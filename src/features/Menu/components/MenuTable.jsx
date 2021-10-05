@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const MenuTable = ({ menuList }) => {
+const MenuTable = ({ menuList, user, onRemoveMenu, onGetMenuById }) => {
+  const handleDeleteMenu = (menuId) => {
+    onRemoveMenu?.(menuId);
+  };
+
+  const handleGetMenuById = (menuId) => {
+    onGetMenuById?.(menuId);
+  };
+
   return (
     <table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -17,24 +25,32 @@ const MenuTable = ({ menuList }) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {menuList.map((menu) => (
-          <tr key={menu._id}>
-            <td className="px-6 py-4  max-w-xs">
-              <div className="text-sm text-gray-900">{menu.name}</div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
-              <a className="text-indigo-600 hover:text-indigo-900">
-                Edit <ion-icon name="create-outline"></ion-icon>
-              </a>
-              <a className="text-red-600  hover:text-red-900 ml-5">
-                Remove <ion-icon name="trash-outline"></ion-icon>
-              </a>
-            </td>
-          </tr>
-        ))}
+        {menuList
+          .filter((menu) => menu.restaurant == user?._id)
+          .map((menu) => (
+            <tr key={menu._id}>
+              <td className="px-6 py-4  max-w-xs">
+                <div className="text-sm capitalize text-gray-900">{menu.name}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
+                <a
+                  onClick={() => handleGetMenuById(menu)}
+                  className="text-indigo-600 hover:text-indigo-900"
+                >
+                  Edit <ion-icon name="create-outline"></ion-icon>
+                </a>
+                <a
+                  onClick={() => handleDeleteMenu(menu._id)}
+                  className="text-red-600  hover:text-red-900 ml-5"
+                >
+                  Remove <ion-icon name="trash-outline"></ion-icon>
+                </a>
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
 };
 
-export default MenuTable;
+export default memo(MenuTable);

@@ -1,13 +1,28 @@
-import React, { Fragment } from 'react';
-import Dialog from 'components/Common/Dialog';
-import Food from 'features/Food';
-import Sidebar from 'components/Common/Sidebar';
-import Header from 'components/Common/Header';
+import React, { Fragment, useEffect } from 'react';
+import Food from '../../features/Food';
+import Sidebar from '../Common/Sidebar';
+import Header from '../Common/Header';
 import { Route, Switch } from 'react-router-dom';
-import Menu from 'features/Menu';
-import Profile from 'features/Profile';
+import Menu from '../../features/Menu';
+import Profile from '../../features/Profile';
+import { ACCESS_TOKEN } from '../../constants/global';
+import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUserToken } from '../../features/Login/loginSlice';
 
 const PartnerLayout = ({ children }) => {
+  const isLogin = Boolean(localStorage.getItem(ACCESS_TOKEN));
+  const token = localStorage.getItem('accessToken');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserToken(token));
+  }, []);
+
+  if (!isLogin) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <Fragment>
       <main className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">

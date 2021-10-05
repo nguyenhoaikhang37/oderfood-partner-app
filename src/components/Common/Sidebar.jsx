@@ -1,4 +1,4 @@
-import Images from 'constants/images';
+import Images from '../../constants/images';
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 

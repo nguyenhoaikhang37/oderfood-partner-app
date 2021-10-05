@@ -29,7 +29,7 @@ export function SelectField({ name, control, label, disabled, options }) {
         label={label}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem className="capitalize" key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}

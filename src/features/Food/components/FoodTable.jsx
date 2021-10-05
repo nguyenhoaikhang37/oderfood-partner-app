@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { getColorQuantity } from '../../../utils/common';
 
-const FoodTable = ({ foodList, menuList }) => {
+const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
+  const handleDeteleFood = (foodId) => {
+    onDeleteFood?.(foodId);
+  };
   return (
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -27,6 +31,12 @@ const FoodTable = ({ foodList, menuList }) => {
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
+            Đặc điểm món ăn
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
             Giá
           </th>
           <th
@@ -35,13 +45,14 @@ const FoodTable = ({ foodList, menuList }) => {
           >
             Số lượng
           </th>
+
           <th scope="col" className="relative px-6 py-3">
             <span className="sr-only">Edit and Remove</span>
           </th>
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {foodList?.map((food) => (
+        {foodList.map((food) => (
           <tr key={food._id}>
             <td className="px-6 py-4 ">
               <div className="flex items-center">
@@ -53,31 +64,47 @@ const FoodTable = ({ foodList, menuList }) => {
                   />
                 </div>
                 <div className="ml-4 max-w-max-w-so-small">
-                  <div className="text-sm font-medium text-gray-900">{food.name}</div>
+                  <div className="text-sm capitalize font-medium text-gray-900">{food.name}</div>
                 </div>
               </div>
             </td>
             <td className="px-6 py-4  max-w-xs">
-              <div className="text-sm text-gray-900">
-                {menuList?.find((menu) => menu._id == food.menu).name}
+              <div className="text-sm capitalize text-gray-900">
+                {menuList.find((menu) => menu._id == food.menu)?.name}
               </div>
             </td>
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm text-gray-900">{food.description}</div>
             </td>
+            <td className="px-6 py-4  text-right whitespace-nowrap text-sm">
+              {food.details?.map((item, index) => (
+                <p className="py-1" key={index}>
+                  {item.nameDetail}
+                </p>
+              ))}
+            </td>
             <td className="px-6 py-4 whitespace-nowrap">
-              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              <span className="px-2 inline-flex  text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                 {food.price.toLocaleString()} vnđ
               </span>
             </td>
-            <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+            <td
+              className={`${getColorQuantity(
+                food.quantity
+              )} px-6 py-4 text-right whitespace-nowrap text-sm`}
+            >
               {food.quantity}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
               <a className="text-indigo-600 hover:text-indigo-900">
                 Edit <ion-icon name="create-outline"></ion-icon>
               </a>
-              <a className="text-red-600  hover:text-red-900 ml-5">
+              <a
+                onClick={() => {
+                  handleDeteleFood(food._id);
+                }}
+                className="text-red-600  hover:text-red-900 ml-5"
+              >
                 Remove <ion-icon name="trash-outline"></ion-icon>
               </a>
             </td>
@@ -88,4 +115,4 @@ const FoodTable = ({ foodList, menuList }) => {
   );
 };
 
-export default FoodTable;
+export default memo(FoodTable);

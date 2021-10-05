@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from 'constants/global';
+import { BASE_URL } from '../constants/global';
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,

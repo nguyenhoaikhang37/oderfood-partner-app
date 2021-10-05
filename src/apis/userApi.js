@@ -1,8 +1,7 @@
 import axiosClient from './axiosClient';
-const token = localStorage.getItem('accessToken');
 
 const userApi = {
-  layThongTinTaiKhoan() {
+  layThongTinTaiKhoan(token) {
     const url = `/restaurant/profile`;
     return axiosClient({
       url,
@@ -11,6 +10,10 @@ const userApi = {
         Authorization: 'Bearer ' + token,
       },
     });
+  },
+  dangNhap(formValues) {
+    const url = `/restaurant/login`;
+    return axiosClient.post(url, formValues);
   },
 };
 

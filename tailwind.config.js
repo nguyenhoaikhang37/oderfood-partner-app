@@ -1,10 +1,7 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  purge: ['./public/**/*.html', './src/**/*.{astro,js,jsx,ts,tsx,vue}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    maxWidth: {
-      'max-w-so-small': '17rem',
-    },
     extend: {},
   },
   variants: {

@@ -1,14 +1,24 @@
+import { ACCESS_TOKEN } from '../../constants/global';
+import { selectLoginUser } from '../../features/Login/loginSlice';
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const user = useSelector(selectLoginUser);
+
+  const handleLogOut = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    window.location.reload();
+  };
+
   return (
     <Fragment>
       <header className="w-full shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl">
         <div className="relative flex flex-col justify-center h-full px-3 mx-auto flex-center">
           <div className="relative items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
-            <div className="container relative left-0 flex w-3/4 h-auto h-full">
+            <div className="container relative left-0 flex w-3/4  h-full">
               <div className="relative flex items-center w-full lg:w-64 h-full group">
-                <div className="absolute flex items-center justify-center block w-auto h-10 p-3 pr-2 text-sm text-gray-500 uppercase cursor-pointer sm:hidden">
+                <div className="absolute flex items-center justify-center  w-auto h-10 p-3 pr-2 text-sm text-gray-500 uppercase cursor-pointer sm:hidden">
                   <svg
                     fill="none"
                     className="relative w-5 h-5"
@@ -38,14 +48,22 @@ const Header = () => {
                 </div>
               </div>
             </div>
-            <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
-              <a href="#" className="block relative">
-                <img
-                  alt="profil"
-                  src="https://i.pravatar.cc/300?u=hehe"
-                  className="mx-auto object-cover rounded-full h-10 w-10 "
-                />
-              </a>
+            {user && (
+              <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
+                <a href="#" className="block relative">
+                  <img
+                    alt="profil"
+                    src={`https://i.pravatar.cc/300?u=${user.name}`}
+                    className="mx-auto object-cover rounded-full h-10 w-10 "
+                  />
+                </a>
+              </div>
+            )}
+            <div
+              onClick={handleLogOut}
+              className="mx-5 flex items-center gap-1 flex-shrink-0 cursor-pointer hover:text-indigo-500 transition-colors"
+            >
+              Đăng xuất <ion-icon name="log-out-outline"></ion-icon>
             </div>
           </div>
         </div>
