@@ -57,11 +57,7 @@ const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
             <td className="px-6 py-4 ">
               <div className="flex items-center">
                 <div className="flex-shrink-0 h-14 w-14">
-                  <img
-                    className="h-14 w-14 rounded-full object-cover"
-                    src={food.photo}
-                    alt={food.name}
-                  />
+                  <img className="h-14 w-14 rounded-full object-cover" src={food.photo} />
                 </div>
                 <div className="ml-4 max-w-max-w-so-small">
                   <div className="text-sm capitalize font-medium text-gray-900">{food.name}</div>

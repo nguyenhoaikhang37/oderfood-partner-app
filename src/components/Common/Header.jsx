@@ -52,8 +52,7 @@ const Header = () => {
               <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
                 <a href="#" className="block relative">
                   <img
-                    alt="profil"
-                    src={`https://i.pravatar.cc/300?u=${user.name}`}
+                    src={`https://i.pravatar.cc/300?u=${user?.name}`}
                     className="mx-auto object-cover rounded-full h-10 w-10 "
                   />
                 </a>

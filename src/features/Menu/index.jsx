@@ -77,8 +77,6 @@ const Menu = () => {
 
   const handleUpdateMenu = async (formValues) => {
     try {
-      const { name, ...restMenu } = formValues;
-      // console.log({ name });
       await menuApi.updateMenu(formValues);
       toast.success('Sửa menu thành công');
       dispatch(fetchMenuList());

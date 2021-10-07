@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { ACCESS_TOKEN } from '../../constants/global';
+import Detail from '../../features/Detail';
 import Food from '../../features/Food';
-import Sidebar from '../Common/Sidebar';
-import Header from '../Common/Header';
-import { Route, Switch } from 'react-router-dom';
+import { getUserToken } from '../../features/Login/loginSlice';
 import Menu from '../../features/Menu';
 import Profile from '../../features/Profile';
-import { ACCESS_TOKEN } from '../../constants/global';
-import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getUserToken } from '../../features/Login/loginSlice';
+import Header from '../Common/Header';
+import Sidebar from '../Common/Sidebar';
 
 const PartnerLayout = ({ children }) => {
   const isLogin = Boolean(localStorage.getItem(ACCESS_TOKEN));
@@ -49,6 +49,10 @@ const PartnerLayout = ({ children }) => {
 
                 <Route path="/admin/food">
                   <Food />
+                </Route>
+
+                <Route path="/admin/detail">
+                  <Detail />
                 </Route>
               </Switch>
             </div>

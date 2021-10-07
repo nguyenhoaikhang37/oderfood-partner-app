@@ -1,3 +1,6 @@
 .MuiBox-root {
-  height: 40rem !important;
+  padding: 20px;
+}
+.dialog-food {
+  height: 650px;
 }

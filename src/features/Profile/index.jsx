@@ -29,7 +29,6 @@ const Profile = () => {
                   <div>
                     <img
                       src={`https://i.pravatar.cc/300?u=${user?.name}`}
-                      alt
                       className="object-cover w-12 h-12 rounded-full bg-coolGray-500"
                     />
                   </div>
@@ -57,31 +56,31 @@ const Profile = () => {
                   <div className="divide-y divide-coolGray-300">
                     <ul className="pt-2 pb-4 space-y-1 text-sm">
                       <li className="bg-coolGray-100 text-coolGray-900">
-                        <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                        <a className="flex items-center p-2 space-x-3 rounded-md">
                           <ion-icon name="storefront-outline"></ion-icon>
                           <span>Giờ mở cửa:</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                        <a className="flex items-center p-2 space-x-3 rounded-md">
                           <ion-icon name="close-circle-outline"></ion-icon>
                           <span>Giờ đóng cửa:</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                        <a className="flex items-center p-2 space-x-3 rounded-md">
                           <ion-icon name="call-outline"></ion-icon>
                           <span>Điện thoại:</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                        <a className="flex items-center p-2 space-x-3 rounded-md">
                           <ion-icon name="accessibility-outline"></ion-icon>
                           <span>Ngày sinh:</span>
                         </a>
                       </li>
                       <li>
-                        <a href className="flex items-center p-2 space-x-3 rounded-md">
+                        <a className="flex items-center p-2 space-x-3 rounded-md">
                           <ion-icon name="id-card-outline"></ion-icon>
                           <span>CMND:</span>
                         </a>

@@ -1,30 +1,29 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Fragment, memo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { InputField } from '../../../components/FormFields/index';
 import { SelectField } from '../../../components/FormFields/SelectField';
-import { Alert } from '@mui/material';
-import DialogDetail from '../../../components/Common/DialogDetail';
 
 const schema = yup.object().shape({
-  name: yup.string().required('Tên món không được để trống'),
-  // photo: yup.string().required('Hình ảnh không được để trống'),
-  description: yup.string().required('Mô tả không được để trống'),
-  menu: yup.string().required('Vui lòng chọn menu'),
-  price: yup
-    .number()
-    .required('Giá món không được để trống')
-    .positive('Trường này phải là một số dương')
-    .integer('Trường này phải là một số nguyên')
-    .typeError('Trường này phải là một số'),
-  quantity: yup
-    .number()
-    .required('Số lượng không được để trống')
-    .positive('Trường này phải là một số dương')
-    .integer('Trường này phải là một số nguyên')
-    .typeError('Trường này phải là một số'),
+  // name: yup.string().required('Tên món không được để trống'),
+  // description: yup.string().required('Mô tả không được để trống'),
+  // menu: yup.string().required('Vui lòng chọn menu'),
+  // price: yup
+  //   .number()
+  //   .required('Giá món không được để trống')
+  //   .positive('Trường này phải là một số dương')
+  //   .integer('Trường này phải là một số nguyên')
+  //   .typeError('Trường này phải là một số'),
+  // quantity: yup
+  //   .number()
+  //   .required('Số lượng không được để trống')
+  //   .positive('Trường này phải là một số dương')
+  //   .integer('Trường này phải là một số nguyên')
+  //   .typeError('Trường này phải là một số'),
+  // choose: yup.string().required(),
 });
 
 const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
@@ -34,6 +33,20 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
   const [image, setImage] = useState(null);
   const [errorLoadImg, setErrorLoadImg] = useState(false);
   const [toppings, setToppings] = useState([]);
+  const [hobbies, setHobbies] = useState([]);
+
+  const handleInputChange = (event) => {
+    const target = event.target;
+    var value = target.value;
+    // this.state.hobbies[value] = value;
+    //   this.state.hobbies.splice(value, 1);
+
+    if (target.checked) {
+      setHobbies((prev) => [...prev, value]);
+    } else {
+      setHobbies(hobbies.splice(value, 1));
+    }
+  };
 
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
@@ -44,18 +57,18 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
     reader.readAsDataURL(file);
     reader.onload = (e) => {
       setImage(e.target.result);
-      console.log(e.target.result);
     };
     setErrorLoadImg(false);
   };
 
   const handleAddFood = (formValues) => {
-    if (!image) {
-      setErrorLoadImg(true);
-      return;
-    }
+    // if (!image) {
+    //   setErrorLoadImg(true);
+    //   return;
+    // }
 
-    onAddFoodSubmit?.({ ...formValues, photo: image, details: toppings });
+    // onAddFoodSubmit?.({ ...formValues, photo: image, details: toppings });
+    console.log('h', hobbies);
   };
 
   return (
@@ -131,15 +144,54 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
               <img
                 style={{ width: '100%', height: '150px', marginTop: '15px' }}
                 className="object-cover"
-                alt="..."
                 src={image}
               />
             )}
           </div>
-
-          <div className="col-span-2 text-right my-2">
-            <DialogDetail toppings={toppings} setToppings={setToppings} />
+          <div className="col-span-2 lg:col-span-1">
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="hobbies"
+                id="inlineCheckboxh1"
+                value="1"
+                onChange={handleInputChange}
+              />
+              <label className="form-check-label" htmlFor="inlineCheckboxh1">
+                Reading
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="hobbies"
+                id="inlineCheckboxh2"
+                value="2"
+                onChange={handleInputChange}
+              />
+              <label className="form-check-label" htmlFor="inlineCheckboxh2">
+                Developing
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="hobbies"
+                id="inlineCheckboxh3"
+                value="3"
+                onChange={handleInputChange}
+              />
+              <label className="form-check-label" htmlFor="inlineCheckboxh3">
+                Desiging
+              </label>
+            </div>
           </div>
+          {/* <div className="col-span-2 text-right my-2">
+            <DialogDetail toppings={toppings} setToppings={setToppings} />
+          </div> */}
           <div className="col-span-2 text-right">
             <button
               type="submit"
