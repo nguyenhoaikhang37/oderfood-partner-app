@@ -26,7 +26,7 @@ const listChooseApi = {
     const url = `/listChoose/${chooseId}`;
     return axiosClient({
       url,
-      method: 'PUT',
+      method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token,
       },

@@ -13,7 +13,9 @@ import { selectLoginUser } from '../Login/loginSlice';
 import DetailForm from './components/DetailForm';
 import DetailTable from './components/DetailTable';
 import DetailToppingForm from './components/DetailToppingForm';
+import ListChooseForm from './components/ListChooseForm';
 import { fetchChooseList, selectDetailList, selectDetailLoading } from './detailSlice';
+import Swal from 'sweetalert2';
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ export default function Detail() {
   //Dialog
   const [open, setOpen] = useState(false);
   const [openTopping, setOpenTopping] = useState(false);
+  const [openListChoose, setOpenListChoose] = useState(false);
   const detailList = useSelector(selectDetailList);
   const loading = useSelector(selectDetailLoading);
   const user = useSelector(selectLoginUser);
@@ -28,6 +31,7 @@ export default function Detail() {
   const [listChoose, setListChoose] = useState([]);
   const [addBtn, setAddBtn] = useState('');
   const [idChoose, setIdChoose] = useState('');
+  const [idChooseDetail, setIdChooseDetail] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -43,6 +47,9 @@ export default function Detail() {
   const handleClose = () => {
     setOpen(false);
   };
+  // const handleCloseListChoose = () => {
+  //   setOpen(false);
+  // };
   const handleOpenTopping = () => {
     setOpenTopping(true);
   };
@@ -88,12 +95,54 @@ export default function Detail() {
     }
   };
 
-  if (loading) {
-    return <LinearProgress />;
-  }
+  const handleDeleteListChoose = (listChooseId) => {
+    try {
+      Swal.fire({
+        title: 'Bạn muốn xoá lựa chọn này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#10B981',
+        cancelButtonColor: '#F87171',
+        cancelButtonText: 'Huỷ',
+        confirmButtonText: 'Có, tôi chắc chắn!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await listChooseApi.deleteListChoose(listChooseId);
+
+          Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
+          const res = await listChooseApi.getListChooseById(idChoose);
+          setListChoose(res.data.listChoose);
+          // dispatch(fetchChooseList());
+        }
+      });
+    } catch (error) {
+      console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
 
   return (
     <Box sx={{ width: '100%', typography: 'body1', maxWidth: '900px' }}>
+      <div style={{ margin: '10px 10px', flexDirection: 'row' }}>
+        <button
+          // sx={{ margin: '0 10px' }}
+          onClick={() => handleOpen('themDacDiem')}
+          // variant="outlined"
+          type="button"
+          className="py-2 px-4  justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
+        >
+          <ion-icon name="add-circle-outline"></ion-icon>
+          &nbsp; Thêm đặc điểm
+        </button>
+        <button
+          onClick={() => handleOpen('themThanhPhan')}
+          // variant="contained"
+          type="button"
+          className="py-2 px-4  justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
+        >
+          <ion-icon name="add-circle-outline"></ion-icon>
+          &nbsp; Thêm thành phần
+        </button>
+      </div>
       <Box
         sx={{
           borderBottom: 1,
@@ -116,7 +165,7 @@ export default function Detail() {
             />
           ))}
         </Tabs>
-        <div style={{ textAlign: 'right', margin: '20px 0' }}>
+        {/* <div style={{ textAlign: 'right', margin: '20px 0' }}>
           <Button
             sx={{ margin: '0 10px' }}
             onClick={() => handleOpen('themDacDiem')}
@@ -127,8 +176,8 @@ export default function Detail() {
           <Button onClick={() => handleOpen('themThanhPhan')} variant="contained">
             Thêm thành phần <ion-icon name="add-outline"></ion-icon>
           </Button>
-        </div>
-        <DetailTable listChoose={listChoose} />
+        </div> */}
+        <DetailTable onDeleteChoose={handleDeleteListChoose} listChoose={listChoose} />
         <Button
           onClick={handleOpenTopping}
           sx={{ margin: '10px 0' }}

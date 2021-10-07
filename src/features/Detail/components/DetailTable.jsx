@@ -8,7 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Alert } from '@mui/material';
 
-export default function DetailTable({ listChoose }) {
+export default function DetailTable({ listChoose, onDeleteChoose }) {
+  const handleDeleteListChoose = (listChooseId) => {
+    onDeleteChoose?.(listChooseId);
+  };
+
   return (
     <TableContainer component={Paper}>
       {listChoose.length !== 0 ? (
@@ -24,7 +28,7 @@ export default function DetailTable({ listChoose }) {
           </TableHead>
           <TableBody>
             {listChoose.map((row) => (
-              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
@@ -33,7 +37,12 @@ export default function DetailTable({ listChoose }) {
                   <a className="text-indigo-600 hover:text-indigo-900">
                     Edit <ion-icon name="create-outline"></ion-icon>
                   </a>
-                  <a className="text-red-600  hover:text-red-900 ml-5">
+                  <a
+                    onClick={() => {
+                      handleDeleteListChoose(row._id);
+                    }}
+                    className="text-red-600  hover:text-red-900 ml-5"
+                  >
                     Remove <ion-icon name="trash-outline"></ion-icon>
                   </a>
                 </td>
