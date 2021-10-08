@@ -24,6 +24,7 @@ export default function Detail() {
   const [open, setOpen] = useState(false);
   const [openTopping, setOpenTopping] = useState(false);
   const [openListChoose, setOpenListChoose] = useState(false);
+  //Selector
   const detailList = useSelector(selectDetailList);
   const loading = useSelector(selectDetailLoading);
   const user = useSelector(selectLoginUser);
@@ -37,6 +38,7 @@ export default function Detail() {
     (async () => {
       const res = await listChooseApi.getListChooseById(detailList[0]?._id);
       setListChoose(res.data.listChoose);
+      setIdChoose(res.data?.listChoose[0].choose);
     })();
   }, [detailList]);
 
@@ -109,7 +111,7 @@ export default function Detail() {
         if (result.isConfirmed) {
           await listChooseApi.deleteListChoose(listChooseId);
 
-          Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
+          Swal.fire('Deleted!', 'Bạn đã xoá chi tiết đặc điểm thành công.', 'success');
           const res = await listChooseApi.getListChooseById(idChoose);
           setListChoose(res.data.listChoose);
           // dispatch(fetchChooseList());
@@ -120,15 +122,19 @@ export default function Detail() {
     }
   };
 
+  if (loading) {
+    return <LinearProgress />;
+  }
+
   return (
     <Box sx={{ width: '100%', typography: 'body1', maxWidth: '900px' }}>
-      <div style={{ margin: '10px 10px', flexDirection: 'row' }}>
+      <div style={{ margin: '10px', display: 'flex' }}>
         <button
           // sx={{ margin: '0 10px' }}
           onClick={() => handleOpen('themDacDiem')}
           // variant="outlined"
           type="button"
-          className="py-2 px-4  justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
+          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
         >
           <ion-icon name="add-circle-outline"></ion-icon>
           &nbsp; Thêm đặc điểm
@@ -137,7 +143,7 @@ export default function Detail() {
           onClick={() => handleOpen('themThanhPhan')}
           // variant="contained"
           type="button"
-          className="py-2 px-4  justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
+          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
         >
           <ion-icon name="add-circle-outline"></ion-icon>
           &nbsp; Thêm thành phần
