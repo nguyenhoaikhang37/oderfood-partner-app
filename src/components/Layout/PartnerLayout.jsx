@@ -2,7 +2,9 @@ import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../../constants/global';
+import Combo from '../../features/Combo';
 import Detail from '../../features/Detail';
+import Discount from '../../features/Discount';
 import Food from '../../features/Food';
 import { getUserToken } from '../../features/Login/loginSlice';
 import Menu from '../../features/Menu';
@@ -51,8 +53,16 @@ const PartnerLayout = ({ children }) => {
                   <Food />
                 </Route>
 
+                <Route path="/admin/combo">
+                  <Combo />
+                </Route>
+
                 <Route path="/admin/detail">
                   <Detail />
+                </Route>
+
+                <Route path="/admin/discount">
+                  <Discount />
                 </Route>
               </Switch>
             </div>

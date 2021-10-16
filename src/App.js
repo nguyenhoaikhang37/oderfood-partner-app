@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 import './index.css';
 import 'tailwindcss/tailwind.css';
+import { fetchDiscountList, fetchFoodDiscount } from './features/Discount/discountSlice';
+import { fetchComboList } from './features/Combo/comboSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -13,6 +15,9 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserToken(token));
+    dispatch(fetchFoodDiscount());
+    dispatch(fetchDiscountList());
+    dispatch(fetchComboList());
   }, []);
 
   return (

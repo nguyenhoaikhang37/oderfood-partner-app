@@ -16,11 +16,16 @@ export const getUserToken = createAsyncThunk('login/getUserToken', async (token,
 const loginSlice = createSlice({
   name: 'login',
   initialState: {
+    loading: false,
     user: {},
   },
   reducers: {},
   extraReducers: {
+    [getUserToken.pending]: (state) => {
+      state.loading = true;
+    },
     [getUserToken.fulfilled]: (state, action) => {
+      state.loading = false;
       state.user = action.payload;
     },
   },
@@ -30,6 +35,7 @@ const loginSlice = createSlice({
 export const loginActions = loginSlice.actions;
 //SELECTOR
 export const selectLoginUser = (state) => state.login.user;
+export const selectLoginLoading = (state) => state.login.loading;
 //REDUCER
 const loginReducer = loginSlice.reducer;
 export default loginReducer;

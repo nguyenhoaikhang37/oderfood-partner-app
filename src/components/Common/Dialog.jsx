@@ -6,7 +6,6 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-  overflowY: 'scroll',
   transform: 'translate(-50%, -50%)',
   width: 600,
   bgcolor: 'background.paper',
