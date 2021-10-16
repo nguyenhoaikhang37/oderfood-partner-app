@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
-import './DialogDetail.css';
 import DetailForm from './UI/DetailForm';
 
 const style = {

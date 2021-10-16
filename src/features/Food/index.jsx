@@ -35,11 +35,10 @@ const Food = () => {
 
   const handleAddFoodSubmit = async (formValues) => {
     try {
-      console.log(formValues);
-      // await foodApi.addFood(formValues);
-      // toast.success('Thêm món ăn thành công');
-      // dispatch(fetchFoodList());
-      // setOpen(false);
+      await foodApi.addFood(formValues);
+      toast.success('Thêm món ăn thành công');
+      dispatch(fetchFoodList());
+      setOpen(false);
     } catch (error) {
       console.log('Failed to add food', error);
     }
@@ -97,7 +96,7 @@ const Food = () => {
         </div>
       </div>
       {/* Dialog */}
-      <Dialog className="koko" open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <FoodForm onAddFoodSubmit={handleAddFoodSubmit} menuOptions={menuOptionsByRes} />
       </Dialog>
     </div>

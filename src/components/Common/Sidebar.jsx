@@ -54,6 +54,16 @@ const Sidebar = () => {
           </NavLink>
           <NavLink
             className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/combo"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="basket-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Combo món ăn</span>
+          </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
             to="/admin/detail"
             activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
           >
@@ -61,6 +71,16 @@ const Sidebar = () => {
               <ion-icon name="funnel-outline"></ion-icon>
             </span>
             <span className="mx-4 text-sm font-normal">Đặc điểm món ăn</span>
+          </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/discount"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="qr-code-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Khuyến mãi</span>
           </NavLink>
         </div>
       </nav>

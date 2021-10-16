@@ -27,12 +27,12 @@ const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
           >
             Mô tả
           </th>
-          <th
+          {/* <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             Đặc điểm món ăn
-          </th>
+          </th> */}
           <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -72,13 +72,13 @@ const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm text-gray-900">{food.description}</div>
             </td>
-            <td className="px-6 py-4  text-right whitespace-nowrap text-sm">
-              {food.details?.map((item, index) => (
+            {/* <td className="px-6 py-4  text-right whitespace-nowrap text-sm">
+              {food.choose?.map((item, index) => (
                 <p className="py-1" key={index}>
-                  {item.nameDetail}
+                  {item}
                 </p>
               ))}
-            </td>
+            </td> */}
             <td className="px-6 py-4 whitespace-nowrap">
               <span className="px-2 inline-flex  text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                 {food.price.toLocaleString()} vnđ

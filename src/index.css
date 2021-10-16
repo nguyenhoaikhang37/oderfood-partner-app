@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dialog-food {
+  height: 600px !important;
+  overflow-y: scroll !important;
+}

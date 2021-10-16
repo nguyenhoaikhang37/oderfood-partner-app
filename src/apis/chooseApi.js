@@ -22,7 +22,7 @@ const chooseApi = {
     const url = `/choose/${chooseId}`;
     return axiosClient({
       url,
-      method: 'PUT',
+      method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + token,
       },

@@ -1,0 +1,13 @@
+.discount-food-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px 0;
+}
+.discount-food-item {
+  display: flex;
+  align-items: center;
+}
+.icon-box ion-icon {
+  cursor: pointer;
+  color: #059669;
+}

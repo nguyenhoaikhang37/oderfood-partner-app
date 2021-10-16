@@ -1,10 +1,12 @@
-import { selectLoginUser } from '../../features/Login/loginSlice';
+import { selectLoginLoading, selectLoginUser } from '../../features/Login/loginSlice';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ProfileForm from './components/ProfileForm';
+import { LinearProgress } from '@mui/material';
 
 const Profile = () => {
   const user = useSelector(selectLoginUser);
+  const loading = useSelector(selectLoginLoading);
 
   const handleUpdateProfile = (formValues) => {
     try {
@@ -13,6 +15,11 @@ const Profile = () => {
       console.log('🚀 ~ file: index.jsx ~ line 9 ~ handleUpdateProfile ~ error', error);
     }
   };
+
+  if (loading) {
+    return <LinearProgress />;
+  }
+
   return (
     <div className="px-5 mx-auto sm:px-10 md:px-16 bg-coolGray-100 text-coolGray-800">
       <div className="flex flex-col max-w-5xl mx-auto overflow-hidden rounded-xl">
