@@ -22,7 +22,7 @@ const comboSlice = createSlice({
       state.loading = true;
     },
     [fetchComboList.fulfilled](state, action) {
-      state.loading = true;
+      state.loading = false;
       state.comboList = action.payload;
     },
   },

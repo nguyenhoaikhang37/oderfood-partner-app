@@ -1,30 +1,49 @@
+import { LinearProgress } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import comboApi from '../../apis/comboApi';
 import Dialog from '../../components/Common/Dialog';
-import { selectComboList } from './comboSlice';
+import { selectLoginUser } from '../Login/loginSlice';
+import { selectMenuOptions } from '../Menu/menuSlice';
+import './Combo.css';
+import { fetchComboList, selectComboList, selectComboLoading } from './comboSlice';
 import ComboForm from './components/ComboForm';
 import ComboTable from './components/ComboTable';
-import './Combo.css';
 
 const Combo = () => {
+  const dispatch = useDispatch();
   // useSelector
   const comboList = useSelector(selectComboList);
-  console.log('🚀 ~ file: index.jsx ~ line 11 ~ Combo ~ comboList', comboList);
+  const loading = useSelector(selectComboLoading);
   // dialog
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
   };
+  //Menu options
+  const user = useSelector(selectLoginUser);
+  const menuOptions = useSelector(selectMenuOptions);
+  const menuOptionsByRes = menuOptions?.filter((menu) => menu.restaurant == user?._id);
 
   // function
-  const handleAddCombo = (comboValues) => {
+  const handleAddCombo = async (comboValues) => {
+    const { formValues, foodChecked, image } = comboValues;
+    const formatFormValues = { ...formValues, photo: image, arrayFood: foodChecked };
     try {
-      console.log(comboValues);
+      await comboApi.addCombo(formatFormValues);
+      dispatch(fetchComboList());
+      setOpen(false);
+      toast.success('Thêm combo món ăn thành công');
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 19 ~ handleAddCombo ~ error', error);
     }
   };
+
+  if (loading) {
+    return <LinearProgress />;
+  }
 
   return (
     <div>
@@ -49,7 +68,7 @@ const Combo = () => {
 
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <ComboForm onAddCombo={handleAddCombo} />
+        <ComboForm menuOptions={menuOptionsByRes} onAddCombo={handleAddCombo} />
       </Dialog>
     </div>
   );

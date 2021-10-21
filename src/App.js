@@ -8,6 +8,7 @@ import './index.css';
 import 'tailwindcss/tailwind.css';
 import { fetchDiscountList, fetchFoodDiscount } from './features/Discount/discountSlice';
 import { fetchComboList } from './features/Combo/comboSlice';
+import { fetchMenuList } from './features/Menu/menuSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function App() {
     dispatch(fetchFoodDiscount());
     dispatch(fetchDiscountList());
     dispatch(fetchComboList());
+    dispatch(fetchMenuList());
   }, []);
 
   return (
