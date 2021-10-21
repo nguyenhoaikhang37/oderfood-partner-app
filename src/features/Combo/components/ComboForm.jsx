@@ -41,12 +41,12 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
     console.log('1', file);
 
     //Tạo đối tượng để đọc file
-    // let reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onload = (e) => {
-    //   setImage(e.target.result);
-    // };
-    // setErrorLoadImg(false);
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      setImage(e.target.result);
+    };
+    setErrorLoadImg(false);
   };
 
   const handleCheckFood = (id) => {
