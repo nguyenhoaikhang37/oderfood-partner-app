@@ -24,7 +24,7 @@ const Discount = () => {
   // variables
   const existFood = useMemo(() => {
     return discountList
-      .map((discount) => discount.discountDetail)
+      ?.map((discount) => discount.discountDetail)
       .flat()
       .map((item) => item.idFood);
   }, [discountList]);

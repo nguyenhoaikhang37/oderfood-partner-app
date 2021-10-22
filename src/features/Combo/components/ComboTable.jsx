@@ -61,7 +61,7 @@ const ComboTable = ({ comboList }) => {
                 {combo?.comboDetails.map((food) => (
                   <div key={food._id} className="flex space-x-2 my-2 items-center ">
                     <img className="h-10 w-10 rounded-full object-cover" src={food.idFood.photo} />
-                    <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
+                    <label className="text-gray-900 text-sm cursor-pointer">
                       {food.idFood.name}
                     </label>
                     <ion-icon name="close-outline"></ion-icon> {food.quanlity}
