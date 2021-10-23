@@ -3,8 +3,8 @@ import axiosClient from './axiosClient';
 const token = localStorage.getItem(ACCESS_TOKEN);
 
 const foodApi = {
-  getFoodList() {
-    const url = '/food';
+  getFoodList(resId) {
+    const url = `/food/restaurant/${resId}`;
     return axiosClient.get(url);
   },
   addFood(formValues) {

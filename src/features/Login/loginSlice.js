@@ -1,5 +1,6 @@
 import userApi from '../../apis/userApi';
 import { fetchChooseList } from '../Detail/detailSlice';
+import { fetchFoodList } from '../Food/foodSlice';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -7,6 +8,7 @@ export const getUserToken = createAsyncThunk('login/getUserToken', async (token,
   try {
     const { data } = await userApi.layThongTinTaiKhoan(token);
     thunkApi.dispatch(fetchChooseList(data.restaurant._id));
+    thunkApi.dispatch(fetchFoodList(data.restaurant._id));
     return data.restaurant;
   } catch (error) {
     console.log('Failed to get user token', error);
