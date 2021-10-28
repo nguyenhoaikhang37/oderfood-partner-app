@@ -8,9 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Alert } from '@mui/material';
 
-export default function DetailTable({ listChoose, onDeleteChoose }) {
+export default function DetailTable({ listChoose, onDeleteChoose, onPopupListChoose }) {
   const handleDeleteListChoose = (listChooseId) => {
     onDeleteChoose?.(listChooseId);
+  };
+
+  const handleUpdateListChoose = (listChoose) => {
+    onPopupListChoose?.(listChoose);
   };
 
   return (
@@ -34,7 +38,12 @@ export default function DetailTable({ listChoose, onDeleteChoose }) {
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
-                  <a className="text-indigo-600 hover:text-indigo-900">
+                  <a
+                    onClick={() => {
+                      handleUpdateListChoose(row);
+                    }}
+                    className="text-indigo-600 hover:text-indigo-900"
+                  >
                     Edit <ion-icon name="create-outline"></ion-icon>
                   </a>
                   <a
@@ -51,7 +60,7 @@ export default function DetailTable({ listChoose, onDeleteChoose }) {
           </TableBody>
         </Table>
       ) : (
-        <Alert severity="error">Hiện tại cửa hàng chưa thêm list đặc điểm!</Alert>
+        <Alert severity="error">Hiện tại chưa có list đặc điểm!</Alert>
       )}
     </TableContainer>
   );

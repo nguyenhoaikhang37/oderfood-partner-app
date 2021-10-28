@@ -34,6 +34,16 @@ const discountApi = {
       data: discountValues,
     });
   },
+  deleteDiscount(discountId) {
+    const url = `/discount/${discountId}`;
+    return axiosClient({
+      url,
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  },
 };
 
 export default discountApi;

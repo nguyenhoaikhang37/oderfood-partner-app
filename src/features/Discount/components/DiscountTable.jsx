@@ -4,7 +4,7 @@ import 'moment/locale/vi';
 
 moment.locale('vi');
 
-function DiscountTable({ discountList }) {
+function DiscountTable({ discountList ,onDeleteDiscount}) {
   console.log('🚀 ~ file: DiscountTable.jsx ~ line 8 ~ DiscountTable ~ discountList', discountList);
   return (
     <table className="divide-y divide-gray-200">
@@ -81,7 +81,9 @@ function DiscountTable({ discountList }) {
               <a className="text-indigo-600 hover:text-indigo-900">
                 Edit <ion-icon name="create-outline"></ion-icon>
               </a>
-              <a className="text-red-600  hover:text-red-900 ml-5">
+              <a
+              onClick={()=>{onDeleteDiscount(discount?._id)}}
+              className="text-red-600  hover:text-red-900 ml-5">
                 Remove <ion-icon name="trash-outline"></ion-icon>
               </a>
             </td>
@@ -94,6 +96,7 @@ function DiscountTable({ discountList }) {
 
 DiscountTable.propTypes = {
   discountList: PropTypes.array,
+  onDeleteDiscount: PropTypes.func,
 };
 
 export default DiscountTable;

@@ -10,6 +10,8 @@ import './Combo.css';
 import { fetchComboList, selectComboList, selectComboLoading } from './comboSlice';
 import ComboForm from './components/ComboForm';
 import ComboTable from './components/ComboTable';
+import Swal from 'sweetalert2';
+import Loading from '../../components/Common/Loading';
 
 const Combo = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,8 @@ const Combo = () => {
   const user = useSelector(selectLoginUser);
   const menuOptions = useSelector(selectMenuOptions);
   const menuOptionsByRes = menuOptions?.filter((menu) => menu.restaurant == user?._id);
+  // state
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   // function
   const handleAddCombo = async (comboValues) => {
@@ -41,12 +45,37 @@ const Combo = () => {
     }
   };
 
+  const handleDeleteCombo = (comboId) => {
+    try {
+      Swal.fire({
+        title: 'Bạn muốn xoá combo này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#10B981',
+        cancelButtonColor: '#F87171',
+        cancelButtonText: 'Huỷ',
+        confirmButtonText: 'Có, tôi chắc chắn!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setLoadingDelete(true);
+          await comboApi.deleteCombo(comboId);
+          setLoadingDelete(false);
+          Swal.fire('Deleted!', 'Bạn đã xoá combo thành công.', 'success');
+        }
+        window.location.reload();
+      });
+    } catch (error) {
+      console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
 
   return (
     <div>
+      {loadingDelete && <Loading />}
       <button
         onClick={handleOpen}
         type="button"
@@ -55,12 +84,11 @@ const Combo = () => {
         <ion-icon name="add-circle-outline"></ion-icon>
         &nbsp; Thêm combo món ăn
       </button>
-
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-min sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <ComboTable comboList={comboList} />
+              <ComboTable comboList={comboList} onDeleteCombo={handleDeleteCombo} />
             </div>
           </div>
         </div>

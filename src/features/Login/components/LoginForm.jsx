@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Alert } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { memo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
@@ -30,13 +29,17 @@ const LoginForm = ({ onSubmit }) => {
   });
   const history = useHistory();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = async (formValues) => {
     try {
       setError('');
+      setLoading(true);
       await onSubmit?.(formValues);
+      setLoading(false);
       toast.success('Đăng nhập thành công!');
       history.push('/');
+      window.location.reload();
     } catch (error) {
       setError('Số điện thoại hoặc mật khẩu không chính xác!');
     }
@@ -67,6 +70,7 @@ const LoginForm = ({ onSubmit }) => {
           </Alert>
         )}
         <Button type="submit" fullWidth color="secondary" variant="contained" sx={{ mt: 3, mb: 2 }}>
+          {loading && <CircularProgress size="1rem" color="inherit" />}{' '}
           <span style={{ color: '#fff' }}>Đăng nhập</span>
         </Button>
       </Box>

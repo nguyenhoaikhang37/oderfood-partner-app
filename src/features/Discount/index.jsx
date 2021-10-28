@@ -9,6 +9,7 @@ import './Discount.css';
 import discountApi from '../../apis/discountApi';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import Loading from '../../components/Common/Loading';
 
 const Discount = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,9 @@ const Discount = () => {
   }, [discountList]);
   // state
   const [error, setError] = useState('');
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
+ // function
   const handleAddDiscount = async (formValues) => {
     try {
       const { data } = await discountApi.addDiscount(formValues);
@@ -48,11 +51,37 @@ const Discount = () => {
     }
   };
 
+  const handleDeleteDiscount = (discountId) => {
+    try {
+      Swal.fire({
+        title: 'Bạn muốn xoá khuyến mãi này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#10B981',
+        cancelButtonColor: '#F87171',
+        cancelButtonText: 'Huỷ',
+        confirmButtonText: 'Có, tôi chắc chắn!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setLoadingDelete(true);
+          await discountApi.deleteDiscount(discountId);
+          setLoadingDelete(false);
+          Swal.fire('Deleted!', 'Bạn đã xoá khuyến mãi thành công.', 'success');
+        }
+        window.location.reload();
+      });
+    } catch (error) {
+      console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
   return (
     <div>
+      {loadingDelete && <Loading />}
+
       <button
         onClick={handleOpen}
         type="button"
@@ -66,7 +95,7 @@ const Discount = () => {
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-min sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <DiscountTable discountList={discountList} />
+              <DiscountTable discountList={discountList} onDeleteDiscount={handleDeleteDiscount} />
             </div>
           </div>
         </div>
