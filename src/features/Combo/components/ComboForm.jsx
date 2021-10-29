@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { selectDiscountFood } from '../../Discount/discountSlice';
 
 const schema = yup.object().shape({
-  nameCombo: yup.string().required('Tên combo không được bỏ trống!'),
+  name: yup.string().required('Tên combo không được bỏ trống!'),
   menu: yup.string().required('Vui lòng chọn menu'),
   discountCombo: yup
     .number()
@@ -87,7 +87,7 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
       <Box component="form" onSubmit={handleSubmit(handleComboSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">
           <div className="col-span-2">
-            <InputField name="nameCombo" control={control} label="Tên combo món ăn" />
+            <InputField name="name" control={control} label="Tên combo món ăn" />
           </div>
           <div className="col-span-2 lg:col-span-1">
             <InputField name="discountCombo" control={control} label="% khuyến mãi" />
