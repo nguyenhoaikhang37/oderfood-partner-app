@@ -22,7 +22,13 @@ const ComboTable = ({ comboList }) => {
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            % khuyến mãi combo
+            %
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Chi tiết
           </th>
           <th
             scope="col"
@@ -61,6 +67,9 @@ const ComboTable = ({ comboList }) => {
             </td>
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-green-500">{combo?.discountCombo}</div>
+            </td>
+            <td className="px-6 py-4  max-w-xs">
+              <div className="text-sm capitalize text-gray-900">{combo?.descriptionCombo}</div>
             </td>
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-yellow-600">{combo?.total}</div>
