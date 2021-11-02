@@ -70,7 +70,7 @@ const LoginForm = ({ onSubmit }) => {
           </Alert>
         )}
         <Button type="submit" fullWidth color="secondary" variant="contained" sx={{ mt: 3, mb: 2 }}>
-          {loading && <CircularProgress size="1rem" color="inherit" />}{' '}
+          {loading && !error && <CircularProgress size="1rem" color="inherit" />}{' '}
           <span style={{ color: '#fff' }}>Đăng nhập</span>
         </Button>
       </Box>
