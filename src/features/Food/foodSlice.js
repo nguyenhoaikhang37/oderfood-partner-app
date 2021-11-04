@@ -2,9 +2,9 @@ import foodApi from '../../apis/foodApi';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const fetchFoodList = createAsyncThunk('food/fetchFoodList', async () => {
+export const fetchFoodList = createAsyncThunk('food/fetchFoodList', async (resApi) => {
   try {
-    const res = await foodApi.getFoodList();
+    const res = await foodApi.getFoodList(resApi);
     return res.data;
   } catch (error) {
     console.log('Failed to fetch Food List', error);

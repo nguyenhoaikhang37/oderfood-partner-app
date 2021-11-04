@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FoodForm from './components/FoodForm';
 import FoodTable from './components/FoodTable';
-import { fetchFoodList, selectFoodList, selectFoodLoading } from './foodSlice';
+import { selectFoodList, selectFoodLoading } from './foodSlice';
 import Swal from 'sweetalert2';
 
 const Food = () => {
@@ -29,15 +29,15 @@ const Food = () => {
   const menuOptionsByRes = menuOptions?.filter((menu) => menu.restaurant == user?._id);
 
   React.useEffect(() => {
-    dispatch(fetchFoodList());
     dispatch(fetchMenuList());
   }, []);
 
   const handleAddFoodSubmit = async (formValues) => {
     try {
       await foodApi.addFood(formValues);
+      console.log('food', formValues);
+      // window.location.reload();
       toast.success('Thêm món ăn thành công');
-      dispatch(fetchFoodList());
       setOpen(false);
     } catch (error) {
       console.log('Failed to add food', error);
@@ -59,8 +59,8 @@ const Food = () => {
           await foodApi.deleteFood(foodId);
 
           Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
-          dispatch(fetchFoodList());
         }
+        window.location.reload();
       });
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);

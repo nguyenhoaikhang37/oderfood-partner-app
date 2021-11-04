@@ -150,7 +150,7 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
           </div>
           <label className="block text-sm font-medium text-gray-700 mt-5">Đặc điểm món ăn</label>
 
-          <div className="flex flex-wrap gap-2 justify-center col-span-2">
+          <div className="grid grid-cols-2 justify-center col-span-2">
             {detailList.map((detail) => (
               <div key={detail._id} className="form-check form-check-inline">
                 <Checkbox

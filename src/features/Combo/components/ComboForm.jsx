@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Fragment, useState } from 'react';
 import Box from '@mui/material/Box';
-import { InputField } from '../../../components/FormFields';
+import { InputField, SelectField } from '../../../components/FormFields';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 import { selectDiscountFood } from '../../Discount/discountSlice';
 
 const schema = yup.object().shape({
-  nameCombo: yup.string().required('Tên combo không được bỏ trống!'),
+  name: yup.string().required('Tên combo không được bỏ trống!'),
+  menu: yup.string().required('Vui lòng chọn menu'),
   discountCombo: yup
     .number()
     .required('Trường này không được để trống')
@@ -21,22 +22,23 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const ComboForm = (props) => {
+const ComboForm = ({ onAddCombo, menuOptions }) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
   // img
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const [errorLoadImg, setErrorLoadImg] = useState(false);
   // useSelector
   const foodDiscounts = useSelector(selectDiscountFood);
   // state
   const [foodChecked, setFoodChecked] = useState([]);
-  console.log(foodChecked);
+
   // function
   const handleChangeFile = (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
+    console.log('1', file);
 
     //Tạo đối tượng để đọc file
     let reader = new FileReader();
@@ -74,7 +76,7 @@ const ComboForm = (props) => {
   };
 
   const handleComboSubmit = (formValues) => {
-    console.log(formValues, foodChecked);
+    onAddCombo?.({ formValues, foodChecked, image });
   };
 
   return (
@@ -84,13 +86,17 @@ const ComboForm = (props) => {
       </div>
       <Box component="form" onSubmit={handleSubmit(handleComboSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">
-          <div className="col-span-2 lg:col-span-1">
-            <InputField name="nameCombo" control={control} label="Tên combo món ăn" />
+          <div className="col-span-2">
+            <InputField name="name" control={control} label="Tên combo món ăn" />
           </div>
           <div className="col-span-2 lg:col-span-1">
             <InputField name="discountCombo" control={control} label="% khuyến mãi" />
           </div>
+          <div className="col-span-2 lg:col-span-1">
+            <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
+          </div>
         </div>
+
         <div className="col-span-2">
           <div className="flex gap-2">
             <label className="block text-sm font-medium text-gray-700">Hình ảnh</label>
@@ -199,6 +205,8 @@ const ComboForm = (props) => {
   );
 };
 
-ComboForm.propTypes = {};
+ComboForm.propTypes = {
+  onAddCombo: PropTypes.func,
+};
 
 export default ComboForm;

@@ -19,11 +19,13 @@ import Swal from 'sweetalert2';
 
 export default function Detail() {
   const dispatch = useDispatch();
+  //State
   const [value, setValue] = useState(0);
+  const [chooseIdUpdate, setChooseIdUpdate] = useState('');
+  const [listChooseUpdate, setListChooseUpdate] = useState('');
   //Dialog
   const [open, setOpen] = useState(false);
   const [openTopping, setOpenTopping] = useState(false);
-  const [openListChoose, setOpenListChoose] = useState(false);
   //Selector
   const detailList = useSelector(selectDetailList);
   const loading = useSelector(selectDetailLoading);
@@ -49,12 +51,11 @@ export default function Detail() {
   const handleClose = () => {
     setOpen(false);
   };
-  // const handleCloseListChoose = () => {
-  //   setOpen(false);
-  // };
+
   const handleOpenTopping = () => {
     setOpenTopping(true);
   };
+
   const handleCloseTopping = () => {
     setOpenTopping(false);
   };
@@ -122,10 +123,6 @@ export default function Detail() {
     }
   };
 
-  const handleEditChoose = () => {
-    console.log(idChoose);
-  };
-
   const handleRemoveChoose = () => {
     try {
       Swal.fire({
@@ -154,6 +151,39 @@ export default function Detail() {
       });
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
+
+  const handleEditChoose = () => {
+    setChooseIdUpdate(detailList.filter((detail) => detail._id === idChoose)[0]);
+    setOpen(true);
+  };
+
+  const handleUpdateDetal = async (formValues) => {
+    try {
+      await chooseApi.updateChoose(formValues);
+      toast.success('Sửa đặc điểm thành công');
+      dispatch(fetchChooseList(user._id));
+      setOpen(false);
+    } catch (error) {
+      console.log('Failed to update choose', error);
+    }
+  };
+
+  const handlePopupListChoose = (listChoose) => {
+    setListChooseUpdate(listChoose);
+    setOpenTopping(true);
+  };
+
+  const handleUpdateListChoose = async (formValues) => {
+    try {
+      await listChooseApi.updateListChoose(formValues);
+      toast.success('Sửa chi tiết đặc điểm thành công');
+      dispatch(fetchChooseList(user._id));
+      setOpenTopping(false);
+      setOpen(false);
+    } catch (error) {
+      console.log('Failed to update choose', error);
     }
   };
 
@@ -243,7 +273,11 @@ export default function Detail() {
             Thêm thành phần <ion-icon name="add-outline"></ion-icon>
           </Button>
         </div> */}
-        <DetailTable onDeleteChoose={handleDeleteListChoose} listChoose={listChoose} />
+        <DetailTable
+          onPopupListChoose={handlePopupListChoose}
+          onDeleteChoose={handleDeleteListChoose}
+          listChoose={listChoose}
+        />
         <Button
           onClick={handleOpenTopping}
           sx={{ margin: '10px' }}
@@ -255,10 +289,19 @@ export default function Detail() {
       </Box>
 
       <Dialog open={open} onClose={handleClose}>
-        <DetailForm addBtn={addBtn} onAdd={handleAddDetail} />
+        <DetailForm
+          addBtn={addBtn}
+          chooseIdUpdate={chooseIdUpdate}
+          onAdd={handleAddDetail}
+          onUpdate={handleUpdateDetal}
+        />
       </Dialog>
       <Dialog open={openTopping} onClose={handleCloseTopping}>
-        <DetailToppingForm onAdd={handleAddTopping} />
+        <DetailToppingForm
+          listChooseUpdate={listChooseUpdate}
+          onAdd={handleAddTopping}
+          onUpdate={handleUpdateListChoose}
+        />
       </Dialog>
     </Box>
   );

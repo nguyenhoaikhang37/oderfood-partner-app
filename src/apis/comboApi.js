@@ -24,6 +24,16 @@ const comboApi = {
       data: comboValues,
     });
   },
+  deleteCombo(comboId) {
+    const url = `/combo/${comboId}`;
+    return axiosClient({
+      url,
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  },
 };
 
 export default comboApi;

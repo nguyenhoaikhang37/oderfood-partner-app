@@ -4,7 +4,8 @@ import 'moment/locale/vi';
 
 moment.locale('vi');
 
-function DiscountTable({ discountList }) {
+function DiscountTable({ discountList ,onDeleteDiscount}) {
+  console.log('🚀 ~ file: DiscountTable.jsx ~ line 8 ~ DiscountTable ~ discountList', discountList);
   return (
     <table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -14,6 +15,12 @@ function DiscountTable({ discountList }) {
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             Tên khuyến mãi
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Các món ăn trong khuyến mãi
           </th>
           <th
             scope="col"
@@ -44,6 +51,19 @@ function DiscountTable({ discountList }) {
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-gray-900">{discount?.nameDiscount}</div>
             </td>
+            <td className="px-6 py-4  max-w-xs">
+              <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
+                {discount?.discountDetail.map((food) => (
+                  <div key={food._id} className="flex space-x-2 my-2 items-center ">
+                    <img className="h-10 w-10 rounded-full object-cover" src={food.idFood.photo} />
+                    <label className="text-gray-900 text-sm cursor-pointer">
+                      {food.idFood.name}
+                    </label>
+                    <ion-icon name="close-outline"></ion-icon> {food.idFood.quantity}
+                  </div>
+                ))}
+              </div>
+            </td>
             <td className="px-6 py-4 text-right max-w-xs">
               <div className="text-sm capitalize text-green-500">{discount?.discount} %</div>
             </td>
@@ -61,7 +81,9 @@ function DiscountTable({ discountList }) {
               <a className="text-indigo-600 hover:text-indigo-900">
                 Edit <ion-icon name="create-outline"></ion-icon>
               </a>
-              <a className="text-red-600  hover:text-red-900 ml-5">
+              <a
+              onClick={()=>{onDeleteDiscount(discount?._id)}}
+              className="text-red-600  hover:text-red-900 ml-5">
                 Remove <ion-icon name="trash-outline"></ion-icon>
               </a>
             </td>
@@ -74,6 +96,7 @@ function DiscountTable({ discountList }) {
 
 DiscountTable.propTypes = {
   discountList: PropTypes.array,
+  onDeleteDiscount: PropTypes.func,
 };
 
 export default DiscountTable;

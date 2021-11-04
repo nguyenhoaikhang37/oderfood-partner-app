@@ -52,7 +52,7 @@ const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {foodList.map((food) => (
+        {foodList?.map((food) => (
           <tr key={food._id}>
             <td className="px-6 py-4 ">
               <div className="flex items-center">

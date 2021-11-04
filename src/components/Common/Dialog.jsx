@@ -23,7 +23,15 @@ export default function Dialog({ open, onClose, children }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className={children.props.onAddFoodSubmit && 'dialog-food'} sx={style}>
+        <Box
+          className={
+            (children.props.onAddFoodSubmit ||
+              children.props.onAddCombo ||
+              children.props.onAddDiscount) &&
+            'dialog-food'
+          }
+          sx={style}
+        >
           {children}
         </Box>
       </Modal>
