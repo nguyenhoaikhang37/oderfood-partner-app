@@ -82,6 +82,16 @@ const Sidebar = () => {
             </span>
             <span className="mx-4 text-sm font-normal">Khuyến mãi</span>
           </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/order"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Xác nhận đơn hàng</span>
+          </NavLink>
         </div>
       </nav>
     </Fragment>

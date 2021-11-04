@@ -110,7 +110,6 @@ const ComboTable = ({ comboList, onDeleteCombo }) => {
               </tr>
             ))}
           </tbody>
-          <Alert severity="error">Hiện tại chưa combo nào!</Alert>
         </table>
       ) : (
         <Alert severity="error">Hiện tại chưa combo nào!</Alert>

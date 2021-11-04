@@ -8,6 +8,7 @@ import Discount from '../../features/Discount';
 import Food from '../../features/Food';
 import { getUserToken } from '../../features/Login/loginSlice';
 import Menu from '../../features/Menu';
+import OrderSubmit from '../../features/OrderSubmit';
 import Profile from '../../features/Profile';
 import Header from '../Common/Header';
 import Sidebar from '../Common/Sidebar';
@@ -29,7 +30,7 @@ const PartnerLayout = ({ children }) => {
     <Fragment>
       <main className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">
         <div className="flex items-start justify-between">
-          <div className="h-screen hidden lg:block my-4 ml-4 shadow-lg relative w-80">
+          <div className="h-screen hidden lg:block my-4 ml-4 shadow-lg relative w-80 flex-shrink-0">
             <div className="bg-white h-full rounded-2xl dark:bg-gray-700">
               {/* Sidebar */}
               <Sidebar />
@@ -63,6 +64,10 @@ const PartnerLayout = ({ children }) => {
 
                 <Route path="/admin/discount">
                   <Discount />
+                </Route>
+
+                <Route path="/admin/order">
+                  <OrderSubmit />
                 </Route>
               </Switch>
             </div>
