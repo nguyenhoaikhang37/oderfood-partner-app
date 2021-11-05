@@ -75,18 +75,16 @@ const ComboTable = ({ comboList, onDeleteCombo }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm text-right capitalize text-green-500">
-                    {combo?.discountCombo}
+                  <div className="text-sm text-right text-green-500">{combo?.discountCombo}</div>
+                </td>
+                <td className="px-6 py-4  max-w-xs">
+                  <div className="text-sm text-right  text-yellow-600">
+                    {combo?.total.toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm text-right capitalize text-yellow-600">
-                    {combo?.total}
-                  </div>
-                </td>
-                <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm text-right capitalize text-blue-500">
-                    {combo?.lastPrice}
+                  <div className="text-sm text-right  text-blue-500">
+                    {combo?.lastPrice.toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">

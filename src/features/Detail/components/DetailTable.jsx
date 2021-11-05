@@ -36,7 +36,7 @@ export default function DetailTable({ listChoose, onDeleteChoose, onPopupListCho
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">{row.price.toLocaleString()} đ</TableCell>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
                   <a
                     onClick={() => {
