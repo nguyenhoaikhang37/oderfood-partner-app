@@ -4,8 +4,8 @@ import OrderTable from './components/OrderTable';
 
 const OrderSubmit = () => {
   const [orderList, setOrderList] = useState([]);
-  console.log('🚀 ~ file: index.jsx ~ line 8 ~ OrderSubmit ~ orderList', orderList);
   const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -16,9 +16,39 @@ const OrderSubmit = () => {
     })();
   }, []);
 
+  const handleChoXacNhanClick = async () => {
+    setIsActive(0);
+  };
+
+  const handleDangGiaoClick = async () => {
+    setIsActive(1);
+  };
+
   return (
     <div style={{ maxWidth: '1070px' }} className="block overflow-x-auto">
-      <OrderTable loading={loading} orderList={orderList} />
+      <div className="flex items-center mb-8">
+        <div>
+          <div
+            onClick={handleChoXacNhanClick}
+            className={`py-2 px-6 cursor-pointer ${
+              isActive === 0 && 'bg-indigo-100 text-indigo-700 rounded-full'
+            }`}
+          >
+            <p>Chờ xác nhận</p>
+          </div>
+        </div>
+        <div>
+          <div
+            onClick={handleDangGiaoClick}
+            className={`py-2 px-6 cursor-pointer ${
+              isActive === 1 && 'bg-indigo-100 text-indigo-700 rounded-full'
+            }`}
+          >
+            <p>Đang giao</p>
+          </div>
+        </div>
+      </div>
+      <OrderTable loading={loading} orderList={orderList} isActiveOrder={isActive} />
     </div>
   );
 };

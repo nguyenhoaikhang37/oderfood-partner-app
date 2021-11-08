@@ -12,6 +12,7 @@ import orderApi from '../../../apis/orderApi';
 moment.locale('vi');
 
 const OrderItem = ({ order }) => {
+  console.log('🚀 ~ file: OrderItem.jsx ~ line 15 ~ OrderItem ~ order', order);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

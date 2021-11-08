@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import OrderItem from './OrderItem';
 import { Alert } from '@mui/material';
 
-const OrderTable = ({ orderList, loading }) => {
+const OrderTable = ({ orderList, loading, isActiveOrder }) => {
   if (loading) {
     return <LinearProgress />;
   }
@@ -56,9 +56,11 @@ const OrderTable = ({ orderList, loading }) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {orderList.map((order) => (
-          <OrderItem key={order._id} order={order} />
-        ))}
+        {orderList
+          .filter((x) => x.status === isActiveOrder)
+          .map((order) => (
+            <OrderItem key={order._id} order={order} />
+          ))}
       </tbody>
     </table>
   );
