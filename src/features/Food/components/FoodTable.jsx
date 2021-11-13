@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { getColorQuantity } from '../../../utils/common';
 
-const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
+const FoodTable = ({ foodList, menuList, onDeleteFood, getUpdateFood }) => {
   const handleDeteleFood = (foodId) => {
     onDeleteFood?.(foodId);
   };
@@ -92,7 +92,10 @@ const FoodTable = ({ foodList, menuList, onDeleteFood }) => {
               {food.quantity}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
-              <a className="text-indigo-600 hover:text-indigo-900">
+              <a
+                onClick={() => getUpdateFood(food)}
+                className="text-indigo-600 hover:text-indigo-900"
+              >
                 Edit <ion-icon name="create-outline"></ion-icon>
               </a>
               <a

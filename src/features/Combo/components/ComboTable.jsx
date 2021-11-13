@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Alert } from '@mui/material';
 
-const ComboTable = ({ comboList, onDeleteCombo }) => {
+const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
   return (
     <>
       {comboList.length !== 0 ? (
@@ -53,7 +53,7 @@ const ComboTable = ({ comboList, onDeleteCombo }) => {
                     </div>
                     <div className="ml-4 max-w-max-w-so-small">
                       <div className="text-sm capitalize font-medium text-gray-900">
-                        {combo?.nameCombo}
+                        {combo?.name}
                       </div>
                     </div>
                   </div>
@@ -90,7 +90,7 @@ const ComboTable = ({ comboList, onDeleteCombo }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
                   <a
                     onClick={() => {
-                      onDeleteCombo(combo?._id);
+                      getUpdateCombo(combo);
                     }}
                     className="text-indigo-600 hover:text-indigo-900"
                   >
@@ -119,6 +119,7 @@ const ComboTable = ({ comboList, onDeleteCombo }) => {
 ComboTable.propTypes = {
   comboList: PropTypes.array,
   onDeleteCombo: PropTypes.func,
+  getUpdateCombo: PropTypes.func,
 };
 
 export default ComboTable;

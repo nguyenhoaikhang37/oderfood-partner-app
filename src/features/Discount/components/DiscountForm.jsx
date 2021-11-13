@@ -23,9 +23,16 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const DiscountForm = ({ error, existFood, onAddDiscount }) => {
+const DiscountForm = ({
+  error,
+  existFood,
+  onAddDiscount,
+  discountNeedUpdate,
+  onUpdateDiscount,
+}) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: discountNeedUpdate,
   });
   // useSelector
   const foodDiscounts = useSelector(selectDiscountFood);
@@ -63,7 +70,12 @@ const DiscountForm = ({ error, existFood, onAddDiscount }) => {
       end: valueEnd,
       arrayFood: foodChecked,
     };
-    onAddDiscount?.(formatFormValues);
+
+    if (discountNeedUpdate) {
+      onUpdateDiscount?.(formatFormValues);
+    } else {
+      onAddDiscount?.(formatFormValues);
+    }
   };
 
   return (
@@ -79,46 +91,51 @@ const DiscountForm = ({ error, existFood, onAddDiscount }) => {
           <div className="col-span-2 lg:col-span-1">
             <InputField name="discount" control={control} label="% khuyến mãi" />
           </div>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <div className="col-span-2 lg:col-span-1 mt-2">
-              <DesktopDatePicker
-                label="Ngày bắt đầu"
-                inputFormat="MM/dd/yyyy"
-                value={valueStart}
-                onChange={handleChangeStart}
-                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
-              />
-            </div>
-            <div className="col-span-2 lg:col-span-1 mt-2">
-              <DesktopDatePicker
-                label="Ngày kết thúc"
-                inputFormat="MM/dd/yyyy"
-                value={valueEnd}
-                onChange={handleChangeEnd}
-                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
-              />
-            </div>
-          </LocalizationProvider>
-          <div className="col-span-2 mt-2">
-            <p className="mb-2">Danh sách món ăn:</p>
-            <div className="discount-food-list">
-              {foodDiscounts?.map((food) => (
-                <div key={food._id} className="discount-food-item">
-                  <Checkbox
-                    id={food._id}
-                    checked={foodChecked.includes(food._id)}
-                    onChange={() => handleCheckFood(food._id)}
+          {!discountNeedUpdate && (
+            <>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <div className="col-span-2 lg:col-span-1 mt-2">
+                  <DesktopDatePicker
+                    label="Ngày bắt đầu"
+                    inputFormat="MM/dd/yyyy"
+                    value={valueStart ? valueStart : discountNeedUpdate.discountDetail[0].start}
+                    onChange={handleChangeStart}
+                    renderInput={(params) => <TextField fullWidth size="small" {...params} />}
                   />
-                  <div className="flex space-x-2 items-center">
-                    <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
-                    <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
-                      {food?.name}
-                    </label>
-                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+                <div className="col-span-2 lg:col-span-1 mt-2">
+                  <DesktopDatePicker
+                    label="Ngày kết thúc"
+                    inputFormat="MM/dd/yyyy"
+                    value={valueEnd ? valueEnd : discountNeedUpdate.discountDetail[0].end}
+                    onChange={handleChangeEnd}
+                    renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+                  />
+                </div>
+              </LocalizationProvider>
+
+              <div className="col-span-2 mt-2">
+                <p className="mb-2">Danh sách món ăn:</p>
+                <div className="discount-food-list">
+                  {foodDiscounts?.map((food) => (
+                    <div key={food._id} className="discount-food-item">
+                      <Checkbox
+                        id={food._id}
+                        checked={foodChecked.includes(food._id)}
+                        onChange={() => handleCheckFood(food._id)}
+                      />
+                      <div className="flex space-x-2 items-center">
+                        <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
+                        <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
+                          {food?.name}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
         {error && (
           <Alert variant="standard" severity="error">

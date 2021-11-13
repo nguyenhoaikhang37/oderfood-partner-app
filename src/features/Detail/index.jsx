@@ -21,8 +21,8 @@ export default function Detail() {
   const dispatch = useDispatch();
   //State
   const [value, setValue] = useState(0);
-  const [chooseIdUpdate, setChooseIdUpdate] = useState('');
-  const [listChooseUpdate, setListChooseUpdate] = useState('');
+  const [chooseIdUpdate, setChooseIdUpdate] = useState(null);
+  const [listChooseUpdate, setListChooseUpdate] = useState(null);
   //Dialog
   const [open, setOpen] = useState(false);
   const [openTopping, setOpenTopping] = useState(false);
@@ -50,6 +50,7 @@ export default function Detail() {
   };
   const handleClose = () => {
     setOpen(false);
+    setChooseIdUpdate(null);
   };
 
   const handleOpenTopping = () => {
@@ -58,6 +59,7 @@ export default function Detail() {
 
   const handleCloseTopping = () => {
     setOpenTopping(false);
+    setListChooseUpdate(null);
   };
 
   const handleChange = (event, newValue) => {

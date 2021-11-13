@@ -28,6 +28,17 @@ const foodApi = {
       },
     });
   },
+  updateFood(formValues) {
+    const url = `/food/${formValues._id}`;
+    return axiosClient({
+      url,
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      data: formValues,
+    });
+  },
 };
 
 export default foodApi;

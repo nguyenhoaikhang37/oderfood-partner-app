@@ -44,6 +44,17 @@ const discountApi = {
       },
     });
   },
+  updateDiscount(formValues) {
+    const url = `/discount/${formValues._id}`;
+    return axiosClient({
+      url,
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      data: formValues,
+    });
+  },
 };
 
 export default discountApi;

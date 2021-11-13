@@ -27,9 +27,10 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
+const FoodForm = ({ onAddFoodSubmit, menuOptions, foodNeedUpdate, onUpdateFood }) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: foodNeedUpdate,
   });
   const [image, setImage] = useState(null);
   const [errorLoadImg, setErrorLoadImg] = useState(false);
@@ -63,27 +64,34 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
   };
 
   const handleAddFood = (formValues) => {
-    if (!image) {
+    if (!image && !foodNeedUpdate) {
       setErrorLoadImg(true);
       return;
     }
 
-    onAddFoodSubmit?.({ ...formValues, photo: image, choose });
+    if (foodNeedUpdate) {
+      onUpdateFood?.({ ...formValues, photo: image ? image : foodNeedUpdate.photo, choose });
+    } else {
+      onAddFoodSubmit?.({ ...formValues, photo: image, choose });
+    }
   };
 
   return (
     <Fragment>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
-        Thêm món ăn <ion-icon name="fast-food-outline"></ion-icon>
+        {foodNeedUpdate ? 'Sửa món ăn' : 'Thêm món ăn'}{' '}
+        <ion-icon name="fast-food-outline"></ion-icon>
       </div>
       <Box component="form" onSubmit={handleSubmit(handleAddFood)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">
           <div className="col-span-2 lg:col-span-1">
             <InputField name="name" control={control} label="Tên món ăn" />
           </div>
-          <div className="col-span-2 lg:col-span-1">
-            <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
-          </div>
+          {!foodNeedUpdate && (
+            <div className="col-span-2 lg:col-span-1">
+              <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
+            </div>
+          )}
           <div className="col-span-2">
             <InputField name="description" control={control} label="Mô tả món ăn" />
           </div>
@@ -119,7 +127,7 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
                 Hình ảnh không được để trống
               </Alert>
             )}
-            {!image ? (
+            {!image && !foodNeedUpdate ? (
               <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                 <div className="space-y-1 text-center">
                   <svg
@@ -144,28 +152,35 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
               <img
                 style={{ width: '100%', height: '150px', marginTop: '15px' }}
                 className="object-cover"
-                src={image}
+                src={image ? image : foodNeedUpdate?.photo}
               />
             )}
           </div>
-          <label className="block text-sm font-medium text-gray-700 mt-5">Đặc điểm món ăn</label>
 
-          <div className="grid grid-cols-2 justify-center col-span-2">
-            {detailList.map((detail) => (
-              <div key={detail._id} className="form-check form-check-inline">
-                <Checkbox
-                  className="form-check-input"
-                  name="choose"
-                  id={detail._id}
-                  value={detail._id}
-                  onChange={handleCheckboxChange}
-                />
-                <label className="text-gray-900 text-sm" htmlFor={detail._id}>
-                  {detail.name}
-                </label>
+          {!foodNeedUpdate && (
+            <>
+              <label className="block text-sm font-medium text-gray-700 mt-5">
+                Đặc điểm món ăn
+              </label>
+
+              <div className="grid grid-cols-2 justify-center col-span-2">
+                {detailList.map((detail) => (
+                  <div key={detail._id} className="form-check form-check-inline">
+                    <Checkbox
+                      className="form-check-input"
+                      name="choose"
+                      id={detail._id}
+                      value={detail._id}
+                      onChange={handleCheckboxChange}
+                    />
+                    <label className="text-gray-900 text-sm" htmlFor={detail._id}>
+                      {detail.name}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
           {/* <div className="col-span-2 text-right my-2">
             <DialogDetail toppings={toppings} setToppings={setToppings} />
           </div> */}
@@ -174,7 +189,7 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions }) => {
               type="submit"
               className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
-              Thêm
+              {foodNeedUpdate ? 'Sửa' : 'Thêm'}
             </button>
           </div>
         </div>

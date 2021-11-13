@@ -23,6 +23,7 @@ const Combo = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setComboNeedUpdate(null);
   };
   //Menu options
   const user = useSelector(selectLoginUser);
@@ -30,6 +31,7 @@ const Combo = () => {
   const menuOptionsByRes = menuOptions?.filter((menu) => menu.restaurant == user?._id);
   // state
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [comboNeedUpdate, setComboNeedUpdate] = useState(null);
 
   // function
   const handleAddCombo = async (comboValues) => {
@@ -69,6 +71,23 @@ const Combo = () => {
     }
   };
 
+  const getUpdateCombo = (values) => {
+    setComboNeedUpdate(values);
+    setOpen(true);
+  };
+
+  const handleUpdateCombo = async ({ formValues, image }) => {
+    const formatFormValues = { ...formValues, photo: image };
+    try {
+      await comboApi.updateCombo(formatFormValues);
+      toast.success('Sửa combo thành công');
+      dispatch(fetchComboList());
+      setOpen(false);
+    } catch (error) {
+      console.log('Failed to add menu', error);
+    }
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
@@ -88,7 +107,11 @@ const Combo = () => {
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-min sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <ComboTable comboList={comboList} onDeleteCombo={handleDeleteCombo} />
+              <ComboTable
+                comboList={comboList}
+                onDeleteCombo={handleDeleteCombo}
+                getUpdateCombo={getUpdateCombo}
+              />
             </div>
           </div>
         </div>
@@ -96,7 +119,12 @@ const Combo = () => {
 
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <ComboForm menuOptions={menuOptionsByRes} onAddCombo={handleAddCombo} />
+        <ComboForm
+          menuOptions={menuOptionsByRes}
+          onAddCombo={handleAddCombo}
+          onUpdateCombo={handleUpdateCombo}
+          comboNeedUpdate={comboNeedUpdate}
+        />
       </Dialog>
     </div>
   );
