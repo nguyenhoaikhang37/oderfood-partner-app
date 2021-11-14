@@ -21,6 +21,7 @@ const Discount = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setDiscountNeedUpdate(null);
   };
   // variables
   const existFood = useMemo(() => {
@@ -32,8 +33,9 @@ const Discount = () => {
   // state
   const [error, setError] = useState('');
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [discountNeedUpdate, setDiscountNeedUpdate] = useState(null);
 
- // function
+  // function
   const handleAddDiscount = async (formValues) => {
     try {
       const { data } = await discountApi.addDiscount(formValues);
@@ -67,11 +69,27 @@ const Discount = () => {
           await discountApi.deleteDiscount(discountId);
           setLoadingDelete(false);
           Swal.fire('Deleted!', 'Bạn đã xoá khuyến mãi thành công.', 'success');
+          window.location.reload();
         }
-        window.location.reload();
       });
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
+
+  const getUpdateDiscount = (values) => {
+    setDiscountNeedUpdate(values);
+    setOpen(true);
+  };
+
+  const handleUpdateDiscount = async (formValues) => {
+    try {
+      await discountApi.updateDiscount(formValues);
+      toast.success('Sửa khuyến mãi thành công');
+      dispatch(fetchDiscountList());
+      setOpen(false);
+    } catch (error) {
+      console.log('Failed to add menu', error);
     }
   };
 
@@ -95,7 +113,11 @@ const Discount = () => {
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-min sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <DiscountTable discountList={discountList} onDeleteDiscount={handleDeleteDiscount} />
+              <DiscountTable
+                discountList={discountList}
+                onDeleteDiscount={handleDeleteDiscount}
+                getUpdateDiscount={getUpdateDiscount}
+              />
             </div>
           </div>
         </div>
@@ -103,7 +125,13 @@ const Discount = () => {
 
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <DiscountForm error={error} existFood={existFood} onAddDiscount={handleAddDiscount} />
+        <DiscountForm
+          error={error}
+          existFood={existFood}
+          onAddDiscount={handleAddDiscount}
+          discountNeedUpdate={discountNeedUpdate}
+          onUpdateDiscount={handleUpdateDiscount}
+        />
       </Dialog>
     </div>
   );

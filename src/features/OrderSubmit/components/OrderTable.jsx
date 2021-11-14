@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 import OrderItem from './OrderItem';
 import { Alert } from '@mui/material';
 
-const OrderTable = ({ orderList, loading }) => {
+const OrderTable = ({ orderList, loading, isActiveOrder, isIncomeTable }) => {
   if (loading) {
     return <LinearProgress />;
   }
-  if (orderList.length === 0) {
+  if (!isIncomeTable && orderList.length === 0) {
     return <Alert severity="info">Hiện tại chưa có đơn đặt hàng nào!</Alert>;
+  }
+  if (isIncomeTable && orderList.length === 0) {
+    return (
+      <Alert severity="info">
+        Bạn vui lòng chọn ngày bắt đầu và ngày kết thúc để tìm kiếm doanh thu!
+      </Alert>
+    );
   }
   return (
     <table className="divide-y divide-gray-200">
@@ -56,9 +63,18 @@ const OrderTable = ({ orderList, loading }) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {orderList.map((order) => (
-          <OrderItem key={order._id} order={order} />
-        ))}
+        {orderList
+          .filter((x) => x.status === isActiveOrder)
+          .map((order) => (
+            <OrderItem key={order._id} order={order} />
+          ))}
+        {orderList &&
+          isIncomeTable &&
+          orderList
+            .filter((x) => x.length != 0)
+            .map((order) => (
+              <OrderItem key={order._id} order={order} isIncomeTable={isIncomeTable} />
+            ))}
       </tbody>
     </table>
   );

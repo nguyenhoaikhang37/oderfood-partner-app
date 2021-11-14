@@ -22,9 +22,10 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const ComboForm = ({ onAddCombo, menuOptions }) => {
+const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: comboNeedUpdate,
   });
   // img
   const [image, setImage] = useState();
@@ -76,13 +77,17 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
   };
 
   const handleComboSubmit = (formValues) => {
-    onAddCombo?.({ formValues, foodChecked, image });
+    if (comboNeedUpdate) {
+      onUpdateCombo?.({ formValues, image: image ? image : comboNeedUpdate.photo });
+    } else {
+      onAddCombo?.({ formValues, foodChecked, image });
+    }
   };
 
   return (
     <Fragment>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
-        Thêm combo món ăn<ion-icon name="basket-outline"></ion-icon>
+        {comboNeedUpdate ? 'Sửa' : 'Thêm'} combo món ăn<ion-icon name="basket-outline"></ion-icon>
       </div>
       <Box component="form" onSubmit={handleSubmit(handleComboSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">
@@ -92,9 +97,11 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
           <div className="col-span-2 lg:col-span-1">
             <InputField name="discountCombo" control={control} label="% khuyến mãi" />
           </div>
-          <div className="col-span-2 lg:col-span-1">
-            <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
-          </div>
+          {!comboNeedUpdate && (
+            <div className="col-span-2 lg:col-span-1">
+              <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
+            </div>
+          )}
         </div>
 
         <div className="col-span-2">
@@ -123,7 +130,7 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
               Hình ảnh không được để trống
             </Alert>
           )}
-          {!image ? (
+          {!image && !comboNeedUpdate ? (
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
               <div className="space-y-1 text-center">
                 <svg
@@ -148,57 +155,59 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
             <img
               style={{ width: '100%', height: '150px', marginTop: '15px' }}
               className="object-cover"
-              src={image}
+              src={image ? image : comboNeedUpdate.photo}
             />
           )}
         </div>
-        <div className="col-span-2 mt-2">
-          <p className="mb-2">Danh sách món ăn:</p>
-          <div className="discount-food-list">
-            {foodDiscounts?.map((food) => (
-              <>
-                <div key={food._id} className="discount-food-item">
-                  {foodChecked.some((item) => item.id === food._id) && (
-                    <div className="flex items-center icon-box">
-                      {foodChecked.map((item) => {
-                        if (item.id === food._id)
-                          return (
-                            <div className="flex items-center" key={item.id}>
-                              <ion-icon
-                                onClick={() => handleMinusSl(item.id)}
-                                name="remove-outline"
-                              ></ion-icon>
-                              <span className="mx-2">{item.sl}</span>
-                              <ion-icon
-                                onClick={() => handleInsertSl(item.id)}
-                                name="add-outline"
-                              ></ion-icon>
-                            </div>
-                          );
-                      })}
+        {!comboNeedUpdate && (
+          <div className="col-span-2 mt-2">
+            <p className="mb-2">Danh sách món ăn:</p>
+            <div className="discount-food-list">
+              {foodDiscounts?.map((food) => (
+                <>
+                  <div key={food._id} className="discount-food-item">
+                    {foodChecked.some((item) => item.id === food._id) && (
+                      <div className="flex items-center icon-box">
+                        {foodChecked.map((item) => {
+                          if (item.id === food._id)
+                            return (
+                              <div className="flex items-center" key={item.id}>
+                                <ion-icon
+                                  onClick={() => handleMinusSl(item.id)}
+                                  name="remove-outline"
+                                ></ion-icon>
+                                <span className="mx-2">{item.sl}</span>
+                                <ion-icon
+                                  onClick={() => handleInsertSl(item.id)}
+                                  name="add-outline"
+                                ></ion-icon>
+                              </div>
+                            );
+                        })}
+                      </div>
+                    )}
+                    <Checkbox
+                      id={food._id}
+                      checked={foodChecked.some((item) => item.id === food._id)}
+                      onChange={() => handleCheckFood(food._id)}
+                    />
+                    <div className="flex space-x-2 items-center justify-between">
+                      <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
+                      <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
+                        {food?.name}
+                      </label>
                     </div>
-                  )}
-                  <Checkbox
-                    id={food._id}
-                    checked={foodChecked.some((item) => item.id === food._id)}
-                    onChange={() => handleCheckFood(food._id)}
-                  />
-                  <div className="flex space-x-2 items-center justify-between">
-                    <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
-                    <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
-                      {food?.name}
-                    </label>
                   </div>
-                </div>
-              </>
-            ))}
+                </>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         <button
           type="submit"
           className="py-2 px-4 mt-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
         >
-          Thêm
+          {comboNeedUpdate ? 'Sửa' : 'Thêm'}
         </button>
       </Box>
     </Fragment>
@@ -207,6 +216,8 @@ const ComboForm = ({ onAddCombo, menuOptions }) => {
 
 ComboForm.propTypes = {
   onAddCombo: PropTypes.func,
+  onUpdateCombo: PropTypes.func,
+  comboNeedUpdate: PropTypes.object,
 };
 
 export default ComboForm;

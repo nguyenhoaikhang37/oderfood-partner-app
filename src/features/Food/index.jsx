@@ -3,7 +3,7 @@ import foodApi from '../../apis/foodApi';
 import Dialog from '../../components/Common/Dialog';
 import { selectLoginUser } from '../../features/Login/loginSlice';
 import { fetchMenuList, selectMenuList, selectMenuOptions } from '../../features/Menu/menuSlice';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FoodForm from './components/FoodForm';
@@ -23,10 +23,15 @@ const Food = () => {
   //Dialog
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setFoodNeedUpdate(null);
+  };
   //Menu options
   const menuOptions = useSelector(selectMenuOptions);
   const menuOptionsByRes = menuOptions?.filter((menu) => menu.restaurant == user?._id);
+  // State
+  const [foodNeedUpdate, setFoodNeedUpdate] = useState(null);
 
   React.useEffect(() => {
     dispatch(fetchMenuList());
@@ -59,11 +64,27 @@ const Food = () => {
           await foodApi.deleteFood(foodId);
 
           Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
+          window.location.reload();
         }
-        window.location.reload();
       });
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
+    }
+  };
+
+  const getUpdateFood = (values) => {
+    setFoodNeedUpdate(values);
+    setOpen(true);
+  };
+
+  const handleUpdateFood = async (formValues) => {
+    try {
+      await foodApi.updateFood(formValues);
+      toast.success('Sửa món ăn thành công');
+      window.location.reload();
+      setOpen(false);
+    } catch (error) {
+      console.log('Failed to add menu', error);
     }
   };
 
@@ -90,6 +111,7 @@ const Food = () => {
                 onDeleteFood={handleDeleteFood}
                 foodList={foodListByRes}
                 menuList={menuListByRes}
+                getUpdateFood={getUpdateFood}
               />
             </div>
           </div>
@@ -97,7 +119,12 @@ const Food = () => {
       </div>
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <FoodForm onAddFoodSubmit={handleAddFoodSubmit} menuOptions={menuOptionsByRes} />
+        <FoodForm
+          onAddFoodSubmit={handleAddFoodSubmit}
+          menuOptions={menuOptionsByRes}
+          foodNeedUpdate={foodNeedUpdate}
+          onUpdateFood={handleUpdateFood}
+        />
       </Dialog>
     </div>
   );

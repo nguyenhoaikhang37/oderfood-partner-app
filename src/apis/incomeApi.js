@@ -13,6 +13,16 @@ const incomeApi = {
       },
     });
   },
+  getOrderListByDay(start, end) {
+    const url = `/order/restaurant/doanh-thu-ngay?dateStart=${start}&dateEnd=${end}`;
+    return axiosClient({
+      url,
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  },
 };
 
 export default incomeApi;

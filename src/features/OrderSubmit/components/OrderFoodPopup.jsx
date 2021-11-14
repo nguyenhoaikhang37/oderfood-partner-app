@@ -29,7 +29,7 @@ const OrderFoodPopup = ({ order }) => {
           </thead>
           <tbody>
             {order?.cartFood?.map((food) => (
-              <tr>
+              <tr key={food?.idFood?._id}>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                   <div className="flex items-center space-x-4">
                     <img
@@ -38,6 +38,7 @@ const OrderFoodPopup = ({ order }) => {
                     />
                     <div>
                       <p className="font-bold">{food?.idFood?.name}</p>
+                      {food?.listChoose?.map((item) => item?.idChoose?.name).join(' ')}
                     </div>
                   </div>
                 </td>
