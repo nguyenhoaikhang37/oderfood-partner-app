@@ -6,6 +6,7 @@ import Combo from '../../features/Combo';
 import Detail from '../../features/Detail';
 import Discount from '../../features/Discount';
 import Food from '../../features/Food';
+import Income from '../../features/Income';
 import { getUserToken } from '../../features/Login/loginSlice';
 import Menu from '../../features/Menu';
 import OrderSubmit from '../../features/OrderSubmit';
@@ -31,7 +32,7 @@ const PartnerLayout = ({ children }) => {
       <main className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">
         <div className="flex items-start justify-between">
           <div className="h-screen hidden lg:block my-4 ml-4 shadow-lg relative w-80 flex-shrink-0">
-            <div className="bg-white h-full rounded-2xl dark:bg-gray-700">
+            <div className="bg-white h-full rounded-2xl dark:bg-gray-700 overflow-y-scroll pb-8 sidebar-scroll">
               {/* Sidebar */}
               <Sidebar />
               {children}
@@ -44,6 +45,10 @@ const PartnerLayout = ({ children }) => {
               <Switch>
                 <Route path="/admin/profile">
                   <Profile />
+                </Route>
+
+                <Route path="/admin/income">
+                  <Income />
                 </Route>
 
                 <Route path="/admin/menu">

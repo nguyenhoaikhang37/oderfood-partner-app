@@ -61,8 +61,8 @@ const Combo = () => {
           await comboApi.deleteCombo(comboId);
           setLoadingDelete(false);
           Swal.fire('Deleted!', 'Bạn đã xoá combo thành công.', 'success');
+          window.location.reload();
         }
-        window.location.reload();
       });
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);

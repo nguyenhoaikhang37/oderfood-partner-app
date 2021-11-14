@@ -1,12 +1,15 @@
 import { LinearProgress } from '@mui/material';
 import PropTypes from 'prop-types';
 import OrderItem from './OrderItem';
+import { Alert } from '@mui/material';
 
-const OrderTable = ({ orderList }) => {
-  if (orderList.length === 0) {
+const OrderTable = ({ orderList, loading }) => {
+  if (loading) {
     return <LinearProgress />;
   }
-
+  if (orderList.length === 0) {
+    return <Alert severity="info">Hiện tại chưa có đơn đặt hàng nào!</Alert>;
+  }
   return (
     <table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">

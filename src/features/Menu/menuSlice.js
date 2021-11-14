@@ -24,7 +24,7 @@ const menuSlice = createSlice({
     },
     [fetchMenuList.fulfilled]: (state, action) => {
       state.loading = false;
-      state.menuList = action.payload.menu;
+      state.menuList = action.payload?.menu;
     },
   },
 });

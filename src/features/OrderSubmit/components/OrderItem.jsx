@@ -108,7 +108,7 @@ const OrderItem = ({ order }) => {
             >
               Xác nhận đơn hàng <ion-icon name="checkmark-done-outline"></ion-icon>
             </Button>
-          ) : order?.status === 2 ? (
+          ) : order?.status === 1 ? (
             <div>
               <span className="relative inline-block px-4 py-2 font-semibold text-indigo-900 leading-tight">
                 <span
