@@ -5,9 +5,12 @@ import { InputField, SelectField } from '../../../components/FormFields';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Alert, Checkbox } from '@mui/material';
+import { Alert, Checkbox, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectDiscountFood } from '../../Discount/discountSlice';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 
 const schema = yup.object().shape({
   name: yup.string().required('Tên combo không được bỏ trống!'),
@@ -34,6 +37,17 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
   const foodDiscounts = useSelector(selectDiscountFood);
   // state
   const [foodChecked, setFoodChecked] = useState([]);
+  const [valueStart, setValueStart] = useState(new Date());
+  const [valueEnd, setValueEnd] = useState(new Date());
+
+  // Calendar
+  const handleChangeStart = (newValue) => {
+    setValueStart(newValue);
+  };
+
+  const handleChangeEnd = (newValue) => {
+    setValueEnd(newValue);
+  };
 
   // function
   const handleChangeFile = (e) => {
@@ -102,9 +116,29 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
               <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
             </div>
           )}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <div className="col-span-2 lg:col-span-1 mt-2">
+              <DesktopDatePicker
+                label="Ngày bắt đầu"
+                inputFormat="MM/dd/yyyy"
+                value={valueStart}
+                onChange={handleChangeStart}
+                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+              />
+            </div>
+            <div className="col-span-2 lg:col-span-1 mt-2">
+              <DesktopDatePicker
+                label="Ngày kết thúc"
+                inputFormat="MM/dd/yyyy"
+                value={valueEnd}
+                onChange={handleChangeEnd}
+                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+              />
+            </div>
+          </LocalizationProvider>
         </div>
 
-        <div className="col-span-2">
+        <div className="col-span-2 mt-4">
           <div className="flex gap-2">
             <label className="block text-sm font-medium text-gray-700">Hình ảnh</label>
             <div className="flex text-sm text-gray-600">
@@ -160,48 +194,50 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
           )}
         </div>
         {!comboNeedUpdate && (
-          <div className="col-span-2 mt-2">
-            <p className="mb-2">Danh sách món ăn:</p>
-            <div className="discount-food-list">
-              {foodDiscounts?.map((food) => (
-                <>
-                  <div key={food._id} className="discount-food-item">
-                    {foodChecked.some((item) => item.id === food._id) && (
-                      <div className="flex items-center icon-box">
-                        {foodChecked.map((item) => {
-                          if (item.id === food._id)
-                            return (
-                              <div className="flex items-center" key={item.id}>
-                                <ion-icon
-                                  onClick={() => handleMinusSl(item.id)}
-                                  name="remove-outline"
-                                ></ion-icon>
-                                <span className="mx-2">{item.sl}</span>
-                                <ion-icon
-                                  onClick={() => handleInsertSl(item.id)}
-                                  name="add-outline"
-                                ></ion-icon>
-                              </div>
-                            );
-                        })}
+          <>
+            <div className="col-span-2 mt-2">
+              <p className="mb-2">Danh sách món ăn:</p>
+              <div className="discount-food-list">
+                {foodDiscounts?.map((food) => (
+                  <>
+                    <div key={food._id} className="discount-food-item">
+                      {foodChecked.some((item) => item.id === food._id) && (
+                        <div className="flex items-center icon-box">
+                          {foodChecked.map((item) => {
+                            if (item.id === food._id)
+                              return (
+                                <div className="flex items-center" key={item.id}>
+                                  <ion-icon
+                                    onClick={() => handleMinusSl(item.id)}
+                                    name="remove-outline"
+                                  ></ion-icon>
+                                  <span className="mx-2">{item.sl}</span>
+                                  <ion-icon
+                                    onClick={() => handleInsertSl(item.id)}
+                                    name="add-outline"
+                                  ></ion-icon>
+                                </div>
+                              );
+                          })}
+                        </div>
+                      )}
+                      <Checkbox
+                        id={food._id}
+                        checked={foodChecked.some((item) => item.id === food._id)}
+                        onChange={() => handleCheckFood(food._id)}
+                      />
+                      <div className="flex space-x-2 items-center justify-between">
+                        <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
+                        <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
+                          {food?.name}
+                        </label>
                       </div>
-                    )}
-                    <Checkbox
-                      id={food._id}
-                      checked={foodChecked.some((item) => item.id === food._id)}
-                      onChange={() => handleCheckFood(food._id)}
-                    />
-                    <div className="flex space-x-2 items-center justify-between">
-                      <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
-                      <label className="text-gray-900 text-sm cursor-pointer" htmlFor={food._id}>
-                        {food?.name}
-                      </label>
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
         <button
           type="submit"

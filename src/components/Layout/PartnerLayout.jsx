@@ -6,6 +6,7 @@ import Combo from '../../features/Combo';
 import Detail from '../../features/Detail';
 import Discount from '../../features/Discount';
 import Food from '../../features/Food';
+import ImportFood from '../../features/ImportFood';
 import Income from '../../features/Income';
 import { getUserToken } from '../../features/Login/loginSlice';
 import Menu from '../../features/Menu';
@@ -57,6 +58,10 @@ const PartnerLayout = ({ children }) => {
 
                 <Route path="/admin/food">
                   <Food />
+                </Route>
+
+                <Route path="/admin/import-food">
+                  <ImportFood />
                 </Route>
 
                 <Route path="/admin/combo">
