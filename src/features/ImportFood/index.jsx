@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Dialog from '../../components/Common/Dialog';
 import ImportFoodForm from './components/ImportFoodForm';
 import ImportFoodTable from './components/ImportFoodTable';
+import { selectFoodList } from '../Food/foodSlice';
+import importFoodApi from '../../apis/importFoodApi';
+import { toast } from 'react-toastify';
 
 const ImportFood = () => {
   // dialog
@@ -9,6 +13,19 @@ const ImportFood = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+  };
+  // state
+  const foodList = useSelector(selectFoodList);
+
+  const handleAddImportFood = async ({ quantity, checkedFood }) => {
+    console.log('submit', quantity, checkedFood);
+    try {
+      await importFoodApi.addImportFood({ quantity, arrayFood: checkedFood });
+      setOpen(false);
+      toast.success('Nhập hàng thành công');
+    } catch (error) {
+      console.log('🚀 ~ file: index.jsx ~ line 23 ~ handleAddImportFood ~ error', error);
+    }
   };
 
   return (
@@ -24,7 +41,7 @@ const ImportFood = () => {
       <ImportFoodTable />
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <ImportFoodForm />
+        <ImportFoodForm onAddImportFood={handleAddImportFood} foodList={foodList} />
       </Dialog>
     </div>
   );

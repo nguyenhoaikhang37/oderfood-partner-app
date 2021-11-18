@@ -45,7 +45,7 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {comboList?.map((combo) => (
-              <tr key={combo._id}>
+              <tr key={combo?._id}>
                 <td className="px-6 py-4 ">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-14 w-14">

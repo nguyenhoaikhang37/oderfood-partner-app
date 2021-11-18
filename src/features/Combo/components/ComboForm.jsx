@@ -92,9 +92,14 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
 
   const handleComboSubmit = (formValues) => {
     if (comboNeedUpdate) {
-      onUpdateCombo?.({ formValues, image: image ? image : comboNeedUpdate.photo });
+      onUpdateCombo?.({
+        formValues,
+        image: image ? image : comboNeedUpdate.photo,
+        valueStart,
+        valueEnd,
+      });
     } else {
-      onAddCombo?.({ formValues, foodChecked, image });
+      onAddCombo?.({ formValues, foodChecked, image, valueStart, valueEnd });
     }
   };
 

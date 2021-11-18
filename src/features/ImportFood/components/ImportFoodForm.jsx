@@ -5,9 +5,10 @@ import { useForm } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import { InputField } from '../../../components/FormFields/InputField';
 import { Checkbox } from '@mui/material';
+import { useState } from 'react';
 
 const schema = yup.object().shape({
-  quantityFood: yup
+  quantity: yup
     .number()
     .required('Trường này không được để trống')
     .min(1, '% khuyến mãi tối thiếu là 1')
@@ -16,13 +17,23 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const ImportFoodForm = () => {
+const ImportFoodForm = ({ foodList, onAddImportFood }) => {
+  const [checkedFood, setCheckedFood] = useState([]);
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const handleImportSubmit = (values) => {
-    console.log('import food', values);
+  const handleImportSubmit = ({ quantity }) => {
+    onAddImportFood({ quantity, checkedFood });
+  };
+
+  const handleCheckedFood = (id) => {
+    const isChecked = checkedFood.includes(id);
+    if (!isChecked) {
+      setCheckedFood([...checkedFood, id]);
+    } else {
+      setCheckedFood(checkedFood.filter((x) => x !== id));
+    }
   };
 
   return (
@@ -33,21 +44,23 @@ const ImportFoodForm = () => {
       <Box component="form" onSubmit={handleSubmit(handleImportSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">
           <div className="col-span-2">
-            <InputField name="name" control={control} label="Số lượng món ăn" />
+            <InputField name="quantity" control={control} label="Số lượng món ăn" />
           </div>
           <div className="col-span-2 mt-2">
             <p className="mb-2">Danh sách món ăn:</p>
             <div className="discount-food-list">
-              <div className="discount-food-item">
-                <Checkbox />
-                <div className="flex space-x-2 items-center">
-                  <img
-                    className="h-8 w-8 rounded-full object-cover"
-                    src="http://res.cloudinary.com/mwg/image/upload/v1634791889/foods/lec9vjjxyxjooax9cgb1.jpg"
+              {foodList?.map((food) => (
+                <div key={food?._id} className="discount-food-item">
+                  <Checkbox
+                    checked={checkedFood.includes(food?._id)}
+                    onChange={() => handleCheckedFood(food?._id)}
                   />
-                  <label className="text-gray-900 text-sm cursor-pointer">mon an 1</label>
+                  <div className="flex space-x-2 items-center">
+                    <img className="h-8 w-8 rounded-full object-cover" src={food?.photo} />
+                    <label className="text-gray-900 text-sm cursor-pointer">{food?.name}</label>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
