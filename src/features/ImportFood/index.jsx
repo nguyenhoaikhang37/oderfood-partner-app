@@ -38,7 +38,7 @@ const ImportFood = () => {
         <ion-icon name="bag-add-outline"></ion-icon>
         &nbsp; Nhập thêm món
       </button>
-      <ImportFoodTable />
+      {/* <ImportFoodTable /> */}
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
         <ImportFoodForm onAddImportFood={handleAddImportFood} foodList={foodList} />

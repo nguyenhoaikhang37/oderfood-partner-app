@@ -60,9 +60,9 @@ const PartnerLayout = ({ children }) => {
                   <Food />
                 </Route>
 
-                <Route path="/admin/import-food">
+                {/* <Route path="/admin/import-food">
                   <ImportFood />
-                </Route>
+                </Route> */}
 
                 <Route path="/admin/combo">
                   <Combo />

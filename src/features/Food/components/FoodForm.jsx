@@ -98,9 +98,11 @@ const FoodForm = ({ onAddFoodSubmit, menuOptions, foodNeedUpdate, onUpdateFood }
           <div className="col-span-2 lg:col-span-1">
             <InputField name="price" control={control} label="Giá" />
           </div>
-          <div className="col-span-2 lg:col-span-1">
-            <InputField name="quantity" control={control} label="Số lượng" />
-          </div>
+          {!foodNeedUpdate && (
+            <div className="col-span-2 lg:col-span-1">
+              <InputField name="quantity" control={control} label="Số lượng" />
+            </div>
+          )}
           <div className="col-span-2">
             <div className="flex gap-2">
               <label className="block text-sm font-medium text-gray-700">Hình ảnh</label>

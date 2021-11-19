@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 import { Alert } from '@mui/material';
+import moment from 'moment';
+import 'moment/locale/vi';
+
+moment.locale('vi');
 
 const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
   return (
@@ -15,6 +19,7 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                 Tên combo món ăn
               </th>
               <th
+                style={{ width: '180px' }}
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
@@ -37,6 +42,18 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Thành tiền
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Ngày bắt đầu
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Ngày kết thúc
               </th>
               <th scope="col" className="relative px-6 py-3">
                 <span className="sr-only">Edit and Remove</span>
@@ -85,6 +102,16 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-right  text-blue-500">
                     {combo?.lastPrice.toLocaleString()}đ
+                  </div>
+                </td>
+                <td className="px-6 py-4  max-w-xs">
+                  <div className="text-sm capitalize text-yellow-600">
+                    {moment(combo?.start).format('LLLL')}
+                  </div>
+                </td>
+                <td className="px-6 py-4  max-w-xs">
+                  <div className="text-sm capitalize text-red-600">
+                    {moment(combo?.end).format('LLLL')}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">

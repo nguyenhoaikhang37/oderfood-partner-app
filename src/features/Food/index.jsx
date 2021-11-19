@@ -10,6 +10,8 @@ import FoodForm from './components/FoodForm';
 import FoodTable from './components/FoodTable';
 import { selectFoodList, selectFoodLoading } from './foodSlice';
 import Swal from 'sweetalert2';
+import ImportFoodForm from '../ImportFood/components/ImportFoodForm';
+import importFoodApi from '../../apis/importFoodApi';
 
 const Food = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,12 @@ const Food = () => {
   const handleClose = () => {
     setOpen(false);
     setFoodNeedUpdate(null);
+  };
+  //Dialog nhap them mon
+  const [openImport, setOpenImport] = React.useState(false);
+  const handleOpenImport = () => setOpenImport(true);
+  const handleCloseImport = () => {
+    setOpenImport(false);
   };
   //Menu options
   const menuOptions = useSelector(selectMenuOptions);
@@ -87,21 +95,41 @@ const Food = () => {
     }
   };
 
+  const handleAddImportFood = async ({ quantity, checkedFood }) => {
+    console.log('submit', quantity, checkedFood);
+    try {
+      await importFoodApi.addImportFood({ quantity, arrayFood: checkedFood });
+      setOpenImport(false);
+      toast.success('Nhập hàng thành công');
+    } catch (error) {
+      console.log('🚀 ~ file: index.jsx ~ line 23 ~ handleAddImportFood ~ error', error);
+    }
+  };
+
   if (loading) {
     return <LinearProgress />;
   }
 
   return (
     <div>
-      <button
-        onClick={handleOpen}
-        type="button"
-        className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
-      >
-        <ion-icon name="add-circle-outline"></ion-icon>
-        &nbsp; Thêm món ăn
-      </button>
-
+      <div className="flex space-x-2">
+        <button
+          onClick={handleOpen}
+          type="button"
+          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
+        >
+          <ion-icon name="add-circle-outline"></ion-icon>
+          &nbsp; Thêm món ăn
+        </button>
+        <button
+          onClick={handleOpenImport}
+          type="button"
+          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
+        >
+          <ion-icon name="bag-add-outline"></ion-icon>
+          &nbsp; Nhập thêm món
+        </button>
+      </div>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -124,6 +152,11 @@ const Food = () => {
           foodNeedUpdate={foodNeedUpdate}
           onUpdateFood={handleUpdateFood}
         />
+      </Dialog>
+
+      {/* Dialog them food */}
+      <Dialog open={openImport} onClose={handleCloseImport}>
+        <ImportFoodForm onAddImportFood={handleAddImportFood} foodList={foodList} />
       </Dialog>
     </div>
   );
