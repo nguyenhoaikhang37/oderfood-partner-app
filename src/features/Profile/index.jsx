@@ -42,10 +42,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <h4 className="font-bold">{user?.owner?.fullName}</h4>
-                    <span className="text-xs text-coolGray-600">
-                      {user?.location?.street}, {user?.location?.ward}, {user?.location?.district},
-                      {user?.location?.city}.
-                    </span>
+                    <span className="text-xs text-coolGray-600">{user?.location}</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2 text-yellow-500">

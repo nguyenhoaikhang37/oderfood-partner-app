@@ -3,8 +3,8 @@ import axiosClient from './axiosClient';
 const token = localStorage.getItem(ACCESS_TOKEN);
 
 const incomeApi = {
-  getIncomeList(start, end) {
-    const url = `/order/income1?dateStart=${start}&dateEnd=${end}`;
+  thongKeTheoThang(start, end) {
+    const url = `/order/thong-ke-theo-thang?dateStart=${start}&dateEnd=${end}`;
     return axiosClient({
       url,
       method: 'GET',
@@ -13,8 +13,8 @@ const incomeApi = {
       },
     });
   },
-  getOrderListByDay(start, end) {
-    const url = `/order/restaurant/doanh-thu-ngay?dateStart=${start}&dateEnd=${end}`;
+  thongKeTheoNgay(day) {
+    const url = `/order/thong-ke-theo-ngay?dateStart=${day}`;
     return axiosClient({
       url,
       method: 'GET',
