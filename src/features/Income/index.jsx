@@ -1,43 +1,54 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { ExportCSV } from '../../ExportCSV';
 import IncomeWithDay from './components/IncomeWithDay';
 import IncomeWithMonth from './components/IncomeWithMonth';
 
 const Income = () => {
-  const [isTab, setIsTab] = useState('day');
+  const [isTab, setIsTab] = useState('Doanh thu theo ngày');
+  const fileName = isTab;
+  const [incomeDay, setIncomeDay] = useState([]);
+  const [excelDay, setExcelDay] = useState([]);
+  const [incomeMonth, setIncomeMonth] = useState([]);
 
   return (
     <div>
-      <ul className="list-reset flex border-b">
-        <li className="-mb-px mr-1">
-          <a
-            onClick={() => setIsTab('day')}
-            className={clsx(
-              'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
-              {
-                'border-l border-t border-r rounded-t font-semibold text-purple-500':
-                  isTab == 'day',
-              }
-            )}
-          >
-            Doanh thu theo ngày
-          </a>
-        </li>
-        <li className="mr-1">
-          <a
-            onClick={() => setIsTab('month')}
-            className={clsx(
-              'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
-              {
-                'border-l border-t border-r rounded-t font-semibold text-purple-500':
-                  isTab == 'month',
-              }
-            )}
-          >
-            Doanh thu theo tháng
-          </a>
-        </li>
-      </ul>
+      <div className="flex justify-between">
+        <ul className="list-reset flex border-b">
+          <li className="-mb-px mr-1">
+            <a
+              onClick={() => setIsTab('Doanh thu theo ngày')}
+              className={clsx(
+                'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
+                {
+                  'border-l border-t border-r rounded-t font-semibold text-purple-500':
+                    isTab == 'Doanh thu theo ngày',
+                }
+              )}
+            >
+              Doanh thu theo ngày
+            </a>
+          </li>
+          <li className="mr-1">
+            <a
+              onClick={() => setIsTab('Doanh thu theo tháng')}
+              className={clsx(
+                'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
+                {
+                  'border-l border-t border-r rounded-t font-semibold text-purple-500':
+                    isTab == 'Doanh thu theo tháng',
+                }
+              )}
+            >
+              Doanh thu theo tháng
+            </a>
+          </li>
+        </ul>
+        <ExportCSV
+          csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
+          fileName={fileName}
+        />
+      </div>
       <div
         className="
     container
@@ -48,7 +59,15 @@ const Income = () => {
     rounded-xl rounded-t-none
   "
       >
-        {isTab === 'day' ? <IncomeWithDay /> : <IncomeWithMonth />}
+        {isTab === 'Doanh thu theo ngày' ? (
+          <IncomeWithDay
+            incomeDay={incomeDay}
+            setIncomeDay={setIncomeDay}
+            setExcelDay={setExcelDay}
+          />
+        ) : (
+          <IncomeWithMonth incomeMonth={incomeMonth} setIncomeMonth={setIncomeMonth} />
+        )}
       </div>
     </div>
   );

@@ -6,10 +6,9 @@ import { useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
-const IncomeWithDay = () => {
+const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
   const [dayValue, setDayValue] = useState(new Date('1/1/2021'));
   const [loading, setLoading] = useState(false);
-  const [incomeDay, setIncomeDay] = useState([]);
 
   const handleChangeDay = (newValue) => {
     setDayValue(newValue);
@@ -21,7 +20,20 @@ const IncomeWithDay = () => {
 
       setLoading(true);
       const response = await incomeApi.thongKeTheoNgay(formatDay);
+
+      const formatExcelIncomeWithDay = response.data.order
+        .filter((x) => x)
+        .map((item) => ({
+          ...item,
+          user: item.user.profile.fullName,
+          restaurant: item.restaurant.name,
+          pay: item.pay.name,
+          cartFood: item.cartFood.map((food) => food.idFood.name).join(','),
+          cartCombo: item.cartCombo.map((food) => food.idFood.name).join(','),
+        }));
+      setExcelDay(formatExcelIncomeWithDay);
       setIncomeDay(response.data.order.filter((x) => x));
+
       setLoading(false);
     } catch (error) {
       console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 27 ~ handleSubmit ~ error', error);
