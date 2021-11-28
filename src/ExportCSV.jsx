@@ -3,6 +3,7 @@ import React from 'react';
 import * as FileSaver from 'file-saver';
 
 import * as XLSX from 'xlsx';
+import { toast } from 'react-toastify';
 
 export const ExportCSV = ({ csvData, fileName }) => {
   const fileType =
@@ -11,6 +12,12 @@ export const ExportCSV = ({ csvData, fileName }) => {
   const fileExtension = '.xlsx';
 
   const exportToCSV = (csvData, fileName) => {
+
+  if(csvData.length === 0 ){
+    toast.info('Bạn vui lòng chọn doanh thu trước khi xuất file excel')
+    return
+  }
+
     const ws = XLSX.utils.json_to_sheet(csvData);
 
     const wb = { Sheets: { data: ws }, SheetNames: ['data'] };

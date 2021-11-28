@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import moment from 'moment';
 import { useState } from 'react';
 import { ExportCSV } from '../../ExportCSV';
 import IncomeWithDay from './components/IncomeWithDay';
@@ -6,10 +7,14 @@ import IncomeWithMonth from './components/IncomeWithMonth';
 
 const Income = () => {
   const [isTab, setIsTab] = useState('Doanh thu theo ngày');
-  const fileName = isTab;
   const [incomeDay, setIncomeDay] = useState([]);
   const [excelDay, setExcelDay] = useState([]);
+
   const [incomeMonth, setIncomeMonth] = useState([]);
+  console.log("🚀 ~ file: index.jsx ~ line 14 ~ Income ~ incomeMonth", incomeMonth)
+
+  const fileName = isTab === 'Doanh thu theo ngày' ? `Doanh thu theo ngày ${moment(incomeDay?.[0]?.updatedAt).format("DD/MM/YYYY")}` : `Doanh thu theo tháng ${moment(incomeMonth?.[0]?.createdAt).format("MM")}`;
+
 
   return (
     <div>

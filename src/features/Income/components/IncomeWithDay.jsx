@@ -95,13 +95,13 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Tiền ship
+                Tiền món ăn
               </th>
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Tiền món ăn
+                Tiền ship
               </th>
               <th
                 scope="col"
