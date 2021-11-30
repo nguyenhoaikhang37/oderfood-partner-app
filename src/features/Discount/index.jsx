@@ -44,7 +44,7 @@ const Discount = () => {
         return;
       }
 
-      Swal.fire('Deleted!', 'Bạn đã xoá khuyen mai thành công.', 'success');
+      Swal.fire('Success!', 'Bạn đã thêm khuyến mãi thành công.', 'success');
       dispatch(fetchDiscountList());
       setOpen(false);
       toast.success('Thêm khuyến mãi thành công');
