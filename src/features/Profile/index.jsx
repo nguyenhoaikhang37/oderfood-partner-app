@@ -98,9 +98,9 @@ const Profile = () => {
                     </ul>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <ProfileForm user={user} onUpdateProfile={handleUpdateProfile} />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
