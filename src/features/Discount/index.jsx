@@ -16,6 +16,7 @@ const Discount = () => {
   // selector
   const loading = useSelector(selectDiscountLoading);
   const discountList = useSelector(selectDiscountList);
+
   // dialog
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -34,10 +35,12 @@ const Discount = () => {
   const [error, setError] = useState('');
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [discountNeedUpdate, setDiscountNeedUpdate] = useState(null);
+  const [loadingAdd, setLoadingAdd] = useState(false);
 
   // function
   const handleAddDiscount = async (formValues) => {
     try {
+      setLoadingAdd(true);
       const { data } = await discountApi.addDiscount(formValues);
       if (!data.success) {
         setError(data.message);
@@ -51,6 +54,7 @@ const Discount = () => {
     } catch (error) {
       console.log('🚀 ~ file: DiscountForm.jsx ~ line 65 ~ handleDiscountSubmit ~ error', error);
     }
+    setLoadingAdd(false);
   };
 
   const handleDeleteDiscount = (discountId) => {
@@ -131,6 +135,7 @@ const Discount = () => {
           onAddDiscount={handleAddDiscount}
           discountNeedUpdate={discountNeedUpdate}
           onUpdateDiscount={handleUpdateDiscount}
+          loadingAdd={loadingAdd}
         />
       </Dialog>
     </div>

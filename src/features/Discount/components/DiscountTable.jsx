@@ -21,12 +21,12 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
           >
             Các món ăn trong khuyến mãi
           </th>
-          <th
+          {/* <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             % khuyến mãi
-          </th>
+          </th> */}
           <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -63,9 +63,9 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
                 ))}
               </div>
             </td>
-            <td className="px-6 py-4 text-right max-w-xs">
+            {/* <td className="px-6 py-4 text-right max-w-xs">
               <div className="text-sm capitalize text-green-500">{discount?.discount} %</div>
-            </td>
+            </td> */}
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-yellow-600">
                 {moment(discount?.discountDetail[0].start).format('LLLL')}
