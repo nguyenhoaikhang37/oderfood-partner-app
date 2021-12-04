@@ -43,6 +43,7 @@ const Discount = () => {
       setLoadingAdd(true);
       const { data } = await discountApi.addDiscount(formValues);
       if (!data.success) {
+        setLoadingAdd(false);
         setError(data.message);
         return;
       }
