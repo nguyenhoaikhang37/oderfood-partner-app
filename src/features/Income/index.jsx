@@ -4,6 +4,19 @@ import { useState } from 'react';
 import { ExportCSV } from '../../ExportCSV';
 import IncomeWithDay from './components/IncomeWithDay';
 import IncomeWithMonth from './components/IncomeWithMonth';
+import { Bar } from 'react-chartjs-2';
+
+const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
 
 const Income = () => {
   const [isTab, setIsTab] = useState('Doanh thu theo ngày');
@@ -11,10 +24,38 @@ const Income = () => {
   const [excelDay, setExcelDay] = useState([]);
 
   const [incomeMonth, setIncomeMonth] = useState([]);
-  console.log("🚀 ~ file: index.jsx ~ line 14 ~ Income ~ incomeMonth", incomeMonth)
 
-  const fileName = isTab === 'Doanh thu theo ngày' ? `Doanh thu theo ngày ${moment(incomeDay?.[0]?.updatedAt).format("DD/MM/YYYY")}` : `Doanh thu theo tháng ${moment(incomeMonth?.[0]?.createdAt).format("MM")}`;
+  const data = {
+    labels: incomeMonth.sort((a, b) => a._id - b._id)?.map((income) => `Tháng ${income._id}`),
+    datasets: [
+      {
+        label: 'Ẩn doanh thu',
+        data: incomeMonth?.map((income) => income.total),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
+  const fileName =
+    isTab === 'Doanh thu theo ngày'
+      ? `Doanh thu theo ngày ${moment(incomeDay?.[0]?.updatedAt).format('DD/MM/YYYY')}`
+      : `Doanh thu theo tháng ${moment(incomeMonth?.[0]?.createdAt).format('MM')}`;
 
   return (
     <div>
@@ -71,7 +112,10 @@ const Income = () => {
             setExcelDay={setExcelDay}
           />
         ) : (
-          <IncomeWithMonth incomeMonth={incomeMonth} setIncomeMonth={setIncomeMonth} />
+          <>
+            <IncomeWithMonth incomeMonth={incomeMonth} setIncomeMonth={setIncomeMonth} />
+            <Bar className="p-8" data={data} options={options} />
+          </>
         )}
       </div>
     </div>
