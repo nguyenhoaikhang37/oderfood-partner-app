@@ -6,7 +6,7 @@ import { useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
-const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
+const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
   const [valueStart, setValueStart] = useState(new Date('1/1/2021'));
   const [valueEnd, setValueEnd] = useState(new Date('12/30/2021'));
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,8 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
 
       setLoading(true);
       const response = await incomeApi.thongKeTheoThang(formatStart, formatEnd);
+      const response2 = await incomeApi.layTopFood(formatStart, formatEnd);
+      setTopFood(response2.data.data);
       setIncomeMonth(response.data.income);
       setLoading(false);
     } catch (error) {

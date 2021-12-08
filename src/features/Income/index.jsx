@@ -5,6 +5,7 @@ import { ExportCSV } from '../../ExportCSV';
 import IncomeWithDay from './components/IncomeWithDay';
 import IncomeWithMonth from './components/IncomeWithMonth';
 import { Bar } from 'react-chartjs-2';
+import TopFood from './components/TopFood';
 
 const options = {
   scales: {
@@ -24,6 +25,7 @@ const Income = () => {
   const [excelDay, setExcelDay] = useState([]);
 
   const [incomeMonth, setIncomeMonth] = useState([]);
+  const [topFood, setTopFood] = useState([]);
 
   const data = {
     labels: incomeMonth.sort((a, b) => a._id - b._id)?.map((income) => `Tháng ${income._id}`),
@@ -89,11 +91,29 @@ const Income = () => {
               Doanh thu theo tháng
             </a>
           </li>
+          {topFood.length !== 0 && (
+            <li className="mr-1">
+              <a
+                onClick={() => setIsTab('Top food')}
+                className={clsx(
+                  'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
+                  {
+                    'border-l border-t border-r rounded-t font-semibold text-purple-500':
+                      isTab == 'Top food',
+                  }
+                )}
+              >
+                Các món bán chạy nhất
+              </a>
+            </li>
+          )}
         </ul>
-        <ExportCSV
-          csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
-          fileName={fileName}
-        />
+        {isTab !== 'Top food' && (
+          <ExportCSV
+            csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
+            fileName={fileName}
+          />
+        )}
       </div>
       <div
         className="
@@ -111,11 +131,19 @@ const Income = () => {
             setIncomeDay={setIncomeDay}
             setExcelDay={setExcelDay}
           />
-        ) : (
+        ) : isTab === 'Doanh thu theo tháng' ? (
           <>
-            <IncomeWithMonth incomeMonth={incomeMonth} setIncomeMonth={setIncomeMonth} />
+            <IncomeWithMonth
+              incomeMonth={incomeMonth}
+              setIncomeMonth={setIncomeMonth}
+              setTopFood={setTopFood}
+            />
             <Bar className="p-8" data={data} options={options} />
           </>
+        ) : (
+          <div className="p-6">
+            <TopFood topFood={topFood} />
+          </div>
         )}
       </div>
     </div>

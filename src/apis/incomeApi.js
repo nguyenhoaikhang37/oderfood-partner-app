@@ -23,6 +23,16 @@ const incomeApi = {
       },
     });
   },
+  layTopFood(start, end) {
+    const url = `/order/topFood?dateStart=${start}&dateEnd=${end}`;
+    return axiosClient({
+      url,
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  },
 };
 
 export default incomeApi;

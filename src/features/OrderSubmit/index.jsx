@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
 import orderApi from '../../apis/orderApi';
 import { ACCESS_TOKEN } from '../../constants/global';
 import OrderTable from './components/OrderTable';
+import { useQuery } from 'react-query';
 
 const token = localStorage.getItem(ACCESS_TOKEN);
 
@@ -25,17 +25,12 @@ const OrderSubmit = () => {
       console.log(error);
     }
   };
-  const { data, error } = useSWR(todosEndpoint, fetcher);
-  const loading = !error && !data;
 
-  // useEffect(() => {
-  //   (async () => {
-  //     setLoading(true);
-  //     const res = await orderApi.getOrderList();
-  //     setOrderList(res.data.order);
-  //     setLoading(false);
-  //   })();
-  // }, []);
+  const { data, status } = useQuery(todosEndpoint, fetcher, {
+    refetchInterval: 5000,
+    refetchIntervalInBackground: false,
+  });
+  const loading = status === 'loading';
 
   const handleChoXacNhanClick = async () => {
     setIsActive(0);
