@@ -25,10 +25,13 @@ const Income = () => {
   const [excelDay, setExcelDay] = useState([]);
 
   const [incomeMonth, setIncomeMonth] = useState([]);
+  console.log('🚀 ~ file: index.jsx ~ line 28 ~ Income ~ incomeMonth', incomeMonth);
   const [topFood, setTopFood] = useState([]);
 
   const data = {
-    labels: incomeMonth.sort((a, b) => a._id - b._id)?.map((income) => `Tháng ${income._id}`),
+    labels: incomeMonth
+      .sort((a, b) => a._id - b._id)
+      ?.map((income) => `Ngày ${income._id.day} Tháng ${income._id.month}`),
     datasets: [
       {
         label: 'Ẩn doanh thu',
