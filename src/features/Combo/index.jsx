@@ -17,6 +17,7 @@ const Combo = () => {
   const dispatch = useDispatch();
   // useSelector
   const comboList = useSelector(selectComboList);
+  console.log('🚀 ~ file: index.jsx ~ line 20 ~ Combo ~ comboList', comboList);
   const loading = useSelector(selectComboLoading);
   // dialog
   const [open, setOpen] = useState(false);
@@ -35,8 +36,15 @@ const Combo = () => {
 
   // function
   const handleAddCombo = async (comboValues) => {
-    const { formValues, foodChecked, image } = comboValues;
-    const formatFormValues = { ...formValues, photo: image, arrayFood: foodChecked };
+    const { formValues, foodChecked, image, valueStart, valueEnd } = comboValues;
+    const formatFormValues = {
+      ...formValues,
+      photo: image,
+      arrayFood: foodChecked,
+      start: valueStart,
+      end: valueEnd,
+    };
+
     try {
       await comboApi.addCombo(formatFormValues);
       dispatch(fetchComboList());
@@ -76,8 +84,13 @@ const Combo = () => {
     setOpen(true);
   };
 
-  const handleUpdateCombo = async ({ formValues, image }) => {
-    const formatFormValues = { ...formValues, photo: image };
+  const handleUpdateCombo = async ({ formValues, image, valueStart, valueEnd }) => {
+    const formatFormValues = { ...formValues, photo: image, start: valueStart, end: valueEnd };
+
+    console.log(
+      '🚀 ~ file: index.jsx ~ line 82 ~ handleUpdateCombo ~ formatFormValues',
+      formatFormValues
+    );
     try {
       await comboApi.updateCombo(formatFormValues);
       toast.success('Sửa combo thành công');
@@ -107,11 +120,13 @@ const Combo = () => {
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-min sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <ComboTable
-                comboList={comboList}
-                onDeleteCombo={handleDeleteCombo}
-                getUpdateCombo={getUpdateCombo}
-              />
+              {comboList && (
+                <ComboTable
+                  comboList={comboList}
+                  onDeleteCombo={handleDeleteCombo}
+                  getUpdateCombo={getUpdateCombo}
+                />
+              )}
             </div>
           </div>
         </div>

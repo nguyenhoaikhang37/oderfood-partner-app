@@ -27,6 +27,7 @@ export default function Dialog({ open, onClose, children }) {
           className={
             (children.props.onAddFoodSubmit ||
               children.props.onAddCombo ||
+              children.props.onAddImportFood ||
               children.props.onAddDiscount) &&
             'dialog-food'
           }

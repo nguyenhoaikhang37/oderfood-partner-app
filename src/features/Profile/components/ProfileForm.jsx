@@ -1,17 +1,11 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@mui/material/Box';
 import { InputField } from '../../../components/FormFields/InputField';
 import React, { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-
-const schema = yup.object().shape({
-  name: yup.string().required('Tên menu không được bỏ trống!'),
-});
 
 const ProfileForm = ({ onUpdateProfile, user }) => {
   const { control, handleSubmit } = useForm({
-    resolver: yupResolver(schema),
+    defaultValues: user,
   });
 
   const handleUpdateProfile = (formValues) => {
