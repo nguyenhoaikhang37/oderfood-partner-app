@@ -1,35 +1,48 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import orderApi from '../../apis/orderApi';
 import { ACCESS_TOKEN } from '../../constants/global';
 import OrderTable from './components/OrderTable';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 
 const token = localStorage.getItem(ACCESS_TOKEN);
 
 const todosEndpoint = 'https://server-express-foodapp.herokuapp.com/api/order/restaurant';
 
-const OrderSubmit = () => {
-  // const [orderList, setOrderList] = useState([]);
-  const [isActive, setIsActive] = useState(0);
+const fetcher = async () => {
+  try {
+    const response = await axios.get(todosEndpoint, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    return await response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  const fetcher = async () => {
-    try {
-      const response = await axios.get(todosEndpoint, {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      });
-      return await response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const OrderSubmit = () => {
+  const [isActive, setIsActive] = useState(0);
 
   const { data, status } = useQuery(todosEndpoint, fetcher, {
     refetchInterval: 5000,
     refetchIntervalInBackground: false,
   });
+  const ref = useRef(null);
+
+  useEffect(() => {
+    ref.current = data?.order;
+  }, [data.order.length]);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    if (ref.current.length !== data.order.length) {
+      toast.success('Bạn vừa có đơn hàng mới, vui lòng kiểm tra!');
+    }
+  });
+
   const loading = status === 'loading';
 
   const handleChoXacNhanClick = async () => {
