@@ -41,7 +41,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
         <div className="col-span-1 mt-2" style={{ maxWidth: 200 }}>
           <DesktopDatePicker
             label="Ngày bắt đầu"
-            inputFormat="MM/dd/yyyy"
+            inputFormat="dd/MM/yyyy"
             value={valueStart}
             onChange={handleChangeStart}
             renderInput={(params) => <TextField fullWidth size="small" {...params} />}
@@ -50,7 +50,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
         <div className="col-span-1 mt-2" style={{ maxWidth: 200 }}>
           <DesktopDatePicker
             label="Ngày kết thúc"
-            inputFormat="MM/dd/yyyy"
+            inputFormat="dd/MM/yyyy"
             value={valueEnd}
             onChange={handleChangeEnd}
             renderInput={(params) => <TextField fullWidth size="small" {...params} />}

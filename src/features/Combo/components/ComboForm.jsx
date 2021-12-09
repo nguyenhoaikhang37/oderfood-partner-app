@@ -125,7 +125,7 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
             <div className="col-span-2 lg:col-span-1 mt-2">
               <DesktopDatePicker
                 label="Ngày bắt đầu"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={valueStart}
                 onChange={handleChangeStart}
                 renderInput={(params) => <TextField fullWidth size="small" {...params} />}
@@ -134,7 +134,7 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
             <div className="col-span-2 lg:col-span-1 mt-2">
               <DesktopDatePicker
                 label="Ngày kết thúc"
-                inputFormat="MM/dd/yyyy"
+                inputFormat="dd/MM/yyyy"
                 value={valueEnd}
                 onChange={handleChangeEnd}
                 renderInput={(params) => <TextField fullWidth size="small" {...params} />}
