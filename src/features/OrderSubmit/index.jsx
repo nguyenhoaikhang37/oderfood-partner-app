@@ -34,11 +34,11 @@ const OrderSubmit = () => {
 
   useEffect(() => {
     ref.current = data?.order;
-  }, [data.order.length]);
+  }, [data?.order.length]);
 
   useLayoutEffect(() => {
-    if (!ref.current) return;
-    if (ref.current.length !== data.order.length) {
+    if (!ref.current || !data.order) return;
+    if (ref.current.length !== data?.order.length) {
       toast.success('Bạn vừa có đơn hàng mới, vui lòng kiểm tra!');
     }
   });

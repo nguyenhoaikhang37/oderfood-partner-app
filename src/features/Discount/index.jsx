@@ -40,6 +40,7 @@ const Discount = () => {
   // function
   const handleAddDiscount = async (formValues) => {
     try {
+      setError('');
       setLoadingAdd(true);
       const { data } = await discountApi.addDiscount(formValues);
       if (!data.success) {
@@ -48,7 +49,6 @@ const Discount = () => {
         return;
       }
 
-      Swal.fire('Success!', 'Bạn đã thêm khuyến mãi thành công.', 'success');
       dispatch(fetchDiscountList());
       setOpen(false);
       toast.success('Thêm khuyến mãi thành công');

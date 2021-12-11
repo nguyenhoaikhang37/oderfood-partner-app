@@ -5,7 +5,7 @@ import { InputField, SelectField } from '../../../components/FormFields';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Alert, Checkbox, TextField } from '@mui/material';
+import { Alert, Checkbox, TextField, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectDiscountFood } from '../../Discount/discountSlice';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -25,7 +25,14 @@ const schema = yup.object().shape({
     .typeError('Trường này phải là một số'),
 });
 
-const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) => {
+const ComboForm = ({
+  onAddCombo,
+  menuOptions,
+  comboNeedUpdate,
+  onUpdateCombo,
+  error,
+  loadingAdd,
+}) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: comboNeedUpdate,
@@ -244,10 +251,17 @@ const ComboForm = ({ onAddCombo, menuOptions, comboNeedUpdate, onUpdateCombo }) 
             </div>
           </>
         )}
+        {error && (
+          <Alert variant="standard" severity="error">
+            {error}
+          </Alert>
+        )}
         <button
+          disabled={loadingAdd}
           type="submit"
           className="py-2 px-4 mt-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
         >
+          {loadingAdd && <CircularProgress size="1rem" color="inherit" />}
           {comboNeedUpdate ? 'Sửa' : 'Thêm'}
         </button>
       </Box>

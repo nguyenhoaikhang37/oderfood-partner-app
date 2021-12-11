@@ -121,12 +121,12 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize text-green-500">
-                    {income?.totalCost.toLocaleString()}đ
+                    {(income?.totalCost - income?.totalShip).toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize text-green-500">
-                    {income?.total.toLocaleString()}đ
+                    {(income?.total - income?.totalShip).toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">
@@ -136,7 +136,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize font-semibold">
-                    {(income?.total + income?.totalShip).toLocaleString()}đ
+                    {(income?.total).toLocaleString()}đ
                   </div>
                 </td>
               </tr>
@@ -146,12 +146,9 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
               <td className="px-6 py-4  max-w-xs"></td>
               <td className="px-6 py-4 text-right max-w-xs"></td>
               <td colSpan={3} className="px-6 py-4 text-right max-w-xs font-semibold">
-                Tổng hoá đơn:{' '}
+                Tổng doanh thu:{' '}
                 <span className="text-red-500">
-                  {incomeMonth
-                    .reduce((sum, curr) => sum + curr.total + curr.totalShip, 0)
-                    .toLocaleString()}
-                  đ
+                  {incomeMonth.reduce((sum, curr) => sum + curr.total, 0).toLocaleString()}đ
                 </span>
               </td>
             </tr>
