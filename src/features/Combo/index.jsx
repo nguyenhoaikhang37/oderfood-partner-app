@@ -33,6 +33,8 @@ const Combo = () => {
   // state
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [comboNeedUpdate, setComboNeedUpdate] = useState(null);
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [error, setError] = useState('');
 
   // function
   const handleAddCombo = async (comboValues) => {
@@ -46,13 +48,21 @@ const Combo = () => {
     };
 
     try {
-      await comboApi.addCombo(formatFormValues);
+      setLoadingAdd(true);
+      setError('');
+      const { data } = await comboApi.addCombo(formatFormValues);
+      if (!data.success) {
+        setLoadingAdd(false);
+        setError(data.message);
+        return;
+      }
       dispatch(fetchComboList());
       setOpen(false);
       toast.success('Thêm combo món ăn thành công');
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 19 ~ handleAddCombo ~ error', error);
     }
+    setLoadingAdd(false);
   };
 
   const handleDeleteCombo = (comboId) => {
@@ -87,10 +97,6 @@ const Combo = () => {
   const handleUpdateCombo = async ({ formValues, image, valueStart, valueEnd }) => {
     const formatFormValues = { ...formValues, photo: image, start: valueStart, end: valueEnd };
 
-    console.log(
-      '🚀 ~ file: index.jsx ~ line 82 ~ handleUpdateCombo ~ formatFormValues',
-      formatFormValues
-    );
     try {
       await comboApi.updateCombo(formatFormValues);
       toast.success('Sửa combo thành công');
@@ -135,6 +141,8 @@ const Combo = () => {
       {/* Dialog */}
       <Dialog open={open} onClose={handleClose}>
         <ComboForm
+          loadingAdd={loadingAdd}
+          error={error}
           menuOptions={menuOptionsByRes}
           onAddCombo={handleAddCombo}
           onUpdateCombo={handleUpdateCombo}

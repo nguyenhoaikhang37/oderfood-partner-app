@@ -46,7 +46,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
         <div className="col-span-1 mt-2" style={{ maxWidth: 200 }}>
           <DesktopDatePicker
             label="Ngày"
-            inputFormat="MM/dd/yyyy"
+            inputFormat="dd/MM/yyyy"
             value={dayValue}
             onChange={handleChangeDay}
             renderInput={(params) => <TextField fullWidth size="small" {...params} />}

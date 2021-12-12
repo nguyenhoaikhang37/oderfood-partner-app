@@ -121,7 +121,7 @@ const DiscountForm = ({
                 <div className="col-span-2 lg:col-span-1 mt-2">
                   <DesktopDatePicker
                     label="Ngày bắt đầu"
-                    inputFormat="MM/dd/yyyy"
+                    inputFormat="dd/MM/yyyy"
                     value={valueStart ? valueStart : discountNeedUpdate.discountDetail[0].start}
                     onChange={handleChangeStart}
                     renderInput={(params) => <TextField fullWidth size="small" {...params} />}
@@ -130,7 +130,7 @@ const DiscountForm = ({
                 <div className="col-span-2 lg:col-span-1 mt-2">
                   <DesktopDatePicker
                     label="Ngày kết thúc"
-                    inputFormat="MM/dd/yyyy"
+                    inputFormat="dd/MM/yyyy"
                     value={valueEnd ? valueEnd : discountNeedUpdate.discountDetail[0].end}
                     onChange={handleChangeEnd}
                     renderInput={(params) => <TextField fullWidth size="small" {...params} />}
