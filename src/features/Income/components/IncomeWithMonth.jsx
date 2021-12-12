@@ -6,7 +6,7 @@ import { useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
-const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
+const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
   const [valueStart, setValueStart] = useState(new Date('1/1/2021'));
   const [valueEnd, setValueEnd] = useState(new Date('12/30/2021'));
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,8 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
 
       setLoading(true);
       const response = await incomeApi.thongKeTheoThang(formatStart, formatEnd);
+      const response2 = await incomeApi.layTopFood(formatStart, formatEnd);
+      setTopFood(response2.data.data);
       setIncomeMonth(response.data.income);
       setLoading(false);
     } catch (error) {
@@ -80,12 +82,17 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
               >
                 Tổng đơn
               </th>
-
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Tổng tiền
+                Giá gốc
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Tổng tiền sau khuyến mãi
               </th>
               <th
                 scope="col"
@@ -112,17 +119,22 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth }) => {
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm">{income?.sum.toLocaleString()} đơn</div>
                 </td>
-                <td className="px-6 py-4 text-right max-w-xs">
+                <td className="px-6 py-4 text-left max-w-xs">
+                  <div className="text-sm capitalize text-green-500">
+                    {income?.totalCost.toLocaleString()}đ
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize text-green-500">
                     {income?.total.toLocaleString()}đ
                   </div>
                 </td>
-                <td className="px-6 py-4 text-right max-w-xs">
+                <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize text-green-500">
                     {income?.totalShip.toLocaleString()}đ
                   </div>
                 </td>
-                <td className="px-6 py-4 text-right max-w-xs">
+                <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize font-semibold">
                     {(income?.total + income?.totalShip).toLocaleString()}đ
                   </div>

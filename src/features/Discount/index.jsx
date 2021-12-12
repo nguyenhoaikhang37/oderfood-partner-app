@@ -16,6 +16,7 @@ const Discount = () => {
   // selector
   const loading = useSelector(selectDiscountLoading);
   const discountList = useSelector(selectDiscountList);
+
   // dialog
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -34,23 +35,27 @@ const Discount = () => {
   const [error, setError] = useState('');
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [discountNeedUpdate, setDiscountNeedUpdate] = useState(null);
+  const [loadingAdd, setLoadingAdd] = useState(false);
 
   // function
   const handleAddDiscount = async (formValues) => {
     try {
+      setLoadingAdd(true);
       const { data } = await discountApi.addDiscount(formValues);
       if (!data.success) {
+        setLoadingAdd(false);
         setError(data.message);
         return;
       }
 
-      Swal.fire('Deleted!', 'Bạn đã xoá khuyen mai thành công.', 'success');
+      Swal.fire('Success!', 'Bạn đã thêm khuyến mãi thành công.', 'success');
       dispatch(fetchDiscountList());
       setOpen(false);
       toast.success('Thêm khuyến mãi thành công');
     } catch (error) {
       console.log('🚀 ~ file: DiscountForm.jsx ~ line 65 ~ handleDiscountSubmit ~ error', error);
     }
+    setLoadingAdd(false);
   };
 
   const handleDeleteDiscount = (discountId) => {
@@ -131,6 +136,7 @@ const Discount = () => {
           onAddDiscount={handleAddDiscount}
           discountNeedUpdate={discountNeedUpdate}
           onUpdateDiscount={handleUpdateDiscount}
+          loadingAdd={loadingAdd}
         />
       </Dialog>
     </div>

@@ -4,6 +4,20 @@ import { useState } from 'react';
 import { ExportCSV } from '../../ExportCSV';
 import IncomeWithDay from './components/IncomeWithDay';
 import IncomeWithMonth from './components/IncomeWithMonth';
+import { Bar } from 'react-chartjs-2';
+import TopFood from './components/TopFood';
+
+const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
 
 const Income = () => {
   const [isTab, setIsTab] = useState('Doanh thu theo ngày');
@@ -11,10 +25,42 @@ const Income = () => {
   const [excelDay, setExcelDay] = useState([]);
 
   const [incomeMonth, setIncomeMonth] = useState([]);
-  console.log("🚀 ~ file: index.jsx ~ line 14 ~ Income ~ incomeMonth", incomeMonth)
+  console.log('🚀 ~ file: index.jsx ~ line 28 ~ Income ~ incomeMonth', incomeMonth);
+  const [topFood, setTopFood] = useState([]);
 
-  const fileName = isTab === 'Doanh thu theo ngày' ? `Doanh thu theo ngày ${moment(incomeDay?.[0]?.updatedAt).format("DD/MM/YYYY")}` : `Doanh thu theo tháng ${moment(incomeMonth?.[0]?.createdAt).format("MM")}`;
+  const data = {
+    labels: incomeMonth
+      .sort((a, b) => a._id - b._id)
+      ?.map((income) => `Ngày ${income._id.day} Tháng ${income._id.month}`),
+    datasets: [
+      {
+        label: 'Ẩn doanh thu',
+        data: incomeMonth?.map((income) => income.total),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
+  const fileName =
+    isTab === 'Doanh thu theo ngày'
+      ? `Doanh thu theo ngày ${moment(incomeDay?.[0]?.updatedAt).format('DD/MM/YYYY')}`
+      : `Doanh thu theo tháng ${moment(incomeMonth?.[0]?.createdAt).format('MM')}`;
 
   return (
     <div>
@@ -48,11 +94,29 @@ const Income = () => {
               Doanh thu theo tháng
             </a>
           </li>
+          {topFood.length !== 0 && (
+            <li className="mr-1">
+              <a
+                onClick={() => setIsTab('Top food')}
+                className={clsx(
+                  'bg-white inline-block  py-2 px-4 cursor-pointer  hover:text-purple-500 focus:outline-none',
+                  {
+                    'border-l border-t border-r rounded-t font-semibold text-purple-500':
+                      isTab == 'Top food',
+                  }
+                )}
+              >
+                Các món bán chạy nhất
+              </a>
+            </li>
+          )}
         </ul>
-        <ExportCSV
-          csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
-          fileName={fileName}
-        />
+        {isTab !== 'Top food' && (
+          <ExportCSV
+            csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
+            fileName={fileName}
+          />
+        )}
       </div>
       <div
         className="
@@ -70,8 +134,19 @@ const Income = () => {
             setIncomeDay={setIncomeDay}
             setExcelDay={setExcelDay}
           />
+        ) : isTab === 'Doanh thu theo tháng' ? (
+          <>
+            <IncomeWithMonth
+              incomeMonth={incomeMonth}
+              setIncomeMonth={setIncomeMonth}
+              setTopFood={setTopFood}
+            />
+            <Bar className="p-8" data={data} options={options} />
+          </>
         ) : (
-          <IncomeWithMonth incomeMonth={incomeMonth} setIncomeMonth={setIncomeMonth} />
+          <div className="p-6">
+            <TopFood topFood={topFood} />
+          </div>
         )}
       </div>
     </div>

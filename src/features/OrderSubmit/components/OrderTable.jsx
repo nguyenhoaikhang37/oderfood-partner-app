@@ -7,10 +7,10 @@ const OrderTable = ({ orderList, loading, isActiveOrder, isIncomeTable }) => {
   if (loading) {
     return <LinearProgress />;
   }
-  if (!isIncomeTable && orderList.length === 0) {
+  if (!isIncomeTable && orderList?.length === 0) {
     return <Alert severity="info">Hiện tại chưa có đơn đặt hàng nào!</Alert>;
   }
-  if (isIncomeTable && orderList.length === 0) {
+  if (isIncomeTable && orderList?.length === 0) {
     return (
       <Alert severity="info">
         Bạn vui lòng chọn ngày bắt đầu và ngày kết thúc để tìm kiếm doanh thu!
@@ -64,14 +64,14 @@ const OrderTable = ({ orderList, loading, isActiveOrder, isIncomeTable }) => {
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
         {orderList
-          .filter((x) => x.status === isActiveOrder)
+          ?.filter((x) => x.status === isActiveOrder)
           .map((order) => (
             <OrderItem key={order._id} order={order} />
           ))}
         {orderList &&
           isIncomeTable &&
           orderList
-            .filter((x) => x.length != 0)
+            ?.filter((x) => x.length != 0)
             .map((order) => (
               <OrderItem key={order._id} order={order} isIncomeTable={isIncomeTable} />
             ))}

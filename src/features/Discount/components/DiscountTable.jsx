@@ -5,6 +5,7 @@ import 'moment/locale/vi';
 moment.locale('vi');
 
 function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
+  console.log('🚀 ~ file: DiscountTable.jsx ~ line 8 ~ DiscountTable ~ discountList', discountList);
   return (
     <table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -21,12 +22,12 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
           >
             Các món ăn trong khuyến mãi
           </th>
-          <th
+          {/* <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             % khuyến mãi
-          </th>
+          </th> */}
           <th
             scope="col"
             className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -50,7 +51,7 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-gray-900">{discount?.nameDiscount}</div>
             </td>
-            <td className="px-6 py-4  max-w-xs">
+            <td className="px-6 py-4  max-w-xs" style={{ width: '400px' }}>
               <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
                 {discount?.discountDetail.map((food) => (
                   <div key={food._id} className="flex space-x-2 my-2 items-center ">
@@ -59,21 +60,24 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
                       {food.idFood.name}
                     </label>
                     <ion-icon name="close-outline"></ion-icon> {food.idFood.quantity}
+                    <div className="text-xs text-green-500 flex-shrink-0">
+                      (Giảm {food.discount}%)
+                    </div>
                   </div>
                 ))}
               </div>
             </td>
-            <td className="px-6 py-4 text-right max-w-xs">
+            {/* <td className="px-6 py-4 text-right max-w-xs">
               <div className="text-sm capitalize text-green-500">{discount?.discount} %</div>
-            </td>
+            </td> */}
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-yellow-600">
-                {moment(discount?.discountDetail[0].start).format('LLLL')}
+                {moment(discount?.discountDetail[0]?.start).format('LLLL')}
               </div>
             </td>
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-red-600">
-                {moment(discount?.discountDetail[0].end).format('LLLL')}
+                {moment(discount?.discountDetail[0]?.end).format('LLLL')}
               </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">

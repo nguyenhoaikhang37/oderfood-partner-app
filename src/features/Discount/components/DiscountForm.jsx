@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Checkbox, TextField } from '@mui/material';
+import { Alert, Checkbox, CircularProgress, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Fragment, memo, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,14 +13,14 @@ import { selectDiscountFood } from '../discountSlice';
 
 const schema = yup.object().shape({
   nameDiscount: yup.string().required('Tên khuyến mãi không được bỏ trống!'),
-  discount: yup
-    .number()
-    .required('Giá món không được để trống')
-    .min(1, '% khuyến mãi tối thiếu là 1')
-    .max(100, '% khuyến mãi tối đa là 100')
-    .positive('Trường này phải là một số dương')
-    .integer('Trường này phải là một số nguyên')
-    .typeError('Trường này phải là một số'),
+  // discount: yup
+  //   .number()
+  //   .required('Giá món không được để trống')
+  //   .min(1, '% khuyến mãi tối thiếu là 1')
+  //   .max(100, '% khuyến mãi tối đa là 100')
+  //   .positive('Trường này phải là một số dương')
+  //   .integer('Trường này phải là một số nguyên')
+  //   .typeError('Trường này phải là một số'),
 });
 
 const DiscountForm = ({
@@ -29,6 +29,7 @@ const DiscountForm = ({
   onAddDiscount,
   discountNeedUpdate,
   onUpdateDiscount,
+  loadingAdd,
 }) => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
@@ -45,6 +46,8 @@ const DiscountForm = ({
     return foodDiscounts.filter((item) => !existFood.some((idFood) => idFood === item._id));
   }, [foodDiscounts, existFood]);
 
+  const [inputCheckedList, setInputCheckedList] = useState([]);
+
   const handleChangeStart = (newValue) => {
     setValueStart(newValue);
   };
@@ -54,8 +57,14 @@ const DiscountForm = ({
   };
 
   const handleCheckFood = (id) => {
+    setInputCheckedList((prev) => {
+      const newPrev = [...prev];
+      return newPrev.filter((x) => x.id !== id);
+    });
+
     setFoodChecked((prev) => {
       const isChecked = foodChecked.includes(id);
+
       if (isChecked) {
         return foodChecked.filter((item) => item !== id);
       }
@@ -68,7 +77,7 @@ const DiscountForm = ({
       ...formValues,
       start: valueStart,
       end: valueEnd,
-      arrayFood: foodChecked,
+      arrayFood: inputCheckedList,
     };
 
     if (discountNeedUpdate) {
@@ -78,6 +87,21 @@ const DiscountForm = ({
     }
   };
 
+  const handleInputChecked = ({ e, foodId }) => {
+    console.log('🚀 ~ file: DiscountForm.jsx ~ line 96 ~ handleInputChecked ~ e', e.target.value);
+
+    setInputCheckedList((prev) => {
+      const newInputList = [...prev];
+      const findIndex = newInputList.findIndex((x) => x.id === foodId);
+      if (findIndex === -1) {
+        return [...newInputList, { id: foodId, discount: Number(e.target.value) }];
+      } else {
+        newInputList[findIndex].discount = Number(e.target.value);
+        return newInputList;
+      }
+    });
+  };
+
   return (
     <Fragment>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
@@ -85,12 +109,12 @@ const DiscountForm = ({
       </div>
       <Box component="form" onSubmit={handleSubmit(handleDiscountSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto mb-4">
-          <div className="col-span-2 lg:col-span-1">
+          <div className="col-span-2">
             <InputField name="nameDiscount" control={control} label="Tên khuyến mãi" />
           </div>
-          <div className="col-span-2 lg:col-span-1">
+          {/* <div className="col-span-2 lg:col-span-1">
             <InputField name="discount" control={control} label="% khuyến mãi" />
-          </div>
+          </div> */}
           {!discountNeedUpdate && (
             <>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -117,8 +141,14 @@ const DiscountForm = ({
               <div className="col-span-2 mt-2">
                 <p className="mb-2">Danh sách món ăn:</p>
                 <div className="discount-food-list">
-                  {foodDiscounts?.map((food) => (
+                  {foodNoDiscount?.map((food) => (
                     <div key={food._id} className="discount-food-item">
+                      {foodChecked.includes(food._id) && (
+                        <input
+                          className="border border-black w-10 px-2"
+                          onChange={(e) => handleInputChecked({ e, foodId: food._id })}
+                        />
+                      )}
                       <Checkbox
                         id={food._id}
                         checked={foodChecked.includes(food._id)}
@@ -143,9 +173,11 @@ const DiscountForm = ({
           </Alert>
         )}
         <button
+          disabled={loadingAdd}
           type="submit"
           className="py-2 px-4 mt-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
         >
+          {loadingAdd && <CircularProgress size="1rem" color="inherit" />}
           Thêm
         </button>
       </Box>

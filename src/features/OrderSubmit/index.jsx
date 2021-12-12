@@ -1,20 +1,36 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import orderApi from '../../apis/orderApi';
+import { ACCESS_TOKEN } from '../../constants/global';
 import OrderTable from './components/OrderTable';
+import { useQuery } from 'react-query';
+
+const token = localStorage.getItem(ACCESS_TOKEN);
+
+const todosEndpoint = 'https://server-express-foodapp.herokuapp.com/api/order/restaurant';
 
 const OrderSubmit = () => {
-  const [orderList, setOrderList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [orderList, setOrderList] = useState([]);
   const [isActive, setIsActive] = useState(0);
 
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const res = await orderApi.getOrderList();
-      setOrderList(res.data.order);
-      setLoading(false);
-    })();
-  }, []);
+  const fetcher = async () => {
+    try {
+      const response = await axios.get(todosEndpoint, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      return await response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { data, status } = useQuery(todosEndpoint, fetcher, {
+    refetchInterval: 5000,
+    refetchIntervalInBackground: false,
+  });
+  const loading = status === 'loading';
 
   const handleChoXacNhanClick = async () => {
     setIsActive(0);
@@ -25,7 +41,7 @@ const OrderSubmit = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1070px' }} className="block overflow-x-auto">
+    <div style={{ maxWidth: '1300px' }} className="block overflow-x-auto">
       <div className="flex items-center mb-8">
         <div>
           <div
@@ -48,7 +64,9 @@ const OrderSubmit = () => {
           </div>
         </div>
       </div>
-      <OrderTable loading={loading} orderList={orderList} isActiveOrder={isActive} />
+      {data?.order?.length !== 0 && (
+        <OrderTable loading={loading} orderList={data?.order} isActiveOrder={isActive} />
+      )}
     </div>
   );
 };
