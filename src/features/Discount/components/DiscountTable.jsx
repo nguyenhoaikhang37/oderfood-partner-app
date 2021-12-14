@@ -49,7 +49,16 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
         {discountList?.map((discount) => (
           <tr key={discount?._id}>
             <td className="px-6 py-4  max-w-xs">
-              <div className="text-sm capitalize text-gray-900">{discount?.nameDiscount}</div>
+              <div className="flex items-center">
+                <div className="flex-shrink-0 h-14 w-14">
+                  <img className="h-14 w-14 rounded-full object-cover" src={discount?.photo} />
+                </div>
+                <div className="ml-4 max-w-max-w-so-small">
+                  <div className="text-sm capitalize font-medium text-gray-900">
+                    {discount?.nameDiscount}
+                  </div>
+                </div>
+              </div>
             </td>
             <td className="px-6 py-4  max-w-xs" style={{ width: '400px' }}>
               <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">

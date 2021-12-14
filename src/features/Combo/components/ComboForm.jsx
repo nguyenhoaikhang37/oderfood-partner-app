@@ -98,6 +98,11 @@ const ComboForm = ({
   };
 
   const handleComboSubmit = (formValues) => {
+    if (!image && !comboNeedUpdate) {
+      setErrorLoadImg(true);
+      return;
+    }
+
     if (comboNeedUpdate) {
       onUpdateCombo?.({
         formValues,

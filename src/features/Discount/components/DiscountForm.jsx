@@ -41,6 +41,10 @@ const DiscountForm = ({
   const [valueStart, setValueStart] = useState(new Date());
   const [valueEnd, setValueEnd] = useState(new Date());
   const [foodChecked, setFoodChecked] = useState([]);
+  // img
+  const [image, setImage] = useState();
+  const [errorLoadImg, setErrorLoadImg] = useState(false);
+
   // Lấy những món ăn chưa nằm trong ds khuyến mãi nào
   const foodNoDiscount = useMemo(() => {
     return foodDiscounts.filter((item) => !existFood.some((idFood) => idFood === item._id));
@@ -54,6 +58,20 @@ const DiscountForm = ({
 
   const handleChangeEnd = (newValue) => {
     setValueEnd(newValue);
+  };
+
+  const handleChangeFile = (e) => {
+    //Lấy file ra từ e
+    let file = e.target.files[0];
+    console.log('1', file);
+
+    //Tạo đối tượng để đọc file
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      setImage(e.target.result);
+    };
+    setErrorLoadImg(false);
   };
 
   const handleCheckFood = (id) => {
@@ -73,8 +91,14 @@ const DiscountForm = ({
   };
 
   const handleDiscountSubmit = async (formValues) => {
+    if (!image && !discountNeedUpdate) {
+      setErrorLoadImg(true);
+      return;
+    }
+
     const formatFormValues = {
       ...formValues,
+      photo: image ? image : discountNeedUpdate.photo,
       start: valueStart,
       end: valueEnd,
       arrayFood: inputCheckedList,
@@ -88,8 +112,6 @@ const DiscountForm = ({
   };
 
   const handleInputChecked = ({ e, foodId }) => {
-    console.log('🚀 ~ file: DiscountForm.jsx ~ line 96 ~ handleInputChecked ~ e', e.target.value);
-
     setInputCheckedList((prev) => {
       const newInputList = [...prev];
       const findIndex = newInputList.findIndex((x) => x.id === foodId);
@@ -111,6 +133,61 @@ const DiscountForm = ({
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto mb-4">
           <div className="col-span-2">
             <InputField name="nameDiscount" control={control} label="Tên khuyến mãi" />
+          </div>
+          <div className="col-span-2 mt-4">
+            <div className="flex gap-2">
+              <label className="block text-sm font-medium text-gray-700">Hình ảnh</label>
+              <div className="flex text-sm text-gray-600">
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                >
+                  <span className="underline">Upload a file</span>
+                  <input
+                    id="file-upload"
+                    name="a"
+                    type="file"
+                    className="sr-only"
+                    name="photo"
+                    onChange={handleChangeFile}
+                    accept="image/png, image/jpeg, image/gif"
+                  />
+                </label>
+              </div>
+            </div>
+            {errorLoadImg && (
+              <Alert variant="standard" severity="error">
+                Hình ảnh không được để trống
+              </Alert>
+            )}
+            {!image && !discountNeedUpdate ? (
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div className="space-y-1 text-center">
+                  <svg
+                    className="mx-auto h-12 w-12 text-gray-400"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </div>
+            ) : (
+              <img
+                style={{ width: '100%', height: '150px', marginTop: '15px' }}
+                className="object-cover"
+                src={image ? image : discountNeedUpdate.photo}
+              />
+            )}
           </div>
           {/* <div className="col-span-2 lg:col-span-1">
             <InputField name="discount" control={control} label="% khuyến mãi" />
