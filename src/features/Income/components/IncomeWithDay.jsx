@@ -9,6 +9,7 @@ import moment from 'moment';
 const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
   const [dayValue, setDayValue] = useState(new Date('1/1/2021'));
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleChangeDay = (newValue) => {
     setDayValue(newValue);
@@ -20,6 +21,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
 
       setLoading(true);
       const response = await incomeApi.thongKeTheoNgay(formatDay);
+      setData(response.data.order.filter((x) => x));
 
       const formatExcelIncomeWithDay = response.data.order
         .filter((x) => x)
@@ -33,11 +35,10 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
         }));
       setExcelDay(formatExcelIncomeWithDay);
       setIncomeDay(response.data.order.filter((x) => x));
-
-      setLoading(false);
     } catch (error) {
       console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 27 ~ handleSubmit ~ error', error);
     }
+    setLoading(false);
   };
 
   return (
@@ -62,7 +63,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
         </button>
       </LocalizationProvider>
 
-      {incomeDay.filter((x) => x._id).length !== 0 ? (
+      {data.length !== 0 ? (
         <table className="divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -115,7 +116,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {incomeDay.map((income) => (
+            {data.map((income) => (
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm capitalize text-gray-900">
@@ -124,18 +125,32 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                 </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
-                    {income?.cartFood.map((food) => (
-                      <div key={food._id} className="flex space-x-2 my-2 items-center ">
-                        <img
-                          className="h-10 w-10 rounded-full object-cover"
-                          src={food.idFood.photo}
-                        />
-                        <label className="text-gray-900 text-sm cursor-pointer">
-                          {food.idFood.name}
-                        </label>
-                        <ion-icon name="close-outline"></ion-icon> {food.quantityFood}
-                      </div>
-                    ))}
+                    {income?.cartFood.length !== 0 &&
+                      income?.cartFood.map((food) => (
+                        <div key={food._id} className="flex space-x-2 my-2 items-center ">
+                          <img
+                            className="h-10 w-10 rounded-full object-cover"
+                            src={food.idFood.photo}
+                          />
+                          <label className="text-gray-900 text-sm cursor-pointer">
+                            {food.idFood.name}
+                          </label>
+                          <ion-icon name="close-outline"></ion-icon> {food.quantityFood}
+                        </div>
+                      ))}
+                    {income?.cartCombo.length !== 0 &&
+                      income?.cartCombo.map((food) => (
+                        <div key={food._id} className="flex space-x-2 my-2 items-center ">
+                          <img
+                            className="h-10 w-10 rounded-full object-cover"
+                            src={food?.idCombo?.photo}
+                          />
+                          <label className="text-gray-900 text-sm cursor-pointer">
+                            {food?.idCombo?.name}
+                          </label>
+                          <ion-icon name="close-outline"></ion-icon> {food?.quantityCombo}
+                        </div>
+                      ))}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-right max-w-xs">
@@ -171,10 +186,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
               <td colSpan={3} className="px-6 py-4 text-right max-w-xs font-semibold">
                 Tổng hoá đơn:{' '}
                 <span className="text-red-500">
-                  {incomeDay
-                    .reduce((sum, curr) => sum + curr.total + curr.ship, 0)
-                    .toLocaleString()}
-                  đ
+                  {data.reduce((sum, curr) => sum + curr.total + curr.ship, 0).toLocaleString()}đ
                 </span>
               </td>
             </tr>

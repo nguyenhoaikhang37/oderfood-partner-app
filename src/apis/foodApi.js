@@ -7,6 +7,23 @@ const foodApi = {
     const url = `/food/restaurant/${resId}`;
     return axiosClient.get(url);
   },
+  getFoodRestore() {
+    const url = `/food/deleteFood/success`;
+    return axiosClient({
+      url,
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  },
+  updateFoodRestore(id) {
+    const url = `/food/delete-revert/${id}`;
+    return axiosClient({
+      url,
+      method: 'PUT',
+    });
+  },
   addFood(formValues) {
     const url = '/food';
     return axiosClient({

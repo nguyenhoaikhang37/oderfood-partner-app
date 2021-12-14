@@ -12,6 +12,7 @@ import { selectFoodList, selectFoodLoading } from './foodSlice';
 import Swal from 'sweetalert2';
 import ImportFoodForm from '../ImportFood/components/ImportFoodForm';
 import importFoodApi from '../../apis/importFoodApi';
+import RestorePopup from './components/RestorePopup';
 
 const Food = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,12 @@ const Food = () => {
   const handleOpenImport = () => setOpenImport(true);
   const handleCloseImport = () => {
     setOpenImport(false);
+  };
+  //Dialog khoi phuc mon an
+  const [openRestore, setOpenRestore] = React.useState(false);
+  const handleOpenRestore = () => setOpenRestore(true);
+  const handleCloseRestore = () => {
+    setOpenRestore(false);
   };
   //Menu options
   const menuOptions = useSelector(selectMenuOptions);
@@ -112,22 +119,32 @@ const Food = () => {
 
   return (
     <div>
-      <div className="flex space-x-2">
+      <div className="flex justify-between">
+        <div className="flex space-x-2">
+          <button
+            onClick={handleOpen}
+            type="button"
+            className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
+          >
+            <ion-icon name="add-circle-outline"></ion-icon>
+            &nbsp; Thêm món ăn
+          </button>
+          <button
+            onClick={handleOpenImport}
+            type="button"
+            className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
+          >
+            <ion-icon name="bag-add-outline"></ion-icon>
+            &nbsp; Nhập thêm món
+          </button>
+        </div>
         <button
-          onClick={handleOpen}
+          onClick={handleOpenRestore}
           type="button"
-          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
+          className="py-2 px-4 flex justify-center items-center  bg-red-400 hover:bg-red-500 focus:ring-red-400 focus:ring-offset-red-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
         >
-          <ion-icon name="add-circle-outline"></ion-icon>
-          &nbsp; Thêm món ăn
-        </button>
-        <button
-          onClick={handleOpenImport}
-          type="button"
-          className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
-        >
-          <ion-icon name="bag-add-outline"></ion-icon>
-          &nbsp; Nhập thêm món
+          <ion-icon name="trash-outline"></ion-icon>
+          &nbsp; Khôi phục món ăn
         </button>
       </div>
       <div className="flex flex-col">
@@ -157,6 +174,11 @@ const Food = () => {
       {/* Dialog them food */}
       <Dialog open={openImport} onClose={handleCloseImport}>
         <ImportFoodForm onAddImportFood={handleAddImportFood} foodList={foodList} />
+      </Dialog>
+
+      {/* Dialog khoi phuc food */}
+      <Dialog open={openRestore} onClose={handleCloseRestore}>
+        <RestorePopup isRestore />
       </Dialog>
     </div>
   );

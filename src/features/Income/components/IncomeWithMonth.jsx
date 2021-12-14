@@ -113,7 +113,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm capitalize text-gray-900">
-                    {moment(income?.createdAt).format('LLLL')}
+                    Tháng {moment(income?.createdAt).format('MM')}
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">

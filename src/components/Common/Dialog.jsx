@@ -28,7 +28,8 @@ export default function Dialog({ open, onClose, children }) {
             (children.props.onAddFoodSubmit ||
               children.props.onAddCombo ||
               children.props.onAddImportFood ||
-              children.props.onAddDiscount) &&
+              children.props.onAddDiscount ||
+              children.props.isRestore) &&
             'dialog-food'
           }
           sx={style}
