@@ -17,7 +17,6 @@ const Combo = () => {
   const dispatch = useDispatch();
   // useSelector
   const comboList = useSelector(selectComboList);
-  console.log('🚀 ~ file: index.jsx ~ line 20 ~ Combo ~ comboList', comboList);
   const loading = useSelector(selectComboLoading);
   // dialog
   const [open, setOpen] = useState(false);
@@ -95,8 +94,9 @@ const Combo = () => {
   };
 
   const handleUpdateCombo = async ({ formValues, image, valueStart, valueEnd }) => {
-    const formatFormValues = { ...formValues, photo: image, start: valueStart, end: valueEnd };
+    const formatFormValues = { ...formValues, photo: image };
 
+    console.log("🚀 ~ file: index.jsx ~ line 99 ~ handleUpdateCombo ~ formatFormValues", formatFormValues)
     try {
       await comboApi.updateCombo(formatFormValues);
       toast.success('Sửa combo thành công');

@@ -81,12 +81,12 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                       <div key={food._id} className="flex space-x-2 my-2 items-center ">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
-                          src={food.idFood.photo}
+                          src={food?.idFood?.photo}
                         />
                         <label className="text-gray-900 text-sm cursor-pointer">
-                          {food.idFood.name}
+                          {food?.idFood?.name}
                         </label>
-                        <ion-icon name="close-outline"></ion-icon> {food.quanlity}
+                        <ion-icon name="close-outline"></ion-icon> {food?.quanlity}
                       </div>
                     ))}
                   </div>

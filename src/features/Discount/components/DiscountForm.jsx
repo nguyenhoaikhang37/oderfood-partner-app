@@ -127,7 +127,7 @@ const DiscountForm = ({
   return (
     <Fragment>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
-        Thêm khuyến mãi <ion-icon name="qr-code-outline"></ion-icon>
+      {discountNeedUpdate ? 'Sửa' : 'Thêm'} khuyến mãi <ion-icon name="qr-code-outline"></ion-icon>
       </div>
       <Box component="form" onSubmit={handleSubmit(handleDiscountSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto mb-4">
@@ -255,7 +255,7 @@ const DiscountForm = ({
           className="py-2 px-4 mt-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
         >
           {loadingAdd && <CircularProgress size="1rem" color="inherit" />}
-          Thêm
+          {discountNeedUpdate ? 'Sửa' : 'Thêm'}
         </button>
       </Box>
     </Fragment>

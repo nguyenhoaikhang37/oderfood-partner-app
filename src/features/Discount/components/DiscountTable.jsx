@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/locale/vi';
+import { Alert } from '@mui/material';
 
 moment.locale('vi');
 
 function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
-  console.log('🚀 ~ file: DiscountTable.jsx ~ line 8 ~ DiscountTable ~ discountList', discountList);
-  return (
-    <table className="divide-y divide-gray-200">
+  console.log("🚀 ~ file: DiscountTable.jsx ~ line 9 ~ DiscountTable ~ discountList", discountList)
+  return (<>
+    {discountList.length!==0 &&<table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">
         <tr>
           <th
@@ -64,24 +65,24 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
               <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
                 {discount?.discountDetail.map((food) => (
                   <div key={food._id} className="flex space-x-2 my-2 items-center ">
-                    <img className="h-10 w-10 rounded-full object-cover" src={food.idFood.photo} />
+                    <img className="h-10 w-10 rounded-full object-cover" src={food?.idFood?.photo} />
                     <label className="text-gray-900 text-sm cursor-pointer">
-                      {food.idFood.name}
+                      {food?.idFood?.name}
                     </label>
-                    <ion-icon name="close-outline"></ion-icon> {food.idFood.quantity}
+                    <ion-icon name="close-outline"></ion-icon> {food?.idFood?.quantity}
                     <div className="text-xs text-green-500 flex-shrink-0">
-                      (Giảm {food.discount}%)
+                      (Giảm {food?.discount}%)
                     </div>
                   </div>
                 ))}
               </div>
             </td>
             {/* <td className="px-6 py-4 text-right max-w-xs">
-              <div className="text-sm capitalize text-green-500">{discount?.discount} %</div>
+              <div className="text-sm capitalize text-green-500">{discount??.discount} %</div>
             </td> */}
             <td className="px-6 py-4  max-w-xs">
               <div className="text-sm capitalize text-yellow-600">
-                {moment(discount?.discountDetail[0].start).format('LLLL')}
+                {moment(discount?.discountDetail[0]?.start)?.format('LLLL')}
               </div>
             </td>
             <td className="px-6 py-4  max-w-xs">
@@ -108,7 +109,9 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table>}
+   { discountList.length === 0 && <Alert severity="error">Hiện tại chưa khuyến mãi nào!</Alert>}
+    </>
   );
 }
 
