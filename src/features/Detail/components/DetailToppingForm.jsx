@@ -10,7 +10,7 @@ const schema = yup.object().shape({
   price: yup
     .number()
     .required('Giá chi tiết không được để trống')
-    .positive('Trường này phải là một số dương')
+    .moreThan(-1, 'Trường này phải là một số dương')
     .integer('Trường này phải là một số nguyên')
     .typeError('Trường này phải là một số'),
 });
