@@ -3,12 +3,8 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import foodApi from '../../../apis/foodApi';
 
-const RestorePopup = () => {
+const RestorePopup = ({ onClose }) => {
   const [foodRestoreList, setFoodRestoreList] = useState([]);
-  console.log(
-    '🚀 ~ file: RestorePopup.jsx ~ line 6 ~ RestorePopup ~ foodRestoreList',
-    foodRestoreList
-  );
 
   useEffect(() => {
     (async () => {
@@ -24,9 +20,9 @@ const RestorePopup = () => {
   const handleRestoreFood = async (foodId) => {
     try {
       await foodApi.updateFoodRestore(foodId);
-
-      Swal.fire('Deleted!', 'Bạn đã khôi phục món ăn thành công.', 'success');
-      // window.location.reload();
+      onClose();
+      Swal.fire('Success!', 'Bạn đã khôi phục món ăn thành công.', 'success');
+      window.location.reload();
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 41 ~ handleRemoveMenu ~ error', error);
     }

@@ -75,7 +75,7 @@ const Food = () => {
         confirmButtonText: 'Có, tôi chắc chắn!',
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await foodApi.deleteFood(foodId);
+          await foodApi.updateFoodRestore(foodId);
 
           Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
           window.location.reload();
@@ -178,7 +178,7 @@ const Food = () => {
 
       {/* Dialog khoi phuc food */}
       <Dialog open={openRestore} onClose={handleCloseRestore}>
-        <RestorePopup isRestore />
+        <RestorePopup isRestore onClose={handleCloseRestore} />
       </Dialog>
     </div>
   );
