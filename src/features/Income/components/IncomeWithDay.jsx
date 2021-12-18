@@ -7,9 +7,10 @@ import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
 const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
-  const [dayValue, setDayValue] = useState(new Date('1/1/2021'));
+  const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 13 ~ IncomeWithDay ~ data', data);
 
   const handleChangeDay = (newValue) => {
     setDayValue(newValue);

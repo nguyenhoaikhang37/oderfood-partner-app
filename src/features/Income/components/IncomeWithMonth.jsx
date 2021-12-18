@@ -7,6 +7,10 @@ import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
 const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
+  console.log(
+    '🚀 ~ file: IncomeWithMonth.jsx ~ line 10 ~ IncomeWithMonth ~ incomeMonth',
+    incomeMonth
+  );
   const [valueStart, setValueStart] = useState(new Date('1/1/2021'));
   const [valueEnd, setValueEnd] = useState(new Date('12/30/2021'));
   const [loading, setLoading] = useState(false);
@@ -74,7 +78,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Ngày tạo
+                Tháng
               </th>
               <th
                 scope="col"
@@ -92,7 +96,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Tổng tiền sau khuyến mãi
+                Giá sau khuyến mãi
               </th>
               <th
                 scope="col"
