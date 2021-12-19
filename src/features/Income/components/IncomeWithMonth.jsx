@@ -6,11 +6,7 @@ import { useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
-const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
-  console.log(
-    '🚀 ~ file: IncomeWithMonth.jsx ~ line 10 ~ IncomeWithMonth ~ incomeMonth',
-    incomeMonth
-  );
+const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood, setExcelMonth }) => {
   const [valueStart, setValueStart] = useState(new Date('1/1/2021'));
   const [valueEnd, setValueEnd] = useState(new Date('12/30/2021'));
   const [loading, setLoading] = useState(false);
@@ -33,10 +29,22 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
       const response2 = await incomeApi.layTopFood(formatStart, formatEnd);
       setTopFood(response2.data.data);
       setIncomeMonth(response.data.income);
-      setLoading(false);
+      setExcelMonth(
+        response.data.income.map((item) => ({
+          'Ngày mua': `Ngày ${moment(item?.createdAt).format('DD')} Tháng ${moment(
+            item?.createdAt
+          ).format('MM')}`,
+          'Tổng đơn': `${item?.sum.toLocaleString()} đơn`,
+          'Giá gốc': `${(item?.totalCost - item?.totalShip).toLocaleString()}đ`,
+          'Giá sau khuyến mãi': `${(item?.total - item?.totalShip).toLocaleString()}đ`,
+          'Tổng tiền ship': `${item?.totalShip.toLocaleString()}đ`,
+          'Tổng cộng': `${(item?.total).toLocaleString()}`,
+        }))
+      );
     } catch (error) {
-      console.log('🚀 ~ file: IncomeWithMonth.jsx ~ line 27 ~ handleSubmit ~ error', error);
+      console.log('🚀 ~ file: IncomeWithMonth.jsx ~ line 52 ~ handleSubmit ~ error', error);
     }
+    setLoading(false);
   };
 
   return (
@@ -117,7 +125,8 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm capitalize text-gray-900">
-                    Tháng {moment(income?.createdAt).format('MM')}
+                    Ngày {moment(income?.createdAt).format('DD')} Tháng{' '}
+                    {moment(income?.createdAt).format('MM')}
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
@@ -125,7 +134,7 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood }) => {
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">
                   <div className="text-sm capitalize text-green-500">
-                    {(income?.totalCost).toLocaleString()}đ
+                    {(income?.totalCost - income?.totalShip).toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4 text-left max-w-xs">

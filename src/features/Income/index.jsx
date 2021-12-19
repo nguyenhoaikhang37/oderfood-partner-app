@@ -25,6 +25,7 @@ const Income = () => {
   const [excelDay, setExcelDay] = useState([]);
 
   const [incomeMonth, setIncomeMonth] = useState([]);
+  const [excelMonth, setExcelMonth] = useState([]);
   const [topFood, setTopFood] = useState([]);
 
   const data = {
@@ -112,7 +113,7 @@ const Income = () => {
         </ul>
         {isTab !== 'Top food' && (
           <ExportCSV
-            csvData={isTab === 'Doanh thu theo ngày' ? excelDay : incomeMonth}
+            csvData={isTab === 'Doanh thu theo ngày' ? excelDay : excelMonth}
             fileName={fileName}
           />
         )}
@@ -139,6 +140,7 @@ const Income = () => {
               incomeMonth={incomeMonth}
               setIncomeMonth={setIncomeMonth}
               setTopFood={setTopFood}
+              setExcelMonth={setExcelMonth}
             />
             <Bar className="p-8" data={data} options={options} />
           </>

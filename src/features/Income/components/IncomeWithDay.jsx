@@ -10,7 +10,6 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
   const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 13 ~ IncomeWithDay ~ data', data);
 
   const handleChangeDay = (newValue) => {
     setDayValue(newValue);
@@ -23,19 +22,19 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
       setLoading(true);
       const response = await incomeApi.thongKeTheoNgay(formatDay);
       setData(response.data.order.filter((x) => x));
-
-      const formatExcelIncomeWithDay = response.data.order
-        .filter((x) => x)
-        .map((item) => ({
-          ...item,
-          user: item.user.profile.fullName,
-          restaurant: item.restaurant.name,
-          pay: item.pay.name,
-          cartFood: item.cartFood.map((food) => food.idFood.name).join(','),
-          cartCombo: item.cartCombo.map((food) => food.idFood.name).join(','),
-        }));
-      setExcelDay(formatExcelIncomeWithDay);
       setIncomeDay(response.data.order.filter((x) => x));
+      setExcelDay(
+        response.data.order
+          .filter((x) => x)
+          .map((item) => ({
+            'Người mua': item.user.profile.fullName,
+            'Tên quán': item.restaurant.name,
+            'Hình thức thanh toán': item.pay.name,
+            'Món ăn': item.cartFood.map((food) => food.idFood.name).join('\n'),
+            'Combo món ăn': item.cartCombo.map((food) => food.idCombo.name).join('\n'),
+            'Tổng tiền': `${item.total.toLocaleString()}đ`,
+          }))
+      );
     } catch (error) {
       console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 27 ~ handleSubmit ~ error', error);
     }
@@ -64,7 +63,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
         </button>
       </LocalizationProvider>
 
-      {data.length !== 0 ? (
+      {incomeDay.length !== 0 ? (
         <table className="divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -117,7 +116,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((income) => (
+            {incomeDay.map((income) => (
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm capitalize text-gray-900">
