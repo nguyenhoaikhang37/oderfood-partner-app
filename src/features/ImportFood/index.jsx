@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '../../components/Common/Dialog';
 import ImportFoodForm from './components/ImportFoodForm';
 import ImportFoodTable from './components/ImportFoodTable';
@@ -18,7 +18,6 @@ const ImportFood = () => {
   const foodList = useSelector(selectFoodList);
 
   const handleAddImportFood = async ({ quantity, checkedFood }) => {
-    console.log('submit', quantity, checkedFood);
     try {
       await importFoodApi.addImportFood({ quantity, arrayFood: checkedFood });
       setOpen(false);

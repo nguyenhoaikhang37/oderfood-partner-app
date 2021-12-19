@@ -76,7 +76,10 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
+                  <div
+                    style={{ width: 250 }}
+                    className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"
+                  >
                     {combo?.comboDetails.map((food) => (
                       <div key={food._id} className="flex space-x-2 my-2 items-center ">
                         <img
@@ -86,13 +89,18 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                         <label className="text-gray-900 text-sm cursor-pointer">
                           {food?.idFood?.name}
                         </label>
-                        <ion-icon name="close-outline"></ion-icon> {food?.quanlity}
+                        <div className="flex items-center">
+                          <div className="text-sm">
+                            <ion-icon name="close-outline"></ion-icon>
+                          </div>{' '}
+                          <div>{food?.quanlity}</div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm text-right text-green-500">{combo?.discountCombo}</div>
+                  <div className="text-sm text-center text-green-500">{combo?.discountCombo}%</div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-right  text-yellow-600">
@@ -105,14 +113,10 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-yellow-600">
-                    {moment(combo?.start).format('LLLL')}
-                  </div>
+                  <div className="text-sm capitalize ">{moment(combo?.start).format('LLLL')}</div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-red-600">
-                    {moment(combo?.end).format('LLLL')}
-                  </div>
+                  <div className="text-sm capitalize ">{moment(combo?.end).format('LLLL')}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium cursor-pointer">
                   <a

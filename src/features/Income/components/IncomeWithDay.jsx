@@ -124,7 +124,10 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
+                  <div
+                    style={{ width: 250 }}
+                    className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"
+                  >
                     {income?.cartFood.length !== 0 &&
                       income?.cartFood.map((food) => (
                         <div key={food._id} className="flex space-x-2 my-2 items-center ">
@@ -153,7 +156,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                       ))}
                   </div>
                 </td>
-                <td className="px-6 py-4 text-right max-w-xs">
+                <td className="px-6 py-4 text-center max-w-xs">
                   <div className="text-sm capitalize">{income?.pay?.name}</div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">

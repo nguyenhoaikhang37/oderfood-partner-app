@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FoodForm from './components/FoodForm';
 import FoodTable from './components/FoodTable';
-import { selectFoodList, selectFoodLoading } from './foodSlice';
+import { fetchFoodList, selectFoodList, selectFoodLoading } from './foodSlice';
 import Swal from 'sweetalert2';
 import ImportFoodForm from '../ImportFood/components/ImportFoodForm';
 import importFoodApi from '../../apis/importFoodApi';
@@ -104,11 +104,11 @@ const Food = () => {
   };
 
   const handleAddImportFood = async ({ quantity, checkedFood }) => {
-    console.log('submit', quantity, checkedFood);
     try {
       await importFoodApi.addImportFood({ quantity, arrayFood: checkedFood });
       setOpenImport(false);
       toast.success('Nhập hàng thành công');
+      dispatch(fetchFoodList(user?._id));
     } catch (error) {
       console.log('🚀 ~ file: index.jsx ~ line 23 ~ handleAddImportFood ~ error', error);
     }
