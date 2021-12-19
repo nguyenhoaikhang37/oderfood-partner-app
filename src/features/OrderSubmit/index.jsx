@@ -54,7 +54,7 @@ const OrderSubmit = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1300px' }} className="block overflow-x-auto">
+    <div style={{ maxWidth: '1500px', margin: '0 auto' }} className="block overflow-x-auto">
       <div className="flex items-center mb-8">
         <div>
           <div

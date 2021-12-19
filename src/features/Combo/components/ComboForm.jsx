@@ -98,12 +98,15 @@ const ComboForm = ({
   };
 
   const handleComboSubmit = (formValues) => {
+    if (!image && !comboNeedUpdate) {
+      setErrorLoadImg(true);
+      return;
+    }
+
     if (comboNeedUpdate) {
       onUpdateCombo?.({
         formValues,
         image: image ? image : comboNeedUpdate.photo,
-        valueStart,
-        valueEnd,
       });
     } else {
       onAddCombo?.({ formValues, foodChecked, image, valueStart, valueEnd });
@@ -120,14 +123,14 @@ const ComboForm = ({
           <div className="col-span-2">
             <InputField name="name" control={control} label="Tên combo món ăn" />
           </div>
+          {!comboNeedUpdate && (
+          <>
           <div className="col-span-2 lg:col-span-1">
             <InputField name="discountCombo" control={control} label="% khuyến mãi" />
           </div>
-          {!comboNeedUpdate && (
             <div className="col-span-2 lg:col-span-1">
               <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
             </div>
-          )}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="col-span-2 lg:col-span-1 mt-2">
               <DesktopDatePicker
@@ -148,6 +151,9 @@ const ComboForm = ({
               />
             </div>
           </LocalizationProvider>
+          </>
+          )}
+
         </div>
 
         <div className="col-span-2 mt-4">

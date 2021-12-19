@@ -30,16 +30,7 @@ const Sidebar = () => {
             </span>
             <span className="mx-4 text-sm font-normal">Quản lí thông tin</span>
           </NavLink>
-          <NavLink
-            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
-            to="/admin/income"
-            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
-          >
-            <span className="text-left text-xl">
-              <ion-icon name="cellular-outline"></ion-icon>
-            </span>
-            <span className="mx-4 text-sm font-normal">Doanh thu cửa hàng</span>
-          </NavLink>
+
           <NavLink
             className={`w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500`}
             to="/admin/menu"
@@ -49,37 +40,6 @@ const Sidebar = () => {
               <ion-icon name="book-outline"></ion-icon>
             </span>
             <span className="mx-4 text-sm font-normal">Menu</span>
-          </NavLink>
-
-          <NavLink
-            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
-            to="/admin/food"
-            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
-          >
-            <span className="text-left text-xl">
-              <ion-icon name="fast-food-outline"></ion-icon>
-            </span>
-            <span className="mx-4 text-sm font-normal">Món ăn</span>
-          </NavLink>
-          {/* <NavLink
-            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
-            to="/admin/import-food"
-            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
-          >
-            <span className="text-left text-xl">
-              <ion-icon name="bag-add-outline"></ion-icon>
-            </span>
-            <span className="mx-4 text-sm font-normal">Nhập món ăn</span>
-          </NavLink> */}
-          <NavLink
-            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
-            to="/admin/combo"
-            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
-          >
-            <span className="text-left text-xl">
-              <ion-icon name="basket-outline"></ion-icon>
-            </span>
-            <span className="mx-4 text-sm font-normal">Combo món ăn</span>
           </NavLink>
           <NavLink
             className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
@@ -91,6 +51,27 @@ const Sidebar = () => {
             </span>
             <span className="mx-4 text-sm font-normal">Đặc điểm món ăn</span>
           </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/food"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="fast-food-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Món ăn</span>
+          </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/combo"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="basket-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Combo món ăn</span>
+          </NavLink>
+
           <NavLink
             className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
             to="/admin/discount"
@@ -110,6 +91,16 @@ const Sidebar = () => {
               <ion-icon name="checkmark-done-circle-outline"></ion-icon>
             </span>
             <span className="mx-4 text-sm font-normal">Xác nhận đơn hàng</span>
+          </NavLink>
+          <NavLink
+            className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-indigo-500"
+            to="/admin/income"
+            activeClassName="text-indigo-500 bg-gradient-to-r from-white to-indigo-100 border-r-4 border-indigo-500 dark:from-gray-700 dark:to-gray-800 border-r-4 border-indigo-500"
+          >
+            <span className="text-left text-xl">
+              <ion-icon name="cellular-outline"></ion-icon>
+            </span>
+            <span className="mx-4 text-sm font-normal">Doanh thu cửa hàng</span>
           </NavLink>
         </div>
       </nav>

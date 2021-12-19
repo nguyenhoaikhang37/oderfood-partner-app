@@ -17,7 +17,7 @@ const Header = () => {
         <div className="relative flex flex-col justify-center h-full px-3 mx-auto flex-center">
           <div className="relative items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
             <div className="container relative left-0 flex w-3/4  h-full">
-              <div className="relative flex items-center w-full lg:w-64 h-full group">
+              {/* <div className="relative flex items-center w-full lg:w-64 h-full group">
                 <div className="absolute flex items-center justify-center  w-auto h-10 p-3 pr-2 text-sm text-gray-500 uppercase cursor-pointer sm:hidden">
                   <svg
                     fill="none"
@@ -46,7 +46,7 @@ const Header = () => {
                 <div className="absolute right-0 hidden h-auto px-2 py-1 mr-2 text-xs text-gray-400 border border-gray-300 rounded-2xl md:block">
                   +
                 </div>
-              </div>
+              </div> */}
             </div>
             {user && (
               <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">

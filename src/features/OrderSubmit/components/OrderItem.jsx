@@ -113,9 +113,7 @@ const OrderItem = ({ order }) => {
         <td className="px-6 py-4 text-indigo-600 text-right max-w-xs">
           {order?.ship?.toLocaleString()}đ
         </td>
-        <td className="px-6 py-4 text-green-600 max-w-xs">
-          {(order?.total + order?.ship).toLocaleString()}đ
-        </td>
+        <td className="px-6 py-4 text-green-600 max-w-xs">{(order?.total).toLocaleString()}đ</td>
         <td style={{ minWidth: '280px' }} className="px-6 py-4 max-w-xs text-base">
           {moment(order?.createdAt).format('LLLL')}
         </td>
