@@ -106,7 +106,7 @@ const Income = () => {
                   }
                 )}
               >
-                Các món bán chạy nhất
+                10 món ăn bán chạy nhất
               </a>
             </li>
           )}

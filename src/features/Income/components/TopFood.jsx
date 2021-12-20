@@ -1,5 +1,4 @@
 const TopFood = ({ topFood }) => {
-  console.log('🚀 ~ file: TopFood.jsx ~ line 2 ~ TopFood ~ topFood', topFood);
   return (
     <table className="divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -21,6 +20,7 @@ const TopFood = ({ topFood }) => {
       </thead>
       <tbody>
         {topFood
+          .slice(0, 10)
           .sort((a, b) => b.count - a.count)
           .map((food) => (
             <tr key={food._id}>

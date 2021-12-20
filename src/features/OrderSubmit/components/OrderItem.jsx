@@ -120,7 +120,7 @@ const OrderItem = ({ order }) => {
         <td style={{ minWidth: '150px' }} className="px-6 py-4  max-w-xs text-base">
           Tiền mặt
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium cursor-pointer">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium cursor-pointer">
           {order?.status === 0 ? (
             <>
               <Button
@@ -131,6 +131,7 @@ const OrderItem = ({ order }) => {
               >
                 Xác nhận đơn hàng <ion-icon name="checkmark-done-outline"></ion-icon>
               </Button>
+              <br />
               <Button
                 onClick={() => handleDeleteOrder(order?._id)}
                 sx={{ margin: '10px' }}

@@ -7,6 +7,7 @@ import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 
 const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
+  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 10 ~ IncomeWithDay ~ incomeDay', incomeDay);
   const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -69,44 +70,44 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Người mua
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Chi tiết đơn hàng
               </th>
 
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Hình thức thanh toán
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Ngày giờ đặt món
+                Giá gốc
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Tiền món ăn
+                Giá sau khuyến mãi
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Tiền ship
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Tổng tiền
               </th>
@@ -119,25 +120,24 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
             {incomeDay.map((income) => (
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-gray-900">
+                  <div className="text-sm text-center capitalize text-gray-900">
                     {income?.user?.profile?.fullName}
                   </div>
                 </td>
-                <td className="px-6 py-4  max-w-xs">
-                  <div
-                    style={{ width: 250 }}
-                    className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"
-                  >
+                <td className="px-6 py-4 max-w-xs">
+                  <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
                     {income?.cartFood.length !== 0 &&
                       income?.cartFood.map((food) => (
-                        <div key={food._id} className="flex space-x-2 my-2 items-center ">
-                          <img
-                            className="h-10 w-10 rounded-full object-cover"
-                            src={food.idFood.photo}
-                          />
-                          <label className="text-gray-900 text-sm cursor-pointer">
-                            {food.idFood.name}
-                          </label>
+                        <div key={food._id} className="flex space-x-4 my-2 items-center">
+                          <div className="flex space-x-2 items-center">
+                            <img
+                              className="h-10 w-10 rounded-full object-cover"
+                              src={food.idFood.photo}
+                            />
+                            <label className="text-gray-900 text-sm cursor-pointer">
+                              {food.idFood.name}
+                            </label>
+                          </div>
                           <ion-icon name="close-outline"></ion-icon> {food.quantityFood}
                         </div>
                       ))}
@@ -157,11 +157,11 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center max-w-xs">
-                  <div className="text-sm capitalize">{income?.pay?.name}</div>
+                  <div className="text-sm capitalize">{income?.pay?.shortName}</div>
                 </td>
-                <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize">
-                    {moment(income?.updatedAt).format('LLLL')}
+                <td className="px-6 py-4 text-right max-w-xs">
+                  <div className="text-sm capitalize text-green-500">
+                    {(income?.totalCost - income?.ship).toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4 text-right max-w-xs">
