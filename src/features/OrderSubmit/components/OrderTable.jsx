@@ -18,65 +18,65 @@ const OrderTable = ({ orderList, loading, isActiveOrder, isIncomeTable }) => {
     );
   }
   return (
-    <table className="divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Người mua
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Chi tiết đơn hàng
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Tiền ship
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Tổng tiền
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Ngày giờ đặt món
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Hình thức thanh toán
-          </th>
-          <th scope="col" className="relative px-6 py-3">
-            <span className="sr-only">Confirm</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {orderList
-          ?.filter((x) => x.status === isActiveOrder)
-          .map((order) => (
-            <OrderItem key={order._id} order={order} />
-          ))}
-        {orderList &&
-          isIncomeTable &&
-          orderList
-            ?.filter((x) => x.length != 0)
+      <table className="divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Người mua
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Chi tiết đơn hàng
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Tiền ship
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Tổng tiền
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Ngày giờ đặt món
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Hình thức thanh toán
+            </th>
+            <th scope="col" className="relative px-6 py-3">
+              <span className="sr-only">Confirm</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {orderList
+            ?.filter((x) => x.status === isActiveOrder)
             .map((order) => (
-              <OrderItem key={order._id} order={order} isIncomeTable={isIncomeTable} />
+              <OrderItem key={order._id} order={order} />
             ))}
-      </tbody>
-    </table>
+          {orderList &&
+            isIncomeTable &&
+            orderList
+              ?.filter((x) => x.length != 0)
+              .map((order) => (
+                <OrderItem key={order._id} order={order} isIncomeTable={isIncomeTable} />
+              ))}
+        </tbody>
+      </table>
   );
 };
 
