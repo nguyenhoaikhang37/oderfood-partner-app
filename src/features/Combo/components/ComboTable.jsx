@@ -104,7 +104,7 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                 </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-right  text-yellow-600">
-                    {combo?.total.toLocaleString()}đ
+                    {combo?.price.toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">

@@ -142,7 +142,7 @@ const OrderItem = ({ order }) => {
               </Button>
             </>
           ) : order?.status === 1 ? (
-            <div>
+            <div className="text-center">
               <span className="relative inline-block px-4 py-2 font-semibold text-indigo-900 leading-tight">
                 <span
                   aria-hidden
@@ -150,6 +150,7 @@ const OrderItem = ({ order }) => {
                 />
                 <span className="relative text-sm">Đang giao</span>
               </span>
+              <br />
               <Button
                 onClick={() => handleConfirmShip(order?._id)}
                 sx={{ margin: '10px' }}

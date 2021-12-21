@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 const OrderFoodPopup = ({ order }) => {
+  console.log('🚀 ~ file: OrderFoodPopup.jsx ~ line 4 ~ OrderFoodPopup ~ order', order);
   return (
     <div>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
@@ -46,10 +47,10 @@ const OrderFoodPopup = ({ order }) => {
                   {food?.quantityFood}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-green-600">
-                  {food?.idFood?.price.toLocaleString()} đ
+                  {(food?.cost).toLocaleString()} đ
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  0 đ
+                  {(food?.cost - food?.amount).toLocaleString()} đ
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-red-500 font-bold">
                   {food?.amount.toLocaleString()} đ
@@ -93,7 +94,8 @@ const OrderFoodPopup = ({ order }) => {
         </table>
       </div>
       <div className="text-base mt-2 text-right font-bold">
-        <span className="text-red-500">Tổng cộng:</span> {(order?.total).toLocaleString()} đ
+        <span className="text-red-500">Tổng cộng:</span>{' '}
+        {(order?.total - order?.ship).toLocaleString()} đ
       </div>
     </div>
   );
