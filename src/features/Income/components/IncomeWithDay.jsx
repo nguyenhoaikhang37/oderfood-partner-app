@@ -5,12 +5,16 @@ import { Alert, CircularProgress, TextField } from '@mui/material';
 import { useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
+import Dialog from '../../../components/Common/Dialog';
+import OrderFoodPopup from '../../OrderSubmit/components/OrderFoodPopup';
 
 const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
-  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 10 ~ IncomeWithDay ~ incomeDay', incomeDay);
   const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChangeDay = (newValue) => {
     setDayValue(newValue);
@@ -124,9 +128,15 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                     {income?.user?.profile?.fullName}
                   </div>
                 </td>
-                <td className="px-6 py-4 max-w-xs">
-                  <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2">
-                    {income?.cartFood.length !== 0 &&
+                <td className="px-6 py-4 text-center max-w-xs">
+                  {/* <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"> */}
+                  <span
+                    onClick={handleOpen}
+                    className="flex items-center justify-center cursor-pointer text-2xl hover:text-indigo-500"
+                  >
+                    <ion-icon name="search-circle-outline"></ion-icon>
+                  </span>
+                  {/* {income?.cartFood.length !== 0 &&
                       income?.cartFood.map((food) => (
                         <div key={food._id} className="flex space-x-4 my-2 items-center">
                           <div className="flex space-x-2 items-center">
@@ -153,8 +163,8 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                           </label>
                           <ion-icon name="close-outline"></ion-icon> {food?.quantityCombo}
                         </div>
-                      ))}
-                  </div>
+                      ))} */}
+                  {/* </div> */}
                 </td>
                 <td className="px-6 py-4 text-center max-w-xs">
                   <div className="text-sm capitalize">{income?.pay?.shortName}</div>
@@ -198,6 +208,9 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
       ) : (
         <Alert severity="info">Ngày bạn chọn hiện không có hoá đơn nào!</Alert>
       )}
+      <Dialog open={open} onClose={handleClose}>
+        <OrderFoodPopup order={incomeDay[0]} />
+      </Dialog>
     </div>
   );
 };

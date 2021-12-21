@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const OrderFoodPopup = ({ order }) => {
-  console.log('🚀 ~ file: OrderFoodPopup.jsx ~ line 4 ~ OrderFoodPopup ~ order', order);
+  console.log('🚀  OrderFoodPopup ~ order', order);
   return (
     <div>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">

@@ -86,12 +86,12 @@ function DiscountTable({ discountList, onDeleteDiscount, getUpdateDiscount }) {
               <div className="text-sm capitalize text-green-500">{discount??.discount} %</div>
             </td> */}
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-yellow-600">
+                  <div className="text-sm capitalize ">
                     {moment(discount?.discountDetail[0]?.start)?.format('LLLL')}
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-red-600">
+                  <div className="text-sm capitalize ">
                     {moment(discount?.discountDetail[0]?.end).format('LLLL')}
                   </div>
                 </td>
