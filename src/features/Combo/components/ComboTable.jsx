@@ -125,7 +125,7 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                     }}
                     className="text-indigo-600 hover:text-indigo-900"
                   >
-                    Edit <ion-icon name="create-outline"></ion-icon>
+                    Sửa <ion-icon name="create-outline"></ion-icon>
                   </a>
                   <a
                     onClick={() => {
@@ -133,7 +133,7 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                     }}
                     className="text-red-600  hover:text-red-900 ml-5"
                   >
-                    Remove <ion-icon name="trash-outline"></ion-icon>
+                    Xoá <ion-icon name="trash-outline"></ion-icon>
                   </a>
                 </td>
               </tr>
