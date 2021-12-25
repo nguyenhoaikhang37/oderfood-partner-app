@@ -214,7 +214,7 @@ export default function Detail() {
             className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
           >
             <ion-icon name="add-circle-outline"></ion-icon>
-            &nbsp; Thêm đặc điểm
+            &nbsp; Thêm đặc điểm (Chọn ít)
           </button>
           <button
             onClick={() => handleOpen('themThanhPhan')}
@@ -222,7 +222,7 @@ export default function Detail() {
             className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
           >
             <ion-icon name="add-circle-outline"></ion-icon>
-            &nbsp; Thêm thành phần
+            &nbsp; Thêm thành phần (Chọn nhiều)
           </button>
         </div>
         <div>

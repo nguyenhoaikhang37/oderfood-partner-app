@@ -104,12 +104,12 @@ const ComboTable = ({ comboList, onDeleteCombo, getUpdateCombo }) => {
                 </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-right  text-yellow-600">
-                    {combo?.price.toLocaleString()}đ
+                    {combo?.price?.toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-right  text-blue-500">
-                    {combo?.lastPrice.toLocaleString()}đ
+                    {combo?.lastPrice?.toLocaleString()}đ
                   </div>
                 </td>
                 <td className="px-6 py-4  max-w-xs">

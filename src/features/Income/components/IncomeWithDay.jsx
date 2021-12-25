@@ -2,7 +2,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { Alert, CircularProgress, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import incomeApi from '../../../apis/incomeApi';
 import moment from 'moment';
 import Dialog from '../../../components/Common/Dialog';
@@ -11,9 +11,13 @@ import OrderFoodPopup from '../../OrderSubmit/components/OrderFoodPopup';
 const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
   const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const [index1, setIndex] = useState();
+  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 16 ~ IncomeWithDay ~ index1', index1);
+  const handleOpen = (idx) => {
+    setOpen(true);
+    setIndex(idx);
+  };
   const handleClose = () => setOpen(false);
 
   const handleChangeDay = (newValue) => {
@@ -26,7 +30,6 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
 
       setLoading(true);
       const response = await incomeApi.thongKeTheoNgay(formatDay);
-      setData(response.data.order.filter((x) => x));
       setIncomeDay(response.data.order.filter((x) => x));
       setExcelDay(
         response.data.order
@@ -121,7 +124,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {incomeDay.map((income) => (
+            {incomeDay.map((income, index) => (
               <tr key={income?._id}>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-center capitalize text-gray-900">
@@ -131,7 +134,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                 <td className="px-6 py-4 text-center max-w-xs">
                   {/* <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"> */}
                   <span
-                    onClick={handleOpen}
+                    onClick={() => handleOpen(index)}
                     className="flex items-center justify-center cursor-pointer text-2xl hover:text-indigo-500"
                   >
                     <ion-icon name="search-circle-outline"></ion-icon>
@@ -189,6 +192,9 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                     {(income?.total).toLocaleString()}đ
                   </div>
                 </td>
+                <Dialog open={open} onClose={handleClose}>
+                  <OrderFoodPopup order={incomeDay[index1]} />
+                </Dialog>
               </tr>
             ))}
             <tr>
@@ -199,7 +205,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
               <td colSpan={3} className="px-6 py-4 text-right max-w-xs font-semibold">
                 Tổng hoá đơn:{' '}
                 <span className="text-red-500">
-                  {data.reduce((sum, curr) => sum + curr.total, 0).toLocaleString()}đ
+                  {incomeDay.reduce((sum, curr) => sum + curr.total, 0).toLocaleString()}đ
                 </span>
               </td>
             </tr>
@@ -208,9 +214,6 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
       ) : (
         <Alert severity="info">Ngày bạn chọn hiện không có hoá đơn nào!</Alert>
       )}
-      <Dialog open={open} onClose={handleClose}>
-        <OrderFoodPopup order={incomeDay[0]} />
-      </Dialog>
     </div>
   );
 };

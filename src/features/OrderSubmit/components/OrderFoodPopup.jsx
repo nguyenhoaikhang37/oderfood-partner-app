@@ -47,13 +47,13 @@ const OrderFoodPopup = ({ order }) => {
                   {food?.quantityFood}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-green-600">
-                  {(food?.cost).toLocaleString()} đ
+                  {food?.cost?.toLocaleString()} đ
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  {(food?.cost - food?.amount).toLocaleString()} đ
+                  {(food?.cost - food?.amount)?.toLocaleString()} đ
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-red-500 font-bold">
-                  {food?.amount.toLocaleString()} đ
+                  {food?.amount?.toLocaleString()} đ
                 </td>
               </tr>
             ))}
@@ -74,19 +74,21 @@ const OrderFoodPopup = ({ order }) => {
                   {combo?.quantityCombo}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-green-600">
-                  {(combo?.amount * (100 / (100 - combo?.idCombo?.discountCombo))).toLocaleString()}{' '}
+                  {(
+                    combo?.amount *
+                    (100 / (100 - combo?.idCombo?.discountCombo))
+                  )?.toLocaleString()}{' '}
                   đ
                 </td>
                 <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  -
                   {(
                     combo?.amount * (100 / (100 - combo?.idCombo?.discountCombo)) -
                     combo?.amount
-                  ).toLocaleString()}{' '}
+                  )?.toLocaleString()}{' '}
                   đ
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-red-500 font-bold">
-                  {combo?.amount.toLocaleString()} đ
+                  {combo?.amount?.toLocaleString()} đ
                 </td>
               </tr>
             ))}

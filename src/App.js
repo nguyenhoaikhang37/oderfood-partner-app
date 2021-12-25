@@ -9,6 +9,7 @@ import 'tailwindcss/tailwind.css';
 import { fetchDiscountList, fetchFoodDiscount } from './features/Discount/discountSlice';
 import { fetchComboList } from './features/Combo/comboSlice';
 import { fetchMenuList } from './features/Menu/menuSlice';
+import Invoice from './components/Common/Invoice';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
         <Redirect exact from="/" to="/admin/profile" />
         <Route path="/admin">
           <PartnerLayout />
+        </Route>
+        <Route path="/invoice">
+          <Invoice />
         </Route>
 
         <Route path="/login">
