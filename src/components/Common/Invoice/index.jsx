@@ -1,81 +1,82 @@
+import moment from 'moment';
 import React from 'react';
+import Images from '../../../constants/images';
 import './Invoice.css';
 
-const Invoice = () => {
+const Invoice = React.forwardRef(({ printOrder }, ref) => {
+  console.log('🚀 ~ file: index.jsx ~ line 6 ~ Invoice ~ printOrder', printOrder);
   return (
-    <div className="page">
-      <h1 className="f">HUFI FOOD.</h1>
-      <img
-        className="img"
-        src="https://img.freepik.com/free-vector/illustration-circle-stamp-banner-vector_53876-27183.jpg?size=338&ext=jpg"
-        align="right"
-      />
+    <div className="page" ref={ref}>
+      <img className="img" src={Images.LOGO} align="right" alt="logo" />
       <p className="address"></p>
-      <div className="flex justify-around mb-10">
+      <div className="flex justify-center space-x-4 mb-3">
         <div>
-          <h6>BILL TO</h6>
-          <h6>SHIP TO</h6>
-          <h6>RECEIPT#</h6>
+          <h6 className="font-bold">MÃ ĐƠN HÀNG</h6>
+          <h6 className="font-bold">NGÀY GIỜ ĐẶT MÓN</h6>
+          <h6 className="font-bold">NGÀY GIỜ GIAO MÓN</h6>
+        </div>
+        <div>
+          <p>{printOrder?._id}</p>
+          <p>{moment(printOrder?.user?.createdAt).format('LLL')}</p>
+          <p>{moment(printOrder?.createdAt).format('LLL')}</p>
+        </div>
+      </div>
+      <div className="flex justify-around mb-10">
+        <div className="w-6/12">
+          <h6 className="font-bold">GỬI TỪ</h6>
+          <p>tên ch</p>
+          <p>địa chỉ</p>
           <p>US-001</p>
         </div>
-        <div>
-          <p>John Smith</p>
-          <p>John Smith</p>
-          <h6>RECEIPT DATE</h6>
-          <p>11/02/2019</p>
-        </div>
-        <div>
-          <p>2 Quart Square</p>
-          <p>37 Drive</p>
-          <h6>P.O.#</h6>
-          <p>2023/2019</p>
-        </div>
-        <div>
-          <p>New York, NY 1222</p>
-          <p>Cambridge, MA 16543</p>
-          <h6>DUE DATE</h6>
-          <p>26/2/2019</p>
+        <div className="w-6/12">
+          <h6 className="font-bold">ĐỊA CHỈ KHÁCH HÀNG</h6>
+          <p>
+            <span className="font-semibold">Tên:</span> {printOrder?.user?.profile?.fullName}
+          </p>
+          <p>
+            <span className="font-semibold">Địa chỉ:</span> {printOrder?.user?.profile?.address}
+          </p>
+          <p>
+            <span className="font-semibold">Sđt:</span> {printOrder?.user?.phoneNumber}
+          </p>
         </div>
       </div>
+
       <div className="main-strip">
-        <h6>QTY</h6>
-        <h6>DESCRIPTION</h6>
-        <h6>UNIT PRICE</h6>
-        <h6>AMOUNT</h6>
+        <h6 className="font-bold">SL</h6>
+        <h6 className="font-bold">MÓN</h6>
+        <h6 className="font-bold">GIÁ</h6>
       </div>
-      <div className="shipping-2">
-        <p>2</p>
-        <p>New set of pedal arms</p>
-        <p>$ 15.00</p>
-        <p>$ 30.00</p>
-      </div>
-      <div className="shipping-3">
-        <p>3</p>
-        <p>Lollipops</p>
-        <p>$ 5.00</p>
-        <p>$ 15.00</p>
-      </div>
+      {printOrder?.cartFood?.map((food) => (
+        <div key={food._id} className="main-strip">
+          <p>{food?.quantityFood}</p>
+          <p>{food?.idFood?.name}</p>
+          <p>{food?.amount?.toLocaleString()}đ</p>
+        </div>
+      ))}
+      {printOrder?.cartCombo?.map((combo) => (
+        <div key={combo._id} className="main-strip">
+          <p>{combo?.quantityCombo}</p>
+          <p>{combo?.idCombo?.name}</p>
+          <p>{combo?.amount?.toLocaleString()}đ</p>
+        </div>
+      ))}
       <total>
         <div className="shipping-total">
-          <p>Subtotal</p>
-          <p>$ 145.00</p>
+          <p className="text-base">Giá</p>
+          <p className="text-base">{(printOrder?.total - printOrder?.ship)?.toLocaleString()}đ</p>
         </div>
         <div className="shipping-total-1">
-          <p>Sales Tax 6.25%</p>
-          <p>9.06</p>
+          <p className="text-base">Tiền ship</p>
+          <p className="text-base">{printOrder?.ship?.toLocaleString()}đ</p>
         </div>
         <div className="shipping-total-2">
-          <h6>TOTAL</h6>
-          <h6>$ 154.06</h6>
+          <h6 className="font-bold">TỔNG</h6>
+          <h6 className="font-bold">{printOrder?.total?.toLocaleString()}đ</h6>
         </div>
       </total>
-      <div className="theTitle active">
-        <div className="left1">
-          <h1>Thank You</h1>
-        </div>
-      </div>
     </div>
   );
-};
+});
 
 export default Invoice;

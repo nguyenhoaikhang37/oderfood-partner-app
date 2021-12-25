@@ -4,7 +4,7 @@ body {
 .page {
   margin-top: 20px !important;
   margin-bottom: 20px !important;
-  height: 850px;
+  height: 1000px;
   margin: auto;
   padding-top: 10px;
   width: 600px;
@@ -14,22 +14,16 @@ body {
   padding-right: 30px;
   background: white;
 }
-.f {
-  color: #212e59;
-  font-size: 3em;
-  position: absolute;
-  top: 40px;
-  font-family: 'Oswald', sans-serif;
-}
 .img {
-  height: 70px;
+  height: 170px;
+  width: 170px;
   position: absolute;
-  margin-left: 480px;
-  margin-top: 10px;
+  margin-left: 400px;
+  margin-top: -20px;
 }
 
 .address {
-  margin-top: 120px;
+  margin-top: 150px;
   font-size: 13px;
   font-family: 'oswald', sans-serif;
 }
@@ -98,8 +92,8 @@ body {
 }
 
 .main-strip {
-  column-count: 4;
-  margin-top: 17px;
+  column-count: 3;
+  margin-top: 10px;
 }
 
 .main-strip h6 {
@@ -174,14 +168,14 @@ total {
 }
 
 .shipping-total-1 p {
-  font-size: 17px;
+  font-size: 20px;
   margin-top: 5px !important;
   font-weight: 100;
   font-family: 'Teko', sans-serif;
 }
 .shipping-total-2 {
   column-count: 2;
-  margin-top: -10px;
+  margin-top: 5px;
 }
 .shipping-total-2 h6 {
   font-size: 23px;

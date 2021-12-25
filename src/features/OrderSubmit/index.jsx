@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import orderApi from '../../apis/orderApi';
 import { ACCESS_TOKEN } from '../../constants/global';
 import OrderTable from './components/OrderTable';
 import { useQuery } from 'react-query';

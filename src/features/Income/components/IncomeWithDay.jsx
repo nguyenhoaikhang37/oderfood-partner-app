@@ -12,11 +12,11 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
   const [dayValue, setDayValue] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [index1, setIndex] = useState();
-  console.log('🚀 ~ file: IncomeWithDay.jsx ~ line 16 ~ IncomeWithDay ~ index1', index1);
-  const handleOpen = (idx) => {
+  const [incomeDetail, setIncomeDetail] = useState();
+
+  const handleOpen = (income) => {
     setOpen(true);
-    setIndex(idx);
+    setIncomeDetail(income);
   };
   const handleClose = () => setOpen(false);
 
@@ -134,7 +134,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                 <td className="px-6 py-4 text-center max-w-xs">
                   {/* <div className="text-sm capitalize text-gray-900 combo-content food-scroll pr-2"> */}
                   <span
-                    onClick={() => handleOpen(index)}
+                    onClick={() => handleOpen(income)}
                     className="flex items-center justify-center cursor-pointer text-2xl hover:text-indigo-500"
                   >
                     <ion-icon name="search-circle-outline"></ion-icon>
@@ -192,9 +192,6 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                     {(income?.total).toLocaleString()}đ
                   </div>
                 </td>
-                <Dialog open={open} onClose={handleClose}>
-                  <OrderFoodPopup order={incomeDay[index1]} />
-                </Dialog>
               </tr>
             ))}
             <tr>
@@ -210,6 +207,9 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
               </td>
             </tr>
           </tbody>
+          <Dialog open={open} onClose={handleClose}>
+            <OrderFoodPopup order={incomeDetail} />
+          </Dialog>
         </table>
       ) : (
         <Alert severity="info">Ngày bạn chọn hiện không có hoá đơn nào!</Alert>

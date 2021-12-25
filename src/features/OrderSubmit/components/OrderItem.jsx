@@ -3,12 +3,14 @@ import { Button } from '@mui/material';
 import OrderFoodPopup from './OrderFoodPopup';
 import Dialog from '../../../components/Common/Dialog';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import 'moment/locale/vi';
 import orderApi from '../../../apis/orderApi';
 import axios from 'axios';
+import Invoice from '../../../components/Common/Invoice';
+import { useReactToPrint } from 'react-to-print';
 
 moment.locale('vi');
 
@@ -86,6 +88,13 @@ const OrderItem = ({ order }) => {
     }
   };
 
+  const componentRef = useRef();
+  const [printOrder, setPrintOrder] = useState({});
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
     <>
       <tr>
@@ -98,7 +107,7 @@ const OrderItem = ({ order }) => {
             <div>
               <p>{order?.user?.profile?.fullName}</p>
               <p className="text-xs text-gray-500">{order?.user?.phoneNumber}</p>
-              <p className="text-xs">{order?.user?.profile?.address}</p>
+              <p className="text-xs">{order?.address}</p>
             </div>
           </div>
         </td>
@@ -123,6 +132,18 @@ const OrderItem = ({ order }) => {
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium cursor-pointer">
           {order?.status === 0 ? (
             <>
+              <Button
+                onClick={() => {
+                  handlePrint();
+                  setPrintOrder(order);
+                }}
+                sx={{ margin: '10px' }}
+                color="success"
+                variant="outlined"
+              >
+                In hoá đơn <ion-icon name="print-outline"></ion-icon>
+              </Button>
+              <br />
               <Button
                 onClick={() => handleConfirmOrder(order?._id)}
                 sx={{ margin: '10px' }}
@@ -167,6 +188,9 @@ const OrderItem = ({ order }) => {
           )}
         </td>
       </tr>
+      <div style={{ display: 'none' }}>
+        <Invoice printOrder={printOrder} ref={componentRef} />
+      </div>
       <Dialog open={open} onClose={handleClose}>
         <OrderFoodPopup order={order} />
       </Dialog>
