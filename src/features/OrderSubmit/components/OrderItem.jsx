@@ -89,7 +89,6 @@ const OrderItem = ({ order }) => {
   };
 
   const componentRef = useRef();
-  const [printOrder, setPrintOrder] = useState({});
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -135,7 +134,6 @@ const OrderItem = ({ order }) => {
               <Button
                 onClick={() => {
                   handlePrint();
-                  setPrintOrder(order);
                 }}
                 sx={{ margin: '10px' }}
                 color="success"
@@ -189,7 +187,7 @@ const OrderItem = ({ order }) => {
         </td>
       </tr>
       <div style={{ display: 'none' }}>
-        <Invoice printOrder={printOrder} ref={componentRef} />
+        <Invoice printOrder={order} ref={componentRef} />
       </div>
       <Dialog open={open} onClose={handleClose}>
         <OrderFoodPopup order={order} />

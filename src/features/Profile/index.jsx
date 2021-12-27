@@ -6,7 +6,6 @@ import { LinearProgress } from '@mui/material';
 
 const Profile = () => {
   const user = useSelector(selectLoginUser);
-  console.log('🚀 ~ file: index.jsx ~ line 9 ~ Profile ~ user', user);
   const loading = useSelector(selectLoginLoading);
 
   const handleUpdateProfile = (formValues) => {

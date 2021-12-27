@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 const OrderFoodPopup = ({ order }) => {
-  console.log('🚀  OrderFoodPopup ~ order', order);
   return (
     <div>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
@@ -39,7 +38,9 @@ const OrderFoodPopup = ({ order }) => {
                     />
                     <div>
                       <p className="font-bold">{food?.idFood?.name}</p>
-                      {food?.listChoose?.map((item) => item?.idChoose?.name).join(' ')}
+                      <p className="italic">
+                        {food?.listChoose?.map((choose) => choose._id.name).join(', ')}
+                      </p>
                     </div>
                   </div>
                 </td>

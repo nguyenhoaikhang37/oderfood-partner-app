@@ -79,6 +79,12 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
+                Mã đơn hàng
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Người mua
               </th>
               <th
@@ -126,6 +132,9 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {incomeDay.map((income, index) => (
               <tr key={income?._id}>
+                <td className="px-6 py-4  max-w-xs">
+                  <div className="text-sm text-center capitalize text-gray-900">{income?._id}</div>
+                </td>
                 <td className="px-6 py-4  max-w-xs">
                   <div className="text-sm text-center capitalize text-gray-900">
                     {income?.user?.profile?.fullName}
