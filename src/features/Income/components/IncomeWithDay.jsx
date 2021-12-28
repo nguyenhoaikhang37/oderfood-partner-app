@@ -208,6 +208,7 @@ const IncomeWithDay = ({ incomeDay, setIncomeDay, setExcelDay }) => {
               <td className="px-6 py-4  max-w-xs"></td>
               <td className="px-6 py-4 text-right max-w-xs"></td>
               <td className="px-6 py-4  max-w-xs"></td>
+              <td className="px-6 py-4  max-w-xs"></td>
               <td colSpan={3} className="px-6 py-4 text-right max-w-xs font-semibold">
                 Tổng hoá đơn:{' '}
                 <span className="text-red-500">
