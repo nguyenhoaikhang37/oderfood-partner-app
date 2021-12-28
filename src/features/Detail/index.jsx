@@ -209,7 +209,7 @@ export default function Detail() {
           }}
         >
           <button
-            onClick={() => handleOpen('themDacDiem')}
+            onClick={() => handleOpen('themThanhPhan')}
             type="button"
             className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
           >
@@ -217,7 +217,7 @@ export default function Detail() {
             &nbsp; Thêm đặc điểm (Chọn ít)
           </button>
           <button
-            onClick={() => handleOpen('themThanhPhan')}
+            onClick={() => handleOpen('themDacDiem')}
             type="button"
             className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4 mr-4"
           >
