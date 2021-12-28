@@ -57,7 +57,7 @@ const Food = () => {
       await foodApi.addFood(formValues);
       // window.location.reload();
       toast.success('Thêm món ăn thành công');
-      dispatch(fetchMenuList());
+      dispatch(fetchFoodList(user?._id));
       setOpen(false);
     } catch (error) {
       console.log('Failed to add food', error);
