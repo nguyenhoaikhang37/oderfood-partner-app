@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Alert } from '@mui/material';
 
 const MenuTable = ({ menuList, user, onRemoveMenu, onGetMenuById }) => {
-  console.log('🚀 ~ file: MenuTable.jsx ~ line 5 ~ MenuTable ~ menuList', menuList);
   const handleDeleteMenu = (menuId) => {
     onRemoveMenu?.(menuId);
   };
