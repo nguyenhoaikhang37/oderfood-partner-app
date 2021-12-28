@@ -79,7 +79,7 @@ const Food = () => {
           await foodApi.updateFoodRestore(foodId);
 
           Swal.fire('Deleted!', 'Bạn đã xoá món ăn thành công.', 'success');
-          window.location.reload();
+          dispatch(fetchFoodList(user?._id));
         }
       });
     } catch (error) {
@@ -96,7 +96,8 @@ const Food = () => {
     try {
       await foodApi.updateFood(formValues);
       toast.success('Sửa món ăn thành công');
-      window.location.reload();
+      dispatch(fetchFoodList(user?._id));
+
       setOpen(false);
     } catch (error) {
       console.log('Failed to add menu', error);
