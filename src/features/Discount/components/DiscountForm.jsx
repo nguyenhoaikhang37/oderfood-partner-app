@@ -127,7 +127,8 @@ const DiscountForm = ({
   return (
     <Fragment>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
-      {discountNeedUpdate ? 'Sửa' : 'Thêm'} khuyến mãi <ion-icon name="qr-code-outline"></ion-icon>
+        {discountNeedUpdate ? 'Sửa' : 'Thêm'} khuyến mãi{' '}
+        <ion-icon name="qr-code-outline"></ion-icon>
       </div>
       <Box component="form" onSubmit={handleSubmit(handleDiscountSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto mb-4">
@@ -183,7 +184,7 @@ const DiscountForm = ({
               </div>
             ) : (
               <img
-                style={{ width: '100%', height: '150px', marginTop: '15px' }}
+                style={{ width: '150px', height: '150px', marginTop: '15px', borderRadius: '50%' }}
                 className="object-cover"
                 src={image ? image : discountNeedUpdate.photo}
               />
