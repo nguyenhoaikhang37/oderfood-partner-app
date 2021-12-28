@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Alert } from '@mui/material';
 
 const MenuTable = ({ menuList, user, onRemoveMenu, onGetMenuById }) => {
+  console.log('🚀 ~ file: MenuTable.jsx ~ line 5 ~ MenuTable ~ menuList', menuList);
   const handleDeleteMenu = (menuId) => {
     onRemoveMenu?.(menuId);
   };
@@ -12,7 +13,7 @@ const MenuTable = ({ menuList, user, onRemoveMenu, onGetMenuById }) => {
 
   return (
     <>
-      {menuList.length !== 0 && (
+      {menuList.filter((menu) => menu.restaurant == user?._id).length !== 0 && (
         <table className="divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -54,7 +55,9 @@ const MenuTable = ({ menuList, user, onRemoveMenu, onGetMenuById }) => {
           </tbody>
         </table>
       )}
-      {menuList.length === 0 && <Alert severity="error">Hiện tại chưa combo nào!</Alert>}
+      {menuList.filter((menu) => menu.restaurant == user?._id).length === 0 && (
+        <Alert severity="error">Hiện tại chưa combo nào!</Alert>
+      )}
     </>
   );
 };
