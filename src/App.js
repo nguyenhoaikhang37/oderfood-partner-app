@@ -13,7 +13,7 @@ import Invoice from './components/Common/Invoice';
 
 function App() {
   const dispatch = useDispatch();
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('accessTokenPartner');
 
   useEffect(() => {
     dispatch(getUserToken(token));

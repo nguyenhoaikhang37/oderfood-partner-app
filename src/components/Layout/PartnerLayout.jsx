@@ -17,7 +17,7 @@ import Sidebar from '../Common/Sidebar';
 
 const PartnerLayout = ({ children }) => {
   const isLogin = Boolean(localStorage.getItem(ACCESS_TOKEN));
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('accessTokenPartner');
   const dispatch = useDispatch();
 
   useEffect(() => {
