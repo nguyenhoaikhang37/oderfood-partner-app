@@ -55,9 +55,9 @@ const Food = () => {
   const handleAddFoodSubmit = async (formValues) => {
     try {
       await foodApi.addFood(formValues);
-      console.log('food', formValues);
       // window.location.reload();
       toast.success('Thêm món ăn thành công');
+      dispatch(fetchMenuList());
       setOpen(false);
     } catch (error) {
       console.log('Failed to add food', error);
