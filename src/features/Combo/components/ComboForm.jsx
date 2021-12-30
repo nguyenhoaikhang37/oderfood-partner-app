@@ -124,36 +124,35 @@ const ComboForm = ({
             <InputField name="name" control={control} label="Tên combo món ăn" />
           </div>
           {!comboNeedUpdate && (
-          <>
-          <div className="col-span-2 lg:col-span-1">
-            <InputField name="discountCombo" control={control} label="% khuyến mãi" />
-          </div>
-            <div className="col-span-2 lg:col-span-1">
-              <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
-            </div>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <div className="col-span-2 lg:col-span-1 mt-2">
-              <DesktopDatePicker
-                label="Ngày bắt đầu"
-                inputFormat="dd/MM/yyyy"
-                value={valueStart}
-                onChange={handleChangeStart}
-                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
-              />
-            </div>
-            <div className="col-span-2 lg:col-span-1 mt-2">
-              <DesktopDatePicker
-                label="Ngày kết thúc"
-                inputFormat="dd/MM/yyyy"
-                value={valueEnd}
-                onChange={handleChangeEnd}
-                renderInput={(params) => <TextField fullWidth size="small" {...params} />}
-              />
-            </div>
-          </LocalizationProvider>
-          </>
+            <>
+              <div className="col-span-2 lg:col-span-1">
+                <InputField name="discountCombo" control={control} label="% khuyến mãi" />
+              </div>
+              <div className="col-span-2 lg:col-span-1">
+                <SelectField name="menu" control={control} label="Menu" options={menuOptions} />
+              </div>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <div className="col-span-2 lg:col-span-1 mt-2">
+                  <DesktopDatePicker
+                    label="Ngày bắt đầu"
+                    inputFormat="dd/MM/yyyy"
+                    value={valueStart}
+                    onChange={handleChangeStart}
+                    renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+                  />
+                </div>
+                <div className="col-span-2 lg:col-span-1 mt-2">
+                  <DesktopDatePicker
+                    label="Ngày kết thúc"
+                    inputFormat="dd/MM/yyyy"
+                    value={valueEnd}
+                    onChange={handleChangeEnd}
+                    renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+                  />
+                </div>
+              </LocalizationProvider>
+            </>
           )}
-
         </div>
 
         <div className="col-span-2 mt-4">

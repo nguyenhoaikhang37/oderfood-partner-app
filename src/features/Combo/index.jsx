@@ -96,7 +96,10 @@ const Combo = () => {
   const handleUpdateCombo = async ({ formValues, image, valueStart, valueEnd }) => {
     const formatFormValues = { ...formValues, photo: image };
 
-    console.log("🚀 ~ file: index.jsx ~ line 99 ~ handleUpdateCombo ~ formatFormValues", formatFormValues)
+    console.log(
+      '🚀 ~ file: index.jsx ~ line 99 ~ handleUpdateCombo ~ formatFormValues',
+      formatFormValues
+    );
     try {
       await comboApi.updateCombo(formatFormValues);
       toast.success('Sửa combo thành công');
