@@ -27,7 +27,7 @@ const OrderSubmit = () => {
 
   const { data, status } = useQuery(todosEndpoint, fetcher, {
     refetchInterval: 5000,
-    refetchIntervalInBackground: false,
+    refetchIntervalInBackground: true,
   });
   const ref = useRef(null);
 
