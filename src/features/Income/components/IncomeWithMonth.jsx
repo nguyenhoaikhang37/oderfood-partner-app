@@ -121,39 +121,43 @@ const IncomeWithMonth = ({ incomeMonth, setIncomeMonth, setTopFood, setExcelMont
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {incomeMonth.map((income) => (
-              <tr key={income?._id}>
-                <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm capitalize text-gray-900">
-                    Ngày {moment(income?.createdAt).format('DD')} Tháng{' '}
-                    {moment(income?.createdAt).format('MM')}
-                  </div>
-                </td>
-                <td className="px-6 py-4  max-w-xs">
-                  <div className="text-sm">{income?.sum.toLocaleString()} đơn</div>
-                </td>
-                <td className="px-6 py-4 text-left max-w-xs">
-                  <div className="text-sm capitalize text-green-500">
-                    {(income?.totalCost - income?.totalShip).toLocaleString()}đ
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-left max-w-xs">
-                  <div className="text-sm capitalize text-green-500">
-                    {(income?.total - income?.totalShip).toLocaleString()}đ
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-left max-w-xs">
-                  <div className="text-sm capitalize text-green-500">
-                    {income?.totalShip.toLocaleString()}đ
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-left max-w-xs">
-                  <div className="text-sm capitalize font-semibold">
-                    {(income?.total).toLocaleString()}đ
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {incomeMonth
+              .sort(function (a, b) {
+                return new Date(a.createdAt) - new Date(b.createdAt);
+              })
+              .map((income) => (
+                <tr key={income?._id}>
+                  <td className="px-6 py-4  max-w-xs">
+                    <div className="text-sm capitalize text-gray-900">
+                      Ngày {moment(income?.createdAt).format('DD')} Tháng{' '}
+                      {moment(income?.createdAt).format('MM')}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4  max-w-xs">
+                    <div className="text-sm">{income?.sum.toLocaleString()} đơn</div>
+                  </td>
+                  <td className="px-6 py-4 text-left max-w-xs">
+                    <div className="text-sm capitalize text-green-500">
+                      {(income?.totalCost - income?.totalShip).toLocaleString()}đ
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-left max-w-xs">
+                    <div className="text-sm capitalize text-green-500">
+                      {(income?.total - income?.totalShip).toLocaleString()}đ
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-left max-w-xs">
+                    <div className="text-sm capitalize text-green-500">
+                      {income?.totalShip.toLocaleString()}đ
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-left max-w-xs">
+                    <div className="text-sm capitalize font-semibold">
+                      {(income?.total).toLocaleString()}đ
+                    </div>
+                  </td>
+                </tr>
+              ))}
             <tr>
               <td className="px-6 py-4  max-w-xs"></td>
               <td className="px-6 py-4  max-w-xs"></td>
