@@ -17,6 +17,7 @@ const Combo = () => {
   const dispatch = useDispatch();
   // useSelector
   const comboList = useSelector(selectComboList);
+  console.log(comboList);
   const loading = useSelector(selectComboLoading);
   // dialog
   const [open, setOpen] = useState(false);
