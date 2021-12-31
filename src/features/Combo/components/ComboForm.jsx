@@ -204,7 +204,7 @@ const ComboForm = ({
             </div>
           ) : (
             <img
-              style={{ width: '100%', height: '150px', marginTop: '15px' }}
+            style={{ width: '150px', height: '150px', marginTop: '15px', borderRadius: '50%' }}
               className="object-cover"
               src={image ? image : comboNeedUpdate.photo}
             />
