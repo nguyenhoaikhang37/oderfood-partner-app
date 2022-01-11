@@ -39,7 +39,7 @@ const ImportFoodForm = ({ foodList, onAddImportFood }) => {
   return (
     <div>
       <div className="mb-6 text-3xl font-light text-center text-indigo-800 dark:text-white">
-        Nhập thêm món<ion-icon name="basket-outline"></ion-icon>
+        Thêm số lượng món<ion-icon name="basket-outline"></ion-icon>
       </div>
       <Box component="form" onSubmit={handleSubmit(handleImportSubmit)} noValidate sx={{ mt: 1 }}>
         <div className="grid max-w-xl grid-cols-2 gap-2 m-auto">

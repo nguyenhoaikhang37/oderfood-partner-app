@@ -137,7 +137,7 @@ const Food = () => {
             className="py-2 px-4 flex justify-center items-center  bg-indigo-500 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full mb-4"
           >
             <ion-icon name="bag-add-outline"></ion-icon>
-            &nbsp; Nhập thêm món
+            &nbsp; Thêm số lượng món
           </button>
         </div>
         <button
