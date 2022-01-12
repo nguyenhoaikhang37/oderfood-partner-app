@@ -41,5 +41,5 @@ src
 3. Run project
 
 ```
-  npm start (or yarn start)
+  npm run start (or yarn start)
 ```
